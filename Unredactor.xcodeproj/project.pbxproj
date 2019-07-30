@@ -8,12 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */; };
-		2F7C0A5B22DCF2FC00AD2828 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5A22DCF2FC00AD2828 /* ViewController.swift */; };
+		2F7C0A5B22DCF2FC00AD2828 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */; };
 		2F7C0A5E22DCF2FC00AD2828 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5C22DCF2FC00AD2828 /* Main.storyboard */; };
 		2F7C0A6022DCF2FC00AD2828 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5F22DCF2FC00AD2828 /* Assets.xcassets */; };
 		2F7C0A6322DCF2FC00AD2828 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F7C0A6122DCF2FC00AD2828 /* LaunchScreen.storyboard */; };
 		2F7C0A6E22DCF2FC00AD2828 /* UnredactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A6D22DCF2FC00AD2828 /* UnredactorTests.swift */; };
 		2F7C0A7922DCF2FD00AD2828 /* UnredactorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A7822DCF2FD00AD2828 /* UnredactorUITests.swift */; };
+		2F7C0A8722DF863F00AD2828 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A8622DF863F00AD2828 /* Document.swift */; };
+		2F7C0A8922DF86BC00AD2828 /* DocumentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */; };
+		2F7C0A8D22E0310400AD2828 /* Unredactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A8C22E0310400AD2828 /* Unredactor.swift */; };
+		2F7C0A8F22E0451B00AD2828 /* UnredactGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A8E22E0451B00AD2828 /* UnredactGestureRecognizer.swift */; };
+		2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A9022E0D0FF00AD2828 /* Bool+Helpers.swift */; };
+		2F7C0A9322E0D8DE00AD2828 /* ClassifiedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A9222E0D8DE00AD2828 /* ClassifiedText.swift */; };
+		2F7C0A9522E2D66900AD2828 /* URL+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A9422E2D66900AD2828 /* URL+Helpers.swift */; };
+		2F7C0A9722E5A34B00AD2828 /* Array+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A9622E5A34B00AD2828 /* Array+Helpers.swift */; };
+		2F7C0A9B22E6069600AD2828 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +45,7 @@
 /* Begin PBXFileReference section */
 		2F7C0A5522DCF2FC00AD2828 /* Unredactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unredactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2F7C0A5A22DCF2FC00AD2828 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5D22DCF2FC00AD2828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2F7C0A5F22DCF2FC00AD2828 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F7C0A6222DCF2FC00AD2828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +56,15 @@
 		2F7C0A7422DCF2FD00AD2828 /* UnredactorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnredactorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7C0A7822DCF2FD00AD2828 /* UnredactorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnredactorUITests.swift; sourceTree = "<group>"; };
 		2F7C0A7A22DCF2FD00AD2828 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F7C0A8622DF863F00AD2828 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCell.swift; sourceTree = "<group>"; };
+		2F7C0A8C22E0310400AD2828 /* Unredactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unredactor.swift; sourceTree = "<group>"; };
+		2F7C0A8E22E0451B00AD2828 /* UnredactGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnredactGestureRecognizer.swift; sourceTree = "<group>"; };
+		2F7C0A9022E0D0FF00AD2828 /* Bool+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Helpers.swift"; sourceTree = "<group>"; };
+		2F7C0A9222E0D8DE00AD2828 /* ClassifiedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassifiedText.swift; sourceTree = "<group>"; };
+		2F7C0A9422E2D66900AD2828 /* URL+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Helpers.swift"; sourceTree = "<group>"; };
+		2F7C0A9622E5A34B00AD2828 /* Array+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Helpers.swift"; sourceTree = "<group>"; };
+		2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +116,16 @@
 			isa = PBXGroup;
 			children = (
 				2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */,
-				2F7C0A5A22DCF2FC00AD2828 /* ViewController.swift */,
+				2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */,
+				2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */,
+				2F7C0A8C22E0310400AD2828 /* Unredactor.swift */,
+				2F7C0A8622DF863F00AD2828 /* Document.swift */,
+				2F7C0A9222E0D8DE00AD2828 /* ClassifiedText.swift */,
+				2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */,
+				2F7C0A8E22E0451B00AD2828 /* UnredactGestureRecognizer.swift */,
+				2F7C0A9022E0D0FF00AD2828 /* Bool+Helpers.swift */,
+				2F7C0A9422E2D66900AD2828 /* URL+Helpers.swift */,
+				2F7C0A9622E5A34B00AD2828 /* Array+Helpers.swift */,
 				2F7C0A5C22DCF2FC00AD2828 /* Main.storyboard */,
 				2F7C0A5F22DCF2FC00AD2828 /* Assets.xcassets */,
 				2F7C0A6122DCF2FC00AD2828 /* LaunchScreen.storyboard */,
@@ -259,8 +286,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F7C0A5B22DCF2FC00AD2828 /* ViewController.swift in Sources */,
+				2F7C0A5B22DCF2FC00AD2828 /* DocumentViewController.swift in Sources */,
+				2F7C0A9B22E6069600AD2828 /* SettingsTableViewController.swift in Sources */,
+				2F7C0A9522E2D66900AD2828 /* URL+Helpers.swift in Sources */,
+				2F7C0A8722DF863F00AD2828 /* Document.swift in Sources */,
+				2F7C0A8D22E0310400AD2828 /* Unredactor.swift in Sources */,
+				2F7C0A9322E0D8DE00AD2828 /* ClassifiedText.swift in Sources */,
+				2F7C0A9722E5A34B00AD2828 /* Array+Helpers.swift in Sources */,
+				2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */,
+				2F7C0A8922DF86BC00AD2828 /* DocumentCell.swift in Sources */,
 				2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */,
+				2F7C0A8F22E0451B00AD2828 /* UnredactGestureRecognizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +463,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = E88BK26E9L;
 				INFOPLIST_FILE = Unredactor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = manceps.Unredactor;
@@ -441,6 +478,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = E88BK26E9L;
 				INFOPLIST_FILE = Unredactor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = manceps.Unredactor;
