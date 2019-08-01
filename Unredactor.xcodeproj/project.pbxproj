@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23946B7622F2512000A69AF3 /* UIPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23946B7522F2512000A69AF3 /* UIPageViewController.swift */; };
 		2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */; };
 		2F7C0A5B22DCF2FC00AD2828 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */; };
 		2F7C0A5E22DCF2FC00AD2828 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5C22DCF2FC00AD2828 /* Main.storyboard */; };
@@ -43,9 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23946B7522F2512000A69AF3 /* UIPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5522DCF2FC00AD2828 /* Unredactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unredactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
+		2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentViewController.swift; path = ../DocumentViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5D22DCF2FC00AD2828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2F7C0A5F22DCF2FC00AD2828 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F7C0A6222DCF2FC00AD2828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -64,7 +66,7 @@
 		2F7C0A9222E0D8DE00AD2828 /* ClassifiedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassifiedText.swift; sourceTree = "<group>"; };
 		2F7C0A9422E2D66900AD2828 /* URL+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Helpers.swift"; sourceTree = "<group>"; };
 		2F7C0A9622E5A34B00AD2828 /* Array+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Helpers.swift"; sourceTree = "<group>"; };
-		2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = ../SettingsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23946B7722F3AFD300A69AF3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				23946B7522F2512000A69AF3 /* UIPageViewController.swift */,
+				2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */,
+				2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */,
+				2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		23946B7822F3B04200A69AF3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2F7C0A8622DF863F00AD2828 /* Document.swift */,
+				2F7C0A9222E0D8DE00AD2828 /* ClassifiedText.swift */,
+				2F7C0A8C22E0310400AD2828 /* Unredactor.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		23946B7922F3B05800A69AF3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2F7C0A8E22E0451B00AD2828 /* UnredactGestureRecognizer.swift */,
+				2F7C0A9022E0D0FF00AD2828 /* Bool+Helpers.swift */,
+				2F7C0A9422E2D66900AD2828 /* URL+Helpers.swift */,
+				2F7C0A9622E5A34B00AD2828 /* Array+Helpers.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		2F7C0A4C22DCF2FC00AD2828 = {
 			isa = PBXGroup;
 			children = (
@@ -116,16 +150,9 @@
 			isa = PBXGroup;
 			children = (
 				2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */,
-				2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */,
-				2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */,
-				2F7C0A8C22E0310400AD2828 /* Unredactor.swift */,
-				2F7C0A8622DF863F00AD2828 /* Document.swift */,
-				2F7C0A9222E0D8DE00AD2828 /* ClassifiedText.swift */,
-				2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */,
-				2F7C0A8E22E0451B00AD2828 /* UnredactGestureRecognizer.swift */,
-				2F7C0A9022E0D0FF00AD2828 /* Bool+Helpers.swift */,
-				2F7C0A9422E2D66900AD2828 /* URL+Helpers.swift */,
-				2F7C0A9622E5A34B00AD2828 /* Array+Helpers.swift */,
+				23946B7722F3AFD300A69AF3 /* Controllers */,
+				23946B7822F3B04200A69AF3 /* Model */,
+				23946B7922F3B05800A69AF3 /* Extensions */,
 				2F7C0A5C22DCF2FC00AD2828 /* Main.storyboard */,
 				2F7C0A5F22DCF2FC00AD2828 /* Assets.xcassets */,
 				2F7C0A6122DCF2FC00AD2828 /* LaunchScreen.storyboard */,
@@ -293,6 +320,7 @@
 				2F7C0A8D22E0310400AD2828 /* Unredactor.swift in Sources */,
 				2F7C0A9322E0D8DE00AD2828 /* ClassifiedText.swift in Sources */,
 				2F7C0A9722E5A34B00AD2828 /* Array+Helpers.swift in Sources */,
+				23946B7622F2512000A69AF3 /* UIPageViewController.swift in Sources */,
 				2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */,
 				2F7C0A8922DF86BC00AD2828 /* DocumentCell.swift in Sources */,
 				2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */,

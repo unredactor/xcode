@@ -25,8 +25,8 @@ class DocumentViewController: UIViewController {
     
     var unredactor = Unredactor() // Set mask token to unk because this is what it is rn on the website
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         // Do any additional setup after loading the view, typically from a nib.
         textField.delegate = self
         

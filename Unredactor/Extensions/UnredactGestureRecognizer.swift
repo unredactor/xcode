@@ -30,7 +30,7 @@ extension UITapGestureRecognizer {
         textContainer.lineBreakMode = label.lineBreakMode
         textContainer.maximumNumberOfLines = label.numberOfLines
         let labelSize = label.bounds.size
-        let textRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: 0, length: label.text!.count), in: textContainer)
+        //let textRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: 0, length: label.text!.count), in: textContainer)
         
         textContainer.size = CGSize(width: label.frame.size.width, height: label.frame.size.height) //Add 200 to make it arbitrarily high
         
