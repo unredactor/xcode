@@ -18,8 +18,8 @@ class UnredactorPageViewController: UIPageViewController, UIPageViewControllerDa
         self.delegate = self
         self.dataSource = self
         
-        let page1: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "normal") // TODO: Update names
-        let page2: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "other")
+        let page1: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView") // TODO: Update names
+        let page2: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2")
         
         pages.append(page1)
         pages.append(page2)

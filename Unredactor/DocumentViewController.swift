@@ -5,13 +5,15 @@
 //  Created by tyler on 7/15/19.
 //  Copyright © 2019 tyler. All rights reserved.
 //
-
+/*
 import UIKit
 import Foundation
 
 
-class DocumentViewController: UIViewController {
-
+class DocumentTableViewController: UIViewController {
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textView: UITextView!
+    
     // MARK: - IBOutlets
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var enterDocumentButton: UIButton!
@@ -149,7 +151,7 @@ class DocumentViewController: UIViewController {
     
 }
 
-extension DocumentViewController: UITextFieldDelegate {
+extension DocumentTableViewController: UITextFieldDelegate {
     /*
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.becomeFirstResponder()
@@ -181,7 +183,7 @@ extension DocumentViewController: UITextFieldDelegate {
     }
 }
 
-extension DocumentViewController: UITableViewDelegate {
+extension DocumentTableViewController: UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -203,7 +205,7 @@ extension DocumentViewController: UITableViewDelegate {
     }
 }
 
-extension DocumentViewController: UITableViewDataSource {
+extension DocumentTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
@@ -212,3 +214,4 @@ extension DocumentViewController: UITableViewDataSource {
         return 44.0
     }
 }
+*/
