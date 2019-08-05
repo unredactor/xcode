@@ -17,8 +17,24 @@ class ScrollDocumentViewController: DocumentViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: self.view.window)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardDidShow, object: self.view.window)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: self.view.window)
+        
+        setupScrollView() // for now, just add a shadow to the document so it looks nice
+    }
+    
+    private func setupScrollView() {
+        guard let backgroundView = scrollView.subviews.first else {
+            print("Setup scroll view unsuccessful; backgroundView not found in subviews as first view")
+            return
+        }
+        
+        // Add a drop shadow to it
+        backgroundView.layer.shadowColor = UIColor.black.cgColor
+        backgroundView.layer.shadowOpacity = 0.3
+        backgroundView.layer.shadowOffset = .zero
+        backgroundView.layer.shadowRadius = 10
+        backgroundView.layer.shouldRasterize = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -75,6 +91,10 @@ class ScrollDocumentViewController: DocumentViewController {
         UIView.setAnimationBeginsFromCurrentState(true)
         self.scrollView.frame = viewFrame
         UIView.commitAnimations()
+        
+        // Scroll back to what it was previously
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
         
         keyboardIsShown = false
     }
