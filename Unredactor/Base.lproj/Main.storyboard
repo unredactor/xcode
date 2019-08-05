@@ -10,21 +10,25 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Document View Controller-->
+        <!--Scroll Document View Controller-->
         <scene sceneID="5Ic-Gt-tlC">
             <objects>
-                <viewController storyboardIdentifier="unredactorView" id="261-wd-RED" customClass="DocumentViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="unredactorView" id="261-wd-RED" customClass="ScrollDocumentViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="g0b-9M-FDb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="image 2.1 (1)" translatesAutoresizingMaskIntoConstraints="NO" id="OP2-GF-LTL">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="manilaFolderTexture" translatesAutoresizingMaskIntoConstraints="NO" id="68Q-XW-qD9">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hN9-Bf-rbz">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ilZ-Xy-Uss">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="PeV-Z8-mdL">
                                         <rect key="frame" x="32" y="36" width="256" height="496"/>
                                         <subviews>
@@ -52,11 +56,19 @@
                                             <constraint firstItem="DXu-vq-Y4S" firstAttribute="top" secondItem="Pmu-nh-2u8" secondAttribute="bottom" constant="16" id="J7A-VL-SQm"/>
                                         </constraints>
                                     </stackView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="image 2.1 (1)" translatesAutoresizingMaskIntoConstraints="NO" id="OP2-GF-LTL">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="ilZ-Xy-Uss" firstAttribute="leading" secondItem="hN9-Bf-rbz" secondAttribute="leading" id="X1g-6i-EbO"/>
+                                    <constraint firstAttribute="trailing" secondItem="ilZ-Xy-Uss" secondAttribute="trailing" id="bsW-NZ-9jX"/>
+                                    <constraint firstAttribute="bottom" secondItem="ilZ-Xy-Uss" secondAttribute="bottom" constant="-36" id="cVG-mu-Y6g"/>
                                     <constraint firstItem="PeV-Z8-mdL" firstAttribute="leading" secondItem="hN9-Bf-rbz" secondAttribute="leading" constant="32" id="i0o-rI-jTg"/>
                                     <constraint firstAttribute="bottom" secondItem="PeV-Z8-mdL" secondAttribute="bottom" id="oym-L4-MiT"/>
                                     <constraint firstItem="PeV-Z8-mdL" firstAttribute="centerY" secondItem="hN9-Bf-rbz" secondAttribute="centerY" id="pFN-Cl-tIr"/>
+                                    <constraint firstItem="ilZ-Xy-Uss" firstAttribute="top" secondItem="hN9-Bf-rbz" secondAttribute="top" id="uhc-ev-raY"/>
                                     <constraint firstItem="PeV-Z8-mdL" firstAttribute="top" secondItem="hN9-Bf-rbz" secondAttribute="top" constant="36" id="xYU-sk-7V7"/>
                                     <constraint firstAttribute="trailing" secondItem="PeV-Z8-mdL" secondAttribute="trailing" constant="32" id="xae-Mx-Yh2"/>
                                     <constraint firstItem="PeV-Z8-mdL" firstAttribute="centerX" secondItem="hN9-Bf-rbz" secondAttribute="centerX" id="zzO-TY-gg6"/>
@@ -73,6 +85,7 @@
                         <viewLayoutGuide key="safeArea" id="Xrd-Dh-Ik8"/>
                     </view>
                     <connections>
+                        <outlet property="scrollView" destination="hN9-Bf-rbz" id="rug-XV-PYr"/>
                         <outlet property="textView" destination="DXu-vq-Y4S" id="Cem-OC-EPX"/>
                     </connections>
                 </viewController>
@@ -502,6 +515,7 @@
     </scenes>
     <resources>
         <image name="image 2.1 (1)" width="634" height="953"/>
+        <image name="manilaFolderTexture" width="602" height="816"/>
         <image name="settingsCogPNG" width="22" height="22"/>
     </resources>
 </document>

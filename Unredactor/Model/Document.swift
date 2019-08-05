@@ -40,6 +40,10 @@ class Document {
         return attributedText
     }
     
+    func setText(to text: String) {
+        self.classifiedText.words = ClassifiedText.classifiedWordsFromText(text)
+    }
+    
     // Just making basic boolean more accesible without having to dig through properties
     var isNotRedacted: Bool { return classifiedText.isNotRedacted }
     var isRedacted: Bool { return classifiedText.isRedacted }

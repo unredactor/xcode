@@ -106,9 +106,19 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         return nil
     }
     
+    
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = ClassifiedText(withClassifiedWords: words)
         return copy
+    }
+ 
+    
+    static func classifiedWordsFromText(_ text: String) -> [ClassifiedString] {
+        let wordSubstrings = text.split(separator: " ")
+        let words = wordSubstrings.map { String($0) }
+        let classifiedWords = words.map { ClassifiedString($0) }
+        
+        return classifiedWords
     }
     
     init(withWords words: [String]) {
@@ -116,9 +126,8 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
     }
     
     init(withText text: String) {
-        let wordSubstrings = text.split(separator: " ")
-        let words = wordSubstrings.map { String($0) }
-        self.words = words.map { ClassifiedString($0) }
+        let words = ClassifiedText.classifiedWordsFromText(text)
+        self.words = words
     }
     
     init(withClassifiedWords classifiedWords: [ClassifiedString]) {
