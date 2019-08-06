@@ -83,4 +83,12 @@ extension DocumentViewController: UITextViewDelegate {
         // already been made
         return false
     }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if self.view.window != nil {
+            if textView.textColor == .lightGray {
+                selectBeginningOfTextView()
+            }
+        }
+    }
 }
