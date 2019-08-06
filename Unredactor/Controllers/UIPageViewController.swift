@@ -29,12 +29,18 @@ class UnredactorPageViewController: UIPageViewController, UIPageViewControllerDa
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let currentIndex = pages.index(of: viewController)!
+        
+        guard currentIndex != 0 else { return nil } // Make sure it isn't the first page
+        
         let previousIndex = abs((currentIndex - 1) % pages.count)
         return pages[previousIndex]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let currentIndex = pages.index(of: viewController)!
+        
+        guard currentIndex != self.pages.count - 1 else { return nil } // Make sure it isn't the last page
+        
         let nextIndex = abs((currentIndex + 1) % pages.count)
         return pages[nextIndex]
     }

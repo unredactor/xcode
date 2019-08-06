@@ -18,10 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="manilaFolderTexture" translatesAutoresizingMaskIntoConstraints="NO" id="68Q-XW-qD9">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="hN9-Bf-rbz">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
@@ -30,13 +26,10 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="PeV-Z8-mdL">
-                                        <rect key="frame" x="32" y="36" width="256" height="496"/>
+                                        <rect key="frame" x="32" y="56" width="256" height="496"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ScrollView" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmu-nh-2u8">
                                                 <rect key="frame" x="50" y="0.0" width="156.5" height="26"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="26" id="Zam-Ea-9Xh"/>
-                                                </constraints>
                                                 <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="26"/>
                                                 <color key="textColor" red="0.12095118613138686" green="0.12095118613138686" blue="0.12095118613138686" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -51,43 +44,39 @@
                                             </textView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="DXu-vq-Y4S" firstAttribute="leading" secondItem="PeV-Z8-mdL" secondAttribute="leading" id="5U2-mx-7Jd"/>
-                                            <constraint firstAttribute="bottom" secondItem="DXu-vq-Y4S" secondAttribute="bottom" id="DxR-Y4-fa2"/>
-                                            <constraint firstItem="DXu-vq-Y4S" firstAttribute="top" secondItem="Pmu-nh-2u8" secondAttribute="bottom" constant="16" id="J7A-VL-SQm"/>
+                                            <constraint firstItem="DXu-vq-Y4S" firstAttribute="leading" secondItem="PeV-Z8-mdL" secondAttribute="leading" id="yvK-aD-zbA"/>
                                         </constraints>
                                     </stackView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="image 2.1 (1)" translatesAutoresizingMaskIntoConstraints="NO" id="OP2-GF-LTL">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image 2.1 (1)" translatesAutoresizingMaskIntoConstraints="NO" id="OP2-GF-LTL">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="ilZ-Xy-Uss" firstAttribute="leading" secondItem="hN9-Bf-rbz" secondAttribute="leading" id="X1g-6i-EbO"/>
-                                    <constraint firstAttribute="trailing" secondItem="ilZ-Xy-Uss" secondAttribute="trailing" id="bsW-NZ-9jX"/>
-                                    <constraint firstAttribute="bottom" secondItem="ilZ-Xy-Uss" secondAttribute="bottom" constant="-36" id="cVG-mu-Y6g"/>
-                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="leading" secondItem="hN9-Bf-rbz" secondAttribute="leading" constant="32" id="i0o-rI-jTg"/>
-                                    <constraint firstAttribute="bottom" secondItem="PeV-Z8-mdL" secondAttribute="bottom" id="oym-L4-MiT"/>
-                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="centerY" secondItem="hN9-Bf-rbz" secondAttribute="centerY" id="pFN-Cl-tIr"/>
-                                    <constraint firstItem="ilZ-Xy-Uss" firstAttribute="top" secondItem="hN9-Bf-rbz" secondAttribute="top" id="uhc-ev-raY"/>
-                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="top" secondItem="hN9-Bf-rbz" secondAttribute="top" constant="36" id="xYU-sk-7V7"/>
-                                    <constraint firstAttribute="trailing" secondItem="PeV-Z8-mdL" secondAttribute="trailing" constant="32" id="xae-Mx-Yh2"/>
-                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="centerX" secondItem="hN9-Bf-rbz" secondAttribute="centerX" id="zzO-TY-gg6"/>
+                                    <constraint firstItem="ilZ-Xy-Uss" firstAttribute="leading" secondItem="OP2-GF-LTL" secondAttribute="leading" id="2NH-Ac-Uuf"/>
+                                    <constraint firstItem="OP2-GF-LTL" firstAttribute="centerX" secondItem="hN9-Bf-rbz" secondAttribute="centerX" id="2ef-rh-nWi"/>
+                                    <constraint firstAttribute="bottom" secondItem="PeV-Z8-mdL" secondAttribute="bottom" constant="16" id="4bL-AO-fso"/>
+                                    <constraint firstAttribute="bottom" secondItem="OP2-GF-LTL" secondAttribute="bottom" id="8le-ev-3a1"/>
+                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="centerX" secondItem="hN9-Bf-rbz" secondAttribute="centerX" id="9qv-83-IaO"/>
+                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="top" secondItem="hN9-Bf-rbz" secondAttribute="top" constant="56" id="AV7-sj-L0t"/>
+                                    <constraint firstItem="OP2-GF-LTL" firstAttribute="centerY" secondItem="hN9-Bf-rbz" secondAttribute="centerY" id="Ei1-uN-PiZ"/>
+                                    <constraint firstItem="ilZ-Xy-Uss" firstAttribute="centerY" secondItem="hN9-Bf-rbz" secondAttribute="centerY" id="MkA-nd-Mvx"/>
+                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="leading" secondItem="hN9-Bf-rbz" secondAttribute="leading" constant="32" id="ZXd-ux-hBm"/>
+                                    <constraint firstItem="ilZ-Xy-Uss" firstAttribute="top" secondItem="hN9-Bf-rbz" secondAttribute="top" id="h7o-VZ-Jax"/>
+                                    <constraint firstItem="OP2-GF-LTL" firstAttribute="top" secondItem="hN9-Bf-rbz" secondAttribute="top" id="r0x-s2-Tys"/>
+                                    <constraint firstItem="OP2-GF-LTL" firstAttribute="leading" secondItem="hN9-Bf-rbz" secondAttribute="leading" id="t90-40-5mi"/>
+                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="centerX" secondItem="ilZ-Xy-Uss" secondAttribute="centerX" id="tEw-Op-any"/>
+                                    <constraint firstAttribute="trailing" secondItem="OP2-GF-LTL" secondAttribute="trailing" id="xnm-eq-Rm1"/>
+                                    <constraint firstAttribute="bottom" secondItem="ilZ-Xy-Uss" secondAttribute="bottom" id="yuB-3x-jin"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="hN9-Bf-rbz" firstAttribute="top" secondItem="g0b-9M-FDb" secondAttribute="top" id="0V3-lN-5kL"/>
-                            <constraint firstItem="hN9-Bf-rbz" firstAttribute="bottom" secondItem="Xrd-Dh-Ik8" secondAttribute="bottom" id="NB3-jb-UeM"/>
-                            <constraint firstItem="hN9-Bf-rbz" firstAttribute="leading" secondItem="g0b-9M-FDb" secondAttribute="leading" id="RGf-DU-9Rg"/>
-                            <constraint firstAttribute="trailing" secondItem="hN9-Bf-rbz" secondAttribute="trailing" id="Squ-Wz-tiP"/>
+                            <constraint firstItem="hN9-Bf-rbz" firstAttribute="bottom" secondItem="Xrd-Dh-Ik8" secondAttribute="bottom" id="7sf-nZ-Up0"/>
+                            <constraint firstAttribute="trailing" secondItem="hN9-Bf-rbz" secondAttribute="trailing" id="USA-NU-wVa"/>
+                            <constraint firstItem="hN9-Bf-rbz" firstAttribute="top" secondItem="g0b-9M-FDb" secondAttribute="top" id="YIQ-7T-9wL"/>
+                            <constraint firstItem="hN9-Bf-rbz" firstAttribute="leading" secondItem="g0b-9M-FDb" secondAttribute="leading" id="fIR-fZ-iqH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xrd-Dh-Ik8"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="68Q-XW-qD9"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="scrollView" destination="hN9-Bf-rbz" id="rug-XV-PYr"/>
@@ -96,43 +85,40 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VZi-ZZ-WzC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2413" y="-162"/>
+            <point key="canvasLocation" x="-2413.125" y="-162.67605633802816"/>
         </scene>
-        <!--View Controller-->
+        <!--Container View Controller-->
         <scene sceneID="Y2O-hv-Zsr">
             <objects>
-                <viewController id="TpE-Ht-se4" sceneMemberID="viewController">
+                <viewController id="TpE-Ht-se4" customClass="ContainerViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dd0-fw-JxH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="manilaFolderTexture" highlightedImage="manilaFolderTexture" translatesAutoresizingMaskIntoConstraints="NO" id="zEi-Xj-rON">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="manilaFolderOpen copy" highlightedImage="manilaFolderTexture" translatesAutoresizingMaskIntoConstraints="NO" id="zEi-Xj-rON">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568.00000000000011"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wwa-9P-pBp">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <connections>
-                                    <segue destination="Nhn-lq-kx0" kind="embed" id="CnG-AC-uJi"/>
+                                    <segue destination="Nhn-lq-kx0" kind="embed" id="dvi-aZ-oCP"/>
                                 </connections>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Wwa-9P-pBp" firstAttribute="bottom" secondItem="GMc-9M-9VE" secondAttribute="bottom" id="25Z-Rh-95m"/>
-                            <constraint firstItem="GMc-9M-9VE" firstAttribute="bottom" secondItem="zEi-Xj-rON" secondAttribute="bottom" id="3yW-9T-D76"/>
-                            <constraint firstItem="Wwa-9P-pBp" firstAttribute="top" secondItem="Dd0-fw-JxH" secondAttribute="top" id="4Uv-dM-4AB"/>
-                            <constraint firstItem="zEi-Xj-rON" firstAttribute="top" secondItem="Dd0-fw-JxH" secondAttribute="top" id="6Ao-SL-0MY"/>
-                            <constraint firstItem="GMc-9M-9VE" firstAttribute="trailing" secondItem="Wwa-9P-pBp" secondAttribute="trailing" id="8Gu-5g-pWs"/>
-                            <constraint firstItem="Wwa-9P-pBp" firstAttribute="leading" secondItem="GMc-9M-9VE" secondAttribute="leading" id="Rx0-Qh-1wy"/>
-                            <constraint firstItem="zEi-Xj-rON" firstAttribute="leading" secondItem="GMc-9M-9VE" secondAttribute="leading" id="Wiy-e5-LsF"/>
-                            <constraint firstItem="GMc-9M-9VE" firstAttribute="trailing" secondItem="zEi-Xj-rON" secondAttribute="trailing" id="n6i-nV-fiB"/>
+                            <constraint firstItem="GMc-9M-9VE" firstAttribute="bottom" secondItem="Wwa-9P-pBp" secondAttribute="bottom" id="0v8-on-Rla"/>
+                            <constraint firstItem="Wwa-9P-pBp" firstAttribute="trailing" secondItem="GMc-9M-9VE" secondAttribute="trailing" id="NWh-MC-QCk"/>
+                            <constraint firstItem="Wwa-9P-pBp" firstAttribute="leading" secondItem="GMc-9M-9VE" secondAttribute="leading" id="c1d-DY-E7T"/>
+                            <constraint firstItem="Wwa-9P-pBp" firstAttribute="top" secondItem="Dd0-fw-JxH" secondAttribute="top" id="oHb-DQ-XSP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GMc-9M-9VE"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4kO-S0-gS0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2648" y="-1233"/>
+            <point key="canvasLocation" x="-2649.375" y="-1233.8028169014085"/>
         </scene>
         <!--UNREDACTOR-->
         <scene sceneID="tne-QT-ifu">
@@ -556,6 +542,7 @@
     </scenes>
     <resources>
         <image name="image 2.1 (1)" width="634" height="953"/>
+        <image name="manilaFolderOpen copy" width="332" height="394"/>
         <image name="manilaFolderTexture" width="602" height="816"/>
         <image name="settingsCogPNG" width="22" height="22"/>
     </resources>
