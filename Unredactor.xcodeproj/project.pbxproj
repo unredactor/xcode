@@ -12,6 +12,7 @@
 		23946B7622F2512000A69AF3 /* UIPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23946B7522F2512000A69AF3 /* UIPageViewController.swift */; };
 		23B876E222F93633006E7D16 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B876E122F93633006E7D16 /* ContainerViewController.swift */; };
 		23D4B15022F4F5D800B7C5A6 /* DocumentViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */; };
+		23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DCA83522FB4D3800AAAE4B /* TextViewController.swift */; };
 		2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */; };
 		2F7C0A5B22DCF2FC00AD2828 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */; };
 		2F7C0A5E22DCF2FC00AD2828 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5C22DCF2FC00AD2828 /* Main.storyboard */; };
@@ -53,6 +54,7 @@
 		23946B7522F2512000A69AF3 /* UIPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageViewController.swift; sourceTree = "<group>"; };
 		23B876E122F93633006E7D16 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewControllerNew.swift; sourceTree = "<group>"; };
+		23DCA83522FB4D3800AAAE4B /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5522DCF2FC00AD2828 /* Unredactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unredactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentViewController.swift; path = ../DocumentViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				23946B7522F2512000A69AF3 /* UIPageViewController.swift */,
 				23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */,
 				23B876E122F93633006E7D16 /* ContainerViewController.swift */,
+				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
 				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,
 				2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */,
 				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
@@ -339,6 +342,7 @@
 				23D4B15022F4F5D800B7C5A6 /* DocumentViewControllerNew.swift in Sources */,
 				2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */,
 				2F7C0A8922DF86BC00AD2828 /* DocumentCell.swift in Sources */,
+				23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */,
 				2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */,
 				2F7C0A8F22E0451B00AD2828 /* UnredactGestureRecognizer.swift in Sources */,
 			);

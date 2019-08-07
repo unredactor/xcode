@@ -34,18 +34,13 @@
                                                 <color key="textColor" red="0.12095118613138686" green="0.12095118613138686" blue="0.12095118613138686" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DXu-vq-Y4S">
-                                                <rect key="frame" x="0.0" y="45.5" width="256" height="450.5"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                <color key="textColor" red="0.17817632299270073" green="0.17817632299270073" blue="0.17817632299270073" alpha="1" colorSpace="calibratedRGB"/>
-                                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
+                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="evJ-M7-HVT">
+                                                <rect key="frame" x="8" y="45.5" width="240" height="450.5"/>
+                                                <connections>
+                                                    <segue destination="svi-fa-nC1" kind="embed" id="IpL-Id-3k6"/>
+                                                </connections>
+                                            </containerView>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="DXu-vq-Y4S" firstAttribute="leading" secondItem="PeV-Z8-mdL" secondAttribute="leading" id="yvK-aD-zbA"/>
-                                        </constraints>
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image 2.1 (1)" translatesAutoresizingMaskIntoConstraints="NO" id="OP2-GF-LTL">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -94,7 +89,7 @@
                     <connections>
                         <outlet property="scrollView" destination="hN9-Bf-rbz" id="rug-XV-PYr"/>
                         <outlet property="switchView" destination="cmL-1s-a4H" id="i1h-pJ-p51"/>
-                        <outlet property="textView" destination="DXu-vq-Y4S" id="Cem-OC-EPX"/>
+                        <outlet property="textView" destination="evJ-M7-HVT" id="kDv-MY-a27"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VZi-ZZ-WzC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -604,6 +599,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5W-cz-cCg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2390.625" y="280.45774647887322"/>
+        </scene>
+        <!--Text View Controller-->
+        <scene sceneID="Ji1-mT-2yw">
+            <objects>
+                <viewController id="svi-fa-nC1" customClass="TextViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MOc-sx-0mv">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="450.5"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DXu-vq-Y4S">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="450.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" red="0.17817632299270073" green="0.17817632299270073" blue="0.17817632299270073" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="DXu-vq-Y4S" secondAttribute="trailing" id="8EU-gE-ETJ"/>
+                            <constraint firstItem="DXu-vq-Y4S" firstAttribute="top" secondItem="MOc-sx-0mv" secondAttribute="top" id="9QA-bg-Bfu"/>
+                            <constraint firstItem="DXu-vq-Y4S" firstAttribute="leading" secondItem="MOc-sx-0mv" secondAttribute="leading" id="Mvi-Mn-nRm"/>
+                            <constraint firstAttribute="bottom" secondItem="DXu-vq-Y4S" secondAttribute="bottom" id="fwl-yd-Z2b"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pQD-Kr-mDm"/>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="DXu-vq-Y4S" id="qZ7-Yh-yD1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zmh-fJ-6n1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3075" y="305.8098591549296"/>
         </scene>
     </scenes>
     <resources>

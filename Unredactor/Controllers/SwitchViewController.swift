@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SwitchViewControllerDelegate {
-    func switchToggled(to state: UnredactorState)
+    func switchWasToggled(to state: UnredactorState)
 }
 
 class SwitchViewController: UIViewController {
@@ -21,7 +21,7 @@ class SwitchViewController: UIViewController {
     @IBOutlet weak var redactLabel: UILabel!
     
     private var animationDuration: TimeInterval = 0.3
-    var delegate: SwitchViewControllerDelegate!
+    var delegate: SwitchViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,9 +83,9 @@ class SwitchViewController: UIViewController {
         
         UIView.transition(with: label, duration: duration, options: .transitionCrossDissolve, animations: {
             if label == self.editLabel {
-                label.textColor = UnredactorState.edit.textColor
+                label.textColor = EditMode.edit.textColor
             } else {
-                label.textColor = UnredactorState.redact.textColor
+                label.textColor = EditMode.redact.textColor
             }
             self.removeGlowEffect(from: label, animated: false)
         }, completion: nil)
@@ -106,27 +106,7 @@ class SwitchViewController: UIViewController {
         state = state.toggled()
         updateViews(animated: true)
         
-        delegate.switchToggled(to: state)
+        delegate?.switchWasToggled(to: state)
     }
 }
 
-enum UnredactorState { // Can be either edit or redact
-    case edit, redact
-    
-    var textColor: UIColor {
-        switch self {
-        case .edit:
-            return UIColor(white: 0.54, alpha: 0.9)
-        case .redact:
-            return UIColor(white: 0.69, alpha: 0.9)
-        }
-    }
-    
-    func toggled() -> UnredactorState {
-        if self == .edit {
-            return .redact
-        } else {
-            return .edit
-        }
-    }
-}

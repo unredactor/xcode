@@ -8,19 +8,24 @@
 
 import UIKit
 
-class ScrollDocumentViewController: DocumentViewController {
+class ScrollDocumentViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
+    
+    // These are container views that connect to other view controllers, so they appear to be just plain old UIViews, although they aren't.
     @IBOutlet weak var switchView: UIView!
+    @IBOutlet weak var textView: UIView!
     
     var switchViewController: SwitchViewController!
+    var textViewController: TextViewController!
+    
     var keyboardIsShown = false // Make sure nothing weird happens
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardDidShow, object: self.view.window)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: self.view.window)
+        
         
         setupScrollView() // for now, just add a shadow to the document so it looks nice
         setupSwitchView() // also add a shadow to the switch view
@@ -102,7 +107,46 @@ class ScrollDocumentViewController: DocumentViewController {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
     
-    @objc func keyboardWillShow(_ notification: NSNotification) { // TODO: Abstract into two helper functions
+    // Nice technique for using switch let statements from https://medium.com/@superpeteblaze/ios-swift-tip-getting-references-to-container-child-view-controllers-653fe58e6f5e
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //guard segue.identifier == "embedSwitchView", let switchViewController = segue.destination as? SwitchViewController else { return }
+        
+        switch segue.destination {
+        case let switchViewController as SwitchViewController:
+            switchViewController.delegate = self
+            self.switchViewController = switchViewController
+        case let textViewController as TextViewController:
+            textViewController.delegate = self
+            self.textViewController = textViewController
+        default:
+            break
+        }
+        
+        //switchViewController.delegate = self
+    }
+}
+
+extension ScrollDocumentViewController: SwitchViewControllerDelegate {
+    func switchWasToggled(to state: EditMode) {
+        switch state {
+        case .edit:
+            setTextViewEditable()
+        case .redact:
+            setTextViewRedactable()
+        }
+    }
+    
+    private func setTextViewEditable() {
+        textViewController.setTextViewEditable()
+    }
+    
+    private func setTextViewRedactable() {
+        textViewController.setTextViewRedactable()
+    }
+}
+
+extension ScrollDocumentViewController: TextViewControllerDelegate {
+    func keyboardWillShow(_ notification: NSNotification) {
         // Make sure the keyboard isn't shown first
         guard !keyboardIsShown, let userInfo = notification.userInfo else { return }
         
@@ -128,7 +172,7 @@ class ScrollDocumentViewController: DocumentViewController {
         keyboardIsShown = true
     }
     
-    @objc func keyboardWillHide(_ notification: NSNotification) {
+    func keyboardWillHide(_ notification: NSNotification) {
         // Make sure the keyboard is already shown
         guard keyboardIsShown, let userInfo = notification.userInfo else { return }
         
@@ -152,40 +196,4 @@ class ScrollDocumentViewController: DocumentViewController {
         
         keyboardIsShown = false
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "embedSwitchView" else { return }
-        
-        switchViewController = segue.destination as? SwitchViewController
-        
-        switchViewController.delegate = self
-    }
-}
-
-extension ScrollDocumentViewController: SwitchViewControllerDelegate {
-    func switchToggled(to state: UnredactorState) {
-        switch state {
-        case .edit:
-            setTextViewEditable()
-        case .redact:
-            setTextViewRedactable()
-        }
-    }
-    
-    private func setTextViewEditable() {
-        textView.isEditable = true
-        
-        // Turn off redaction detection
-    }
-    
-    private func setTextViewRedactable() {
-        textView.isEditable = false
-        
-        // Turn on redaction detection
-    }
-    
-    //private func
-    
-    // func to make textView editable
-    // func to make textView redactable
 }

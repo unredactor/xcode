@@ -52,6 +52,12 @@ class Document {
      // This might be the text turned into a sequence of classified strings
     // TODO: Make sure that classifiedText is updated every time text is updated
     
+    var state: RedactionState { 
+        if isNotRedacted { return .notRedacted }
+        else if isRedacted { return .redacted }
+        else { return .unredacted }
+    }
+    
     
     
     let unredactor: Unredactor

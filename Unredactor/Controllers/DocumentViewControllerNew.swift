@@ -51,7 +51,7 @@ extension DocumentViewController: UITextViewDelegate {
         self.document.setText(to: textView.text!)
     }
     
-    // From: https://stackoverflow.com/questions/27652227/text-view-uitextview-placeholder-swift
+    
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Combine the textView text and the replacement text to
