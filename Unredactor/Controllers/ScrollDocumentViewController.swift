@@ -11,7 +11,9 @@ import UIKit
 class ScrollDocumentViewController: DocumentViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var switchView: UIView!
     
+    var switchViewController: SwitchViewController!
     var keyboardIsShown = false // Make sure nothing weird happens
     
     override func viewWillAppear(_ animated: Bool) {
@@ -21,6 +23,7 @@ class ScrollDocumentViewController: DocumentViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: self.view.window)
         
         setupScrollView() // for now, just add a shadow to the document so it looks nice
+        setupSwitchView() // also add a shadow to the switch view
     }
     
     private func setupScrollView() {
@@ -30,11 +33,62 @@ class ScrollDocumentViewController: DocumentViewController {
         }
         
         // Add a drop shadow to it
-        backgroundView.layer.shadowColor = UIColor.black.cgColor
-        backgroundView.layer.shadowOpacity = 0.3
-        backgroundView.layer.shadowOffset = .zero
-        backgroundView.layer.shadowRadius = 10
-        backgroundView.layer.shouldRasterize = true
+        addShadow(to: backgroundView)
+    }
+    
+    private func setupSwitchView() {
+        addShadow(to: switchView)
+    }
+    
+    private func addShadow(to view: UIView) {
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.3
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 10
+        view.layer.shouldRasterize = true
+        view.layer.rasterizationScale = UIScreen.main.scale
+    }
+    
+    private func dismissSwitchView() {
+        guard switchView.center.y < self.view.frame.maxY else {
+            print("Didn't dismiss switch view because view was already dismissed")
+            return
+        }
+        
+        // Animate switch view down (back to normal position)
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
+            let centerMovedDown = CGPoint(x: self.switchView.center.x, y: self.switchView.center.y + self.switchView.frame.height)
+            self.switchView.center = centerMovedDown
+        }, completion: { (bool) in
+            
+        })
+    }
+    
+    private func showSwitchView() {
+        guard switchView.center.y > self.view.frame.maxY else {
+            print("Didn't show switch view because view was already shown")
+            return
+        }
+        
+        // Animate switch view up
+        //let moveUpTransform: CGAffineTransform = CGAffineTransform(translationX: 0, y: 60)
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
+            self.switchView.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -1 * self.switchView.frame.height).isActive = true
+        }, completion: { (bool) in
+            
+        })
+    }
+    
+    
+    // We can do this function and have it work because the parent class is a UITextViewDelegate
+    func textViewDidChange(_ textView: UITextView) {
+        let text: String = textView.text
+        
+        if text.isEmpty {
+            dismissSwitchView()
+        } else {
+            showSwitchView()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -99,15 +153,39 @@ class ScrollDocumentViewController: DocumentViewController {
         keyboardIsShown = false
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        guard segue.identifier == "embedSwitchView" else { return }
+        
+        switchViewController = segue.destination as? SwitchViewController
+        
+        switchViewController.delegate = self
     }
-    */
+}
 
+extension ScrollDocumentViewController: SwitchViewControllerDelegate {
+    func switchToggled(to state: UnredactorState) {
+        switch state {
+        case .edit:
+            setTextViewEditable()
+        case .redact:
+            setTextViewRedactable()
+        }
+    }
+    
+    private func setTextViewEditable() {
+        textView.isEditable = true
+        
+        // Turn off redaction detection
+    }
+    
+    private func setTextViewRedactable() {
+        textView.isEditable = false
+        
+        // Turn on redaction detection
+    }
+    
+    //private func
+    
+    // func to make textView editable
+    // func to make textView redactable
 }

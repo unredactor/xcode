@@ -5,14 +5,14 @@
 //  Created by tyler on 7/15/19.
 //  Copyright © 2019 tyler. All rights reserved.
 //
-/*
+
 import UIKit
 import Foundation
 
 
 class DocumentTableViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var textView: UITextView!
+    //@IBOutlet weak var textView: UITextView!
     
     // MARK: - IBOutlets
     @IBOutlet weak var textField: UITextField!
@@ -214,4 +214,4 @@ extension DocumentTableViewController: UITableViewDataSource {
         return 44.0
     }
 }
-*/
+
