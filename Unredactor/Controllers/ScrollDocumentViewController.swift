@@ -21,12 +21,11 @@ class ScrollDocumentViewController: UIViewController {
     
     var keyboardIsShown = false // Make sure nothing weird happens
     
+    let unredactor = Unredactor()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        
-        
         setupScrollView() // for now, just add a shadow to the document so it looks nice
         setupSwitchView() // also add a shadow to the switch view
     }
@@ -84,18 +83,6 @@ class ScrollDocumentViewController: UIViewController {
         })
     }
     
-    
-    // We can do this function and have it work because the parent class is a UITextViewDelegate
-    func textViewDidChange(_ textView: UITextView) {
-        let text: String = textView.text
-        
-        if text.isEmpty {
-            dismissSwitchView()
-        } else {
-            showSwitchView()
-        }
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
@@ -118,6 +105,7 @@ class ScrollDocumentViewController: UIViewController {
         case let textViewController as TextViewController:
             textViewController.delegate = self
             self.textViewController = textViewController
+            self.textViewController.document = Document(withText: "", unredactor: unredactor)
         default:
             break
         }
@@ -195,5 +183,17 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         scrollView.scrollIndicatorInsets = .zero
         
         keyboardIsShown = false
+    }
+    
+    func textViewDidBecomeEmpty() {
+        dismissSwitchView()
+    }
+    
+    func textViewDidBecomeNotEmpty() {
+        showSwitchView()
+    }
+    
+    func documentStateSwitched(to state: RedactionState) {
+        
     }
 }

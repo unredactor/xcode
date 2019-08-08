@@ -10,7 +10,7 @@ import UIKit
 
 
 // Manages the top level of views, including the background, the file menu, and the pageViewController
-class ContainerViewController: UIViewController {
+class FolderViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return true

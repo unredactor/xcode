@@ -9,12 +9,12 @@
 import UIKit
 
 protocol SwitchViewControllerDelegate {
-    func switchWasToggled(to state: UnredactorState)
+    func switchWasToggled(to state: EditMode)
 }
 
 class SwitchViewController: UIViewController {
     
-    var state: UnredactorState = .edit
+    var state: EditMode = .edit
     @IBOutlet weak var stateSwitch: UISwitch!
     
     @IBOutlet weak var editLabel: UILabel!

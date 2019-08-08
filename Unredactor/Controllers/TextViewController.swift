@@ -27,7 +27,7 @@ class TextViewController: UIViewController {
     
     @IBOutlet weak var textView: UITextView!
     
-    fileprivate let placeholderText = "Enter redacted text here..."
+    fileprivate let placeholderText = "Enter text here..."
     
     var delegate: TextViewControllerDelegate?
     var document: Document!
@@ -38,10 +38,14 @@ class TextViewController: UIViewController {
         super.viewDidLoad()
         
         textView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupTextView()
+        setupTapGestureRecognizer()
+        addObservers()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardDidShow, object: self.view.window)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: self.view.window)
-        // Do any additional setup after loading the view.
+        configureTextView(withDocument: document)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -77,11 +81,13 @@ class TextViewController: UIViewController {
     }
     
     func setTextViewEditable() {
+        print("Text view set to be editable")
         textView.isEditable = true
         editMode = .edit
     }
     
     func setTextViewRedactable() {
+        print("Text view set to be redactable")
         textView.isEditable = false
         editMode = .redact
     }
@@ -112,13 +118,26 @@ extension TextViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Combine the textView text and the replacement text to
         // Create the updated text tring
-        let currentText: String = textView.text
+        var currentText: String = ""
+        
+        if textView.text.isEmpty {
+            currentText = textView.attributedText.string
+        } else {
+            currentText = textView.text
+        }
+        
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
         // If updated text view will be empty, add the placeholder
         // and set the cursor to the beginning of the text view
+        
+        
         if updatedText.isEmpty {
+            textView.text = placeholderText
+            textView.textColor = .lightGray
+            
             selectBeginningOfTextView()
+            document.setText(to: "")
         }
             
             // Else if the text view's placeholder is showing
@@ -126,13 +145,15 @@ extension TextViewController: UITextViewDelegate {
             // set the text color to black and then set its text to the replacement string
         else if textView.textColor == .lightGray && !text.isEmpty {
             textView.textColor = .black
-            textView.text = text
-        }
+            print("Replacement Text: \(text)")
+            document.setText(to: text)
+            textView.attributedText = document.attributedText
+            textView.font = document.font
+        } else {
+            document.setText(to: updatedText)
             
-            // For every other case, the text should change with the usual
-            // behavior...
-        else {
             return true
+            //print(textView.font)
         }
         
         // ...otherwise return false since the updates have
@@ -153,14 +174,18 @@ extension TextViewController: UIGestureRecognizerDelegate {
     @objc func textViewTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         guard editMode == .redact else { return }
         
-        let characterIndexTapped = gestureRecognizer.characterIndexTapped()
+        print("\(document.classifiedText.rawText)")
+        
+        let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document)
         
         let previousDocumentState: RedactionState = document.state
         
         // Make the tapped word toggle between redacted and unredacted
         document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState()
+        print("\(document.classifiedText.rawText)")
         
         textView.attributedText = document.attributedText
+        textView.font = document.font
         
         if document.state != previousDocumentState { // If document state changed
             delegate?.documentStateSwitched(to: document.state)
@@ -179,16 +204,23 @@ extension TextViewController: UIGestureRecognizerDelegate {
 // MARK: - Helper methods
 // (that you don't need to know about)
 fileprivate extension TextViewController {
-    func configureTextView(withDocument document: Document) {
-        textView.attributedText = document.attributedText
-        
-        selectBeginningOfTextView()
-        textView.becomeFirstResponder()
+    
+    func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardDidShow, object: self.view.window)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: self.view.window)
     }
     
     func removeObservers() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+    }
+    
+    func configureTextView(withDocument document: Document) {
+        textView.attributedText = document.attributedText
+        textView.font = document.font
+        
+        selectBeginningOfTextView()
+        textView.becomeFirstResponder()
     }
     
     func setupTapGestureRecognizer() {
@@ -201,6 +233,12 @@ fileprivate extension TextViewController {
         textView.text = placeholderText
         textView.textColor = .lightGray
         textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+    }
+    
+    func setupTextView() {
+        setTextViewEditable()
+        selectBeginningOfTextView()
+        textView.becomeFirstResponder()
     }
 }
 

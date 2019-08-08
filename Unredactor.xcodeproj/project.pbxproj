@@ -10,7 +10,7 @@
 		2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2377E07C22FA01370021C277 /* SwitchViewController.swift */; };
 		2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */; };
 		23946B7622F2512000A69AF3 /* UIPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23946B7522F2512000A69AF3 /* UIPageViewController.swift */; };
-		23B876E222F93633006E7D16 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B876E122F93633006E7D16 /* ContainerViewController.swift */; };
+		23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B876E122F93633006E7D16 /* FolderViewController.swift */; };
 		23D4B15022F4F5D800B7C5A6 /* DocumentViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */; };
 		23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DCA83522FB4D3800AAAE4B /* TextViewController.swift */; };
 		2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */; };
@@ -52,12 +52,12 @@
 		2377E07C22FA01370021C277 /* SwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchViewController.swift; sourceTree = "<group>"; };
 		2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDocumentViewController.swift; sourceTree = "<group>"; };
 		23946B7522F2512000A69AF3 /* UIPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageViewController.swift; sourceTree = "<group>"; };
-		23B876E122F93633006E7D16 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		23B876E122F93633006E7D16 /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
 		23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewControllerNew.swift; sourceTree = "<group>"; };
 		23DCA83522FB4D3800AAAE4B /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5522DCF2FC00AD2828 /* Unredactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unredactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentViewController.swift; path = ../DocumentViewController.swift; sourceTree = "<group>"; };
+		2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5D22DCF2FC00AD2828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2F7C0A5F22DCF2FC00AD2828 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F7C0A6222DCF2FC00AD2828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -104,18 +104,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		237C08A022FB95C800DE3379 /* Old Stuff (Unused) */ = {
+			isa = PBXGroup;
+			children = (
+				2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */,
+				2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */,
+			);
+			path = "Old Stuff (Unused)";
+			sourceTree = "<group>";
+		};
 		23946B7722F3AFD300A69AF3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				23946B7522F2512000A69AF3 /* UIPageViewController.swift */,
 				23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */,
-				23B876E122F93633006E7D16 /* ContainerViewController.swift */,
+				23B876E122F93633006E7D16 /* FolderViewController.swift */,
 				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
 				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,
-				2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */,
 				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
 				2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */,
-				2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -168,6 +175,7 @@
 				23946B7722F3AFD300A69AF3 /* Controllers */,
 				23946B7822F3B04200A69AF3 /* Model */,
 				23946B7922F3B05800A69AF3 /* Extensions */,
+				237C08A022FB95C800DE3379 /* Old Stuff (Unused) */,
 				2F7C0A5C22DCF2FC00AD2828 /* Main.storyboard */,
 				2F7C0A5F22DCF2FC00AD2828 /* Assets.xcassets */,
 				2F7C0A6122DCF2FC00AD2828 /* LaunchScreen.storyboard */,
@@ -336,7 +344,7 @@
 				2F7C0A9322E0D8DE00AD2828 /* ClassifiedText.swift in Sources */,
 				2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */,
 				2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */,
-				23B876E222F93633006E7D16 /* ContainerViewController.swift in Sources */,
+				23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */,
 				2F7C0A9722E5A34B00AD2828 /* Array+Helpers.swift in Sources */,
 				23946B7622F2512000A69AF3 /* UIPageViewController.swift in Sources */,
 				23D4B15022F4F5D800B7C5A6 /* DocumentViewControllerNew.swift in Sources */,

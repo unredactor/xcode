@@ -88,7 +88,7 @@ class DocumentCell: UITableViewCell {
             return
         }
         
-        let characterIndexTapped = gestureRecognizer.characterIndexTapped()
+        let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document)
         
         // Make the tapped word redact or unredact (literally, not with the model)
         document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState() // Goes back and forth between .notRedacted and .isRedacted or .notRedacted and .unredacted

@@ -14,11 +14,19 @@ class Document {
     // MARK: - Properties
     var classifiedText: ClassifiedText // Base text that was entered is accessible through classifiedText.rawText
     //var redactedText: String? // Text where redacted words are replaced with unk. This is likely what would be sent to the API
+    
+    var font = UIFont(name: "CourierNewPS-BoldMT", size: 17)!
+    
     var attributedText: NSAttributedString { // Text that is used by the DocumentCell to display black bars. Needs to remember the length of redacted words (so it looks nicer)
-        let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: "")
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font
+        ]
+        
+        let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: "")//, attributes: attributes)
         let attributedSpace = NSMutableAttributedString(string: " ")
         
-        attributedText.addAttributes([.font: UIFont.systemFont(ofSize: 14)], range: NSMakeRange(0, attributedText.string.count)) // Sets the font of the attributed text
+        //attributedText.addAttributes([.font: font], range: NSMakeRange(0, attributedText.string.count)) // Sets the font of the attributed text
+        //attributedText.addAttribute(.font, value: font, range: NSMakeRange(0, attributedText.string.count))
         
         for word in classifiedText.words {
             let string = word.redactionState == .unredacted ? word.unredactorPrediction! : word.string
@@ -34,6 +42,8 @@ class Document {
             attributedText.append(attributedSpace)
             attributedText.append(attributedWord)
         }
+        
+        attributedText.addAttribute(.font, value: font, range: NSMakeRange(0, attributedText.string.count))
  
     
         
