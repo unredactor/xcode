@@ -18,9 +18,6 @@ class Document {
     var font = UIFont(name: "CourierNewPS-BoldMT", size: 17)!
     
     var attributedText: NSAttributedString { // Text that is used by the DocumentCell to display black bars. Needs to remember the length of redacted words (so it looks nicer)
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font
-        ]
         
         let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: "")//, attributes: attributes)
         let attributedSpace = NSMutableAttributedString(string: " ")
@@ -44,7 +41,11 @@ class Document {
         }
         
         attributedText.addAttribute(.font, value: font, range: NSMakeRange(0, attributedText.string.count))
- 
+        
+        // Since a space is added before every word, we need to get rid of the initial space
+        if !attributedText.string.isEmpty {
+            attributedText.deleteCharacters(in: NSRange(location: 0, length: 1))
+        }
     
         
         return attributedText
