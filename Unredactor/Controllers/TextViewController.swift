@@ -172,23 +172,35 @@ extension TextViewController: UITextViewDelegate {
 
 extension TextViewController: UIGestureRecognizerDelegate {
     @objc func textViewTapped(_ gestureRecognizer: UITapGestureRecognizer) {
-        guard editMode == .redact else { return }
+        guard editMode == .redact else {
+            // EditMode must be edit, so let's start editing
+            textView.becomeFirstResponder()
+            
+            return
+        }
         
-        print("\(document.classifiedText.rawText)")
+        //print("\(document.classifiedText.rawText)")
         
         let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document)
         
-        let previousDocumentState: RedactionState = document.state
+        if editMode == .redact {
+            let previousDocumentState: RedactionState = document.state
         
-        // Make the tapped word toggle between redacted and unredacted
-        document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState()
-        print("\(document.classifiedText.rawText)")
+            // Make the tapped word toggle between redacted and unredacted
+            document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState()
+            print("\(document.classifiedText.rawText)")
         
-        textView.attributedText = document.attributedText
-        textView.font = document.font
+            textView.attributedText = document.attributedText
+            textView.font = document.font
         
-        if document.state != previousDocumentState { // If document state changed
-            delegate?.documentStateSwitched(to: document.state)
+            if document.state != previousDocumentState { // If document state changed
+                delegate?.documentStateSwitched(to: document.state)
+            }
+        } else if editMode == .edit {
+            textView.becomeFirstResponder()
+            
+            let selectedPosition = textView.position(from: textView.beginningOfDocument, offset: characterIndexTapped) ?? textView.endOfDocument
+            textView.selectedTextRange = textView.textRange(from: selectedPosition, to: selectedPosition)
         }
     }
     
