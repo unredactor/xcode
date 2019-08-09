@@ -23,8 +23,8 @@ class SwitchViewController: UIViewController {
     private var animationDuration: TimeInterval = 0.3
     var delegate: SwitchViewControllerDelegate?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
         // Do any additional setup after loading the view.
         

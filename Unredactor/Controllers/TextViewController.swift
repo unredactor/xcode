@@ -80,10 +80,27 @@ class TextViewController: UIViewController {
         }
     }
     
+    func setTextView(toEditMode editMode: EditMode) {
+        switch editMode {
+        case .edit:
+            setTextViewEditable()
+            if textView.textColor == .lightGray {
+                selectBeginningOfTextView()
+            } else {
+                selectEndOfTextView()
+            }
+            textView.becomeFirstResponder()
+        case .redact:
+            setTextViewRedactable()
+            textView.resignFirstResponder()
+        }
+    }
+    
     func setTextViewEditable() {
         print("Text view set to be editable")
         textView.isEditable = true
         editMode = .edit
+        textView.becomeFirstResponder()
     }
     
     func setTextViewRedactable() {
@@ -104,8 +121,9 @@ extension TextViewController: UITextViewDelegate {
         self.document.setText(to: textView.text)
     }
     
+    /*
     func textViewDidChange(_ textView: UITextView) {
-        let text: String = textView.text
+        let text: String = textView.attributedText.string
         
         if text.isEmpty {
             delegate?.textViewDidBecomeEmpty()
@@ -113,11 +131,15 @@ extension TextViewController: UITextViewDelegate {
             delegate?.textViewDidBecomeNotEmpty()
         }
     }
+ */
     
     // From: https://stackoverflow.com/questions/27652227/text-view-uitextview-placeholder-swift
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Combine the textView text and the replacement text to
-        // Create the updated text tring
+        // Create the updated text string
+        
+        
+        
         var currentText: String = ""
         
         if textView.text.isEmpty {
@@ -138,6 +160,11 @@ extension TextViewController: UITextViewDelegate {
             
             selectBeginningOfTextView()
             document.setText(to: "")
+            delegate?.textViewDidBecomeEmpty()
+        }
+            
+        if currentText.isEmpty && !updatedText.isEmpty {
+            delegate?.textViewDidBecomeNotEmpty()
         }
             
             // Else if the text view's placeholder is showing
@@ -242,15 +269,18 @@ fileprivate extension TextViewController {
     }
     
     func selectBeginningOfTextView() { // Make it select the very start of the text view, "ignoring" the placeholder text
+        textView.attributedText = NSAttributedString(string: "")
         textView.text = placeholderText
         textView.textColor = .lightGray
         textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
     }
     
+    func selectEndOfTextView() {
+        textView.selectedTextRange = textView.textRange(from: textView.endOfDocument, to: textView.endOfDocument)
+    }
+    
     func setupTextView() {
-        setTextViewEditable()
-        selectBeginningOfTextView()
-        textView.becomeFirstResponder()
+        setTextView(toEditMode: editMode)
     }
 }
 

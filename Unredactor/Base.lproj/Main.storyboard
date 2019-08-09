@@ -102,10 +102,10 @@
             </objects>
             <point key="canvasLocation" x="-2409.375" y="-363.38028169014086"/>
         </scene>
-        <!--Container View Controller-->
+        <!--View Controller-->
         <scene sceneID="Y2O-hv-Zsr">
             <objects>
-                <viewController id="TpE-Ht-se4" customClass="ContainerViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="TpE-Ht-se4" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dd0-fw-JxH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -567,21 +567,19 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBA-na-1RR">
-                                <rect key="frame" x="16" y="19" width="46" height="22"/>
+                                <rect key="frame" x="16" y="0.0" width="46" height="60"/>
                                 <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="19"/>
                                 <color key="textColor" red="0.62813640510948909" green="0.62813640510948909" blue="0.62813640510948909" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Redact" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TG8-q6-PW0">
-                                <rect key="frame" x="235" y="20" width="69" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redact" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TG8-q6-PW0">
+                                <rect key="frame" x="235" y="0.0" width="69" height="60"/>
                                 <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="19"/>
                                 <color key="textColor" red="0.74409785583941601" green="0.74409785583941601" blue="0.74409785583941601" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ohW-J3-V6O">
-                                <rect key="frame" x="136" y="19" width="49" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ohW-J3-V6O">
+                                <rect key="frame" x="135.5" y="14.5" width="51" height="31"/>
                                 <color key="onTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="toggleSwitch:" destination="H4q-JR-BWU" eventType="valueChanged" id="qsO-He-dlW"/>
@@ -590,9 +588,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="bottomMargin" secondItem="oBA-na-1RR" secondAttribute="bottom" constant="19" id="GDR-Uh-fur"/>
-                            <constraint firstItem="oBA-na-1RR" firstAttribute="top" secondItem="a8f-gZ-aKo" secondAttribute="topMargin" constant="19" id="SxJ-5d-11l"/>
+                            <constraint firstItem="TG8-q6-PW0" firstAttribute="centerY" secondItem="a8f-gZ-aKo" secondAttribute="centerY" id="3Cs-iG-cIs"/>
+                            <constraint firstItem="X9T-Uo-6h2" firstAttribute="trailing" secondItem="TG8-q6-PW0" secondAttribute="trailing" constant="16" id="FM6-zH-nPn"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="oBA-na-1RR" secondAttribute="bottom" id="GDR-Uh-fur"/>
+                            <constraint firstItem="ohW-J3-V6O" firstAttribute="centerX" secondItem="a8f-gZ-aKo" secondAttribute="centerX" id="MiI-af-IBJ"/>
+                            <constraint firstItem="oBA-na-1RR" firstAttribute="top" secondItem="a8f-gZ-aKo" secondAttribute="topMargin" id="SxJ-5d-11l"/>
                             <constraint firstItem="oBA-na-1RR" firstAttribute="leading" secondItem="a8f-gZ-aKo" secondAttribute="leadingMargin" id="Xh6-5s-RBj"/>
+                            <constraint firstItem="X9T-Uo-6h2" firstAttribute="bottom" secondItem="TG8-q6-PW0" secondAttribute="bottom" id="YY2-cX-fZ3"/>
+                            <constraint firstItem="ohW-J3-V6O" firstAttribute="centerY" secondItem="a8f-gZ-aKo" secondAttribute="centerY" id="cfi-Sg-uKW"/>
+                            <constraint firstItem="TG8-q6-PW0" firstAttribute="top" secondItem="X9T-Uo-6h2" secondAttribute="top" id="eWn-lm-Dde"/>
+                            <constraint firstItem="oBA-na-1RR" firstAttribute="centerY" secondItem="a8f-gZ-aKo" secondAttribute="centerY" id="fRi-cH-bYb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="X9T-Uo-6h2"/>
                     </view>

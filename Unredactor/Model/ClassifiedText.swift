@@ -114,7 +114,10 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
  
     
     static func classifiedWordsFromText(_ text: String) -> [ClassifiedString] {
-        let wordSubstrings = text.split(separator: " ")
+        //let wordSubstrings = text.split(whereSeparator: { ($0 == " " || $0.isNewLine) }) // split by both spaces and line breaks
+        let wordSubstrings = text.split { (separator) -> Bool in
+            return separator == " " || separator.isNewline
+        }
         let words = wordSubstrings.map { String($0) }
         let classifiedWords = words.map { ClassifiedString($0) }
         

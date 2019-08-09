@@ -34,14 +34,14 @@ extension UITapGestureRecognizer {
         //textContainer.lineFragmentPadding = 7
         //textContainer.lineBreakMode = label.lineBreakMode
         //textContainer.maximumNumberOfLines = label.numberOfLines
-        let textViewSize = textView.bounds.size
+        //let textViewSize = textView.bounds.size
         //let textRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: 0, length: label.text!.count), in: textContainer)
         
         textContainer.size = CGSize(width: textView.frame.size.width, height: textView.frame.size.height) //Add 200 to make it arbitrarily high
         
         // Find the tapped character location and compare it to the specified range
         let locationOfTouchInTextView = self.location(in: textView)
-        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+        //let textBoundingBox = layoutManager.usedRect(for: textContainer)
         //let textContainerOffset = CGPoint(x: 0, y: (textViewSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
         
         let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInTextView.x,
