@@ -53,7 +53,7 @@
 		2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDocumentViewController.swift; sourceTree = "<group>"; };
 		23946B7522F2512000A69AF3 /* UIPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageViewController.swift; sourceTree = "<group>"; };
 		23B876E122F93633006E7D16 /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
-		23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewControllerNew.swift; sourceTree = "<group>"; };
+		23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentViewControllerNew.swift; path = ../Controllers/DocumentViewControllerNew.swift; sourceTree = "<group>"; };
 		23DCA83522FB4D3800AAAE4B /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5522DCF2FC00AD2828 /* Unredactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unredactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +107,7 @@
 		237C08A022FB95C800DE3379 /* Old Stuff (Unused) */ = {
 			isa = PBXGroup;
 			children = (
+				23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */,
 				2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */,
 				2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */,
 			);
@@ -117,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				23946B7522F2512000A69AF3 /* UIPageViewController.swift */,
-				23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */,
 				23B876E122F93633006E7D16 /* FolderViewController.swift */,
 				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
 				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,

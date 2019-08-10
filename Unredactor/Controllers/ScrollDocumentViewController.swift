@@ -25,22 +25,26 @@ class ScrollDocumentViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         setupScrollView() // for now, just add a shadow to the document so it looks nice.
-        setupSwitchView() // also add a shadow to the switch view
+        setupSwitchView() // also add a shadow to the switch view and dismiss the switch view
+        
         setupTextView() // align text view behavior with switch behavior
         
-        // Make switch view stick to top of keyboard
+        
         if let textView = textView.subviews.first?.subviews.first as? UITextView {
             //textViewController.removeFromParentViewController()
             //textView.inputView?.removeFromSuperview()
             //self.view.addSubview(switchView)
+            dismissSwitchView(isAnimated: false)
+            
             textView.inputAccessoryView = switchView
             switchView.removeFromSuperview()
             //self.addChildViewController(textView.inputAccessoryViewController!)
         } else {
             print("ERROR: Failed to find textView in view hierarchy. Look at ScrollDocumentViewController.viewWillAppear(_:) to fix the access route.")
         } // TODO: some sort of test for this cause this is gonna break if I change anything about textViewController in code or storyboard
+        // Make switch view stick to top of keyboard
     }
     
     // From https://stackoverflow.com/questions/10768659/leaving-inputaccessoryview-visible-after-keyboard-is-dismissed
@@ -63,12 +67,16 @@ class ScrollDocumentViewController: UIViewController {
     
     private func setupSwitchView() {
         addShadow(to: switchView)
-        
-        switchViewController.updateSwitch
+        switchViewController.viewWillAppear(true)
+        //switchViewController.viewWillAppear(true)
+        //switchViewController.disableSwitch()
+        //dismissSwitchView(isAnimated: false)
+        //switchViewController.
         //switchViewCont
     }
     
     private func setupTextView() {
+        print(switchViewController.state)
         textViewController.setTextView(toEditMode: switchViewController.state)
     }
     
@@ -81,35 +89,31 @@ class ScrollDocumentViewController: UIViewController {
         view.layer.rasterizationScale = UIScreen.main.scale
     }
     
-    private func dismissSwitchView() {
-        guard switchView.center.y < self.view.frame.maxY else {
-            print("Didn't dismiss switch view because view was already dismissed")
-            return
-        }
+    private func dismissSwitchView(isAnimated: Bool = true) {
+        let duration = isAnimated ? 0.3 : 0.0
         
+        let downTransform: CGAffineTransform = CGAffineTransform(translationX: 0, y: switchView.frame.height)
         
         
         // Animate switch view down (back to normal position)
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
-            let centerMovedDown = CGPoint(x: self.switchView.center.x, y: self.switchView.center.y + self.switchView.frame.height)
-            self.switchView.center = centerMovedDown
+        UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: {
+            self.switchView.transform = downTransform
         }, completion: { (bool) in
-            
+            print("something")
         })
     }
     
-    private func showSwitchView() {
-        guard switchView.center.y > self.view.frame.maxY else {
-            print("Didn't show switch view because view was already shown")
-            return
-        }
+    private func showSwitchView(isAnimated: Bool = true) {
+        let duration = isAnimated ? 0.3 : 0.0
+
+        let identityTransform: CGAffineTransform = .identity
         
         // Animate switch view up
         //let moveUpTransform: CGAffineTransform = CGAffineTransform(translationX: 0, y: 60)
-        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut, animations: {
-            self.switchView.topAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -1 * self.switchView.frame.height).isActive = true
+        UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: {
+            self.switchView.transform = identityTransform
         }, completion: { (bool) in
-            
+            print("something")
         })
     }
     
@@ -132,10 +136,13 @@ class ScrollDocumentViewController: UIViewController {
         case let switchViewController as SwitchViewController:
             switchViewController.delegate = self
             self.switchViewController = switchViewController
+            //addChildViewController(switchViewController)
+            //switchViewController.didMove(toParentViewController: self)
         case let textViewController as TextViewController:
             textViewController.delegate = self
             self.textViewController = textViewController
             self.textViewController.document = Document(withText: "", unredactor: unredactor)
+            //textViewController.viewWillAppear(true)
         default:
             break
         }
@@ -165,16 +172,21 @@ extension ScrollDocumentViewController: SwitchViewControllerDelegate {
 
 extension ScrollDocumentViewController: TextViewControllerDelegate {
     func keyboardWillShow(_ notification: NSNotification) {
+        print("TextView text: \(textViewController.textView.text)")
         // Make sure the keyboard isn't shown first
-        guard !keyboardIsShown, let userInfo = notification.userInfo else { return }
+            guard !keyboardIsShown, let userInfo = notification.userInfo else { return }
         
         // get the size of the keboard
         let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as! CGRect
         let keyboardSize = keyboardRect.size
+        print("Keyboard Size: \(keyboardRect.size)")
         
         // resize the scrollView
         var viewFrame: CGRect = self.scrollView.frame
-        viewFrame.size.height -= keyboardSize.height // subtract the height of the keyboard (when the keyboard is shown, we have less space to display stuff)
+        viewFrame.size.height -= keyboardSize.height + switchView.frame.height // subtract the height of the keyboard (when the keyboard is shown, we have less space to display stuff)
+        
+        // Account for switchView:
+        
         
         // move the switchView
         //var switchViewFrame: CGRect = self.switchView.frame
@@ -206,7 +218,7 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         // resize the scrollView
         var viewFrame: CGRect = self.scrollView.frame
         // Account for the height of the keyboard
-        viewFrame.size.height += keyboardSize.height
+        viewFrame.size.height += keyboardSize.height + switchView.frame.height
         
        // Move the switchview
         //var switchViewFrame: CGRect = self.switchView.frame
@@ -214,7 +226,8 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        self.scrollView.frame = viewFrame
+        //self.scrollView.frame = viewFrame
+        self.scrollView.frame = self.view.frame
         //self.switchView.frame = switchViewFrame
         UIView.commitAnimations()
         
@@ -227,10 +240,12 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
     
     func textViewDidBecomeEmpty() {
         dismissSwitchView()
+        //switchViewController.disableSwitch()
     }
     
     func textViewDidBecomeNotEmpty() {
         showSwitchView()
+        //switchViewController.enableSwitch()
     }
     
     func documentStateSwitched(to state: RedactionState) {

@@ -585,6 +585,20 @@
                                     <action selector="toggleSwitch:" destination="H4q-JR-BWU" eventType="valueChanged" id="qsO-He-dlW"/>
                                 </connections>
                             </switch>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8YO-cL-MO7">
+                                <rect key="frame" x="219" y="0.0" width="101" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="redactButtonPressed:" destination="H4q-JR-BWU" eventType="touchUpInside" id="PE3-1t-1Df"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OCO-Kk-6qY">
+                                <rect key="frame" x="0.0" y="0.0" width="101" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="editButtonPressed:" destination="H4q-JR-BWU" eventType="touchUpInside" id="PLR-hO-e0G"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -609,7 +623,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5W-cz-cCg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2390.625" y="280.45774647887322"/>
+            <point key="canvasLocation" x="-2390.625" y="279.92957746478874"/>
         </scene>
         <!--Text View Controller-->
         <scene sceneID="Ji1-mT-2yw">

@@ -37,15 +37,18 @@ class TextViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureTextView(withDocument: document)
+        
+        if textView.text.isEmpty {
+            setTextToPlaceholderText()
+        }
+        
         textView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setupTextView()
         setupTapGestureRecognizer()
         addObservers()
-        
-        configureTextView(withDocument: document)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -83,13 +86,16 @@ class TextViewController: UIViewController {
     func setTextView(toEditMode editMode: EditMode) {
         switch editMode {
         case .edit:
-            setTextViewEditable()
+            print("TextView text: \(textView.text)")
             if textView.textColor == .lightGray {
+                selectBeginningOfTextView()
+            } else if textView.text.isEmpty || textView.text == nil {
+                setTextToPlaceholderText()
                 selectBeginningOfTextView()
             } else {
                 selectEndOfTextView()
             }
-            textView.becomeFirstResponder()
+            setTextViewEditable()
         case .redact:
             setTextViewRedactable()
             textView.resignFirstResponder()
@@ -101,6 +107,7 @@ class TextViewController: UIViewController {
         textView.isEditable = true
         editMode = .edit
         textView.becomeFirstResponder()
+        print(textView.text)
     }
     
     func setTextViewRedactable() {
@@ -155,16 +162,10 @@ extension TextViewController: UITextViewDelegate {
         
         
         if updatedText.isEmpty {
-            textView.text = placeholderText
-            textView.textColor = .lightGray
-            
+            setTextToPlaceholderText()
             selectBeginningOfTextView()
             document.setText(to: "")
             delegate?.textViewDidBecomeEmpty()
-        }
-            
-        if currentText.isEmpty && !updatedText.isEmpty {
-            delegate?.textViewDidBecomeNotEmpty()
         }
             
             // Else if the text view's placeholder is showing
@@ -176,6 +177,7 @@ extension TextViewController: UITextViewDelegate {
             document.setText(to: text)
             textView.attributedText = document.attributedText
             textView.font = document.font
+            delegate?.textViewDidBecomeNotEmpty()
         } else {
             document.setText(to: updatedText)
             
@@ -258,8 +260,8 @@ fileprivate extension TextViewController {
         textView.attributedText = document.attributedText
         textView.font = document.font
         
-        selectBeginningOfTextView()
-        textView.becomeFirstResponder()
+        //selectBeginningOfTextView()
+        //textView.becomeFirstResponder()
     }
     
     func setupTapGestureRecognizer() {
@@ -268,10 +270,13 @@ fileprivate extension TextViewController {
         textView.addGestureRecognizer(gestureRecognizer)
     }
     
-    func selectBeginningOfTextView() { // Make it select the very start of the text view, "ignoring" the placeholder text
-        textView.attributedText = NSAttributedString(string: "")
+    func setTextToPlaceholderText() {
         textView.text = placeholderText
         textView.textColor = .lightGray
+        textView.backgroundColor = .clear
+    }
+    
+    func selectBeginningOfTextView() { // Make it select the very start of the text view, "ignoring" the placeholder text
         textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
     }
     
