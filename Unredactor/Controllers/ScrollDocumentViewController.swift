@@ -120,12 +120,12 @@ class ScrollDocumentViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        NotificationCenter.default.removeObserver(self)
+        //NotificationCenter.default.removeObserver(self)
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+        //NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        //NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
     
     // Nice technique for using switch let statements from https://medium.com/@superpeteblaze/ios-swift-tip-getting-references-to-container-child-view-controllers-653fe58e6f5e
@@ -171,10 +171,11 @@ extension ScrollDocumentViewController: SwitchViewControllerDelegate {
 }
 
 extension ScrollDocumentViewController: TextViewControllerDelegate {
-    func keyboardWillShow(_ notification: NSNotification) {
-        print("TextView text: \(textViewController.textView.text)")
-        // Make sure the keyboard isn't shown first
-            guard !keyboardIsShown, let userInfo = notification.userInfo else { return }
+    func keyboardDidShow(_ notification: NSNotification) {
+        print("KEYBOARD WILL SHOW")
+        //print("TextView text: \(textViewController.textView.text)")
+        
+        guard let userInfo = notification.userInfo else { return }
         
         // get the size of the keboard
         let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as! CGRect
@@ -182,8 +183,11 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         print("Keyboard Size: \(keyboardRect.size)")
         
         // resize the scrollView
-        var viewFrame: CGRect = self.scrollView.frame
-        viewFrame.size.height -= keyboardSize.height + switchView.frame.height // subtract the height of the keyboard (when the keyboard is shown, we have less space to display stuff)
+        var viewFrame: CGRect = self.view.frame
+        
+        print("ScrollView size: \(self.scrollView.frame)")
+        
+        viewFrame.size.height -= keyboardSize.height // subtract the height of the keyboard (when the keyboard is shown, we have less space to display stuff)
         
         // Account for switchView:
         
@@ -195,7 +199,7 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         // Animate the change
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
-        self.scrollView.frame = viewFrame
+        //self.scrollView.frame = viewFrame
         //self.switchView.frame = switchViewFrame
         UIView.commitAnimations()
         
@@ -205,20 +209,24 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         scrollView.scrollIndicatorInsets = contentInsets
         
         keyboardIsShown = true
+        print("ScrollView sizeAfter: \(self.scrollView.frame)")
     }
     
     func keyboardWillHide(_ notification: NSNotification) {
-        // Make sure the keyboard is already shown
-        guard keyboardIsShown, let userInfo = notification.userInfo else { return }
+        print("KEYBOARD WILL HIDE")
+        
+        guard let userInfo = notification.userInfo else { return }
         
         // get the size of the keyboard
-        let keyboardRect = userInfo[UIKeyboardFrameBeginUserInfoKey] as! CGRect
+        let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as! CGRect
         let keyboardSize = keyboardRect.size
+        print("Keyboard Size: \(keyboardRect.size)")
         
         // resize the scrollView
-        var viewFrame: CGRect = self.scrollView.frame
+        //var viewFrame: CGRect = self.scrollView.frame
+        //print("ScrollView size: \(self.scrollView.frame)")
         // Account for the height of the keyboard
-        viewFrame.size.height += keyboardSize.height + switchView.frame.height
+        //viewFrame.size.height += keyboardSize.height - switchView.frame.height
         
        // Move the switchview
         //var switchViewFrame: CGRect = self.switchView.frame
@@ -227,7 +235,7 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationBeginsFromCurrentState(true)
         //self.scrollView.frame = viewFrame
-        self.scrollView.frame = self.view.frame
+        //self.scrollView.frame = self.view.frame
         //self.switchView.frame = switchViewFrame
         UIView.commitAnimations()
         
@@ -236,6 +244,8 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         scrollView.scrollIndicatorInsets = .zero
         
         keyboardIsShown = false
+        
+        print("ScrollView sizeAfter: \(self.scrollView.frame)")
     }
     
     func textViewDidBecomeEmpty() {
