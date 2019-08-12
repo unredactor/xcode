@@ -8,9 +8,10 @@
 
 import UIKit
 
-class UnredactorPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+class PageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
-    var pages = [UIViewController]()
+    var pages = [DocumentViewController]()
+    var documents: [Document] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,8 +19,11 @@ class UnredactorPageViewController: UIPageViewController, UIPageViewControllerDa
         self.delegate = self
         self.dataSource = self
         
-        let page1: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView") // TODO: Update names
-        let page2: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2")
+        let page1: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView") as? DocumentViewController // TODO: Update names
+        let page2: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2") as? DocumentViewController
+        
+        page1.document = documents[0]
+        page2.document = documents[1]
         
         pages.append(page1)
         pages.append(page2)
@@ -28,7 +32,7 @@ class UnredactorPageViewController: UIPageViewController, UIPageViewControllerDa
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        let currentIndex = pages.index(of: viewController)!
+        let currentIndex = pages.index(of: viewController as! DocumentViewController)!
         
         guard currentIndex != 0 else { return nil } // Make sure it isn't the first page
         
@@ -37,7 +41,7 @@ class UnredactorPageViewController: UIPageViewController, UIPageViewControllerDa
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        let currentIndex = pages.index(of: viewController)!
+        let currentIndex = pages.index(of: viewController as! DocumentViewController)!
         
         guard currentIndex != self.pages.count - 1 else { return nil } // Make sure it isn't the last page
         

@@ -73,6 +73,7 @@ class Unredactor {
                 //completion(unredactorInfo.words)
             } else {
                 print("didn't work i guess lmao gotem")
+                completion(["getUnredactedWords() failed; couldn't properly parse JSON response."])
             }
         }
         

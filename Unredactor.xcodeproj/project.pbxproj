@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2377E07C22FA01370021C277 /* SwitchViewController.swift */; };
 		2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */; };
-		23946B7622F2512000A69AF3 /* UIPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23946B7522F2512000A69AF3 /* UIPageViewController.swift */; };
+		23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23946B7522F2512000A69AF3 /* PageViewController.swift */; };
+		2397332F2301B5A400A378C3 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2397332E2301B5A300A378C3 /* DocumentViewController.swift */; };
 		23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B876E122F93633006E7D16 /* FolderViewController.swift */; };
 		23D4B15022F4F5D800B7C5A6 /* DocumentViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */; };
 		23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DCA83522FB4D3800AAAE4B /* TextViewController.swift */; };
 		2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */; };
-		2F7C0A5B22DCF2FC00AD2828 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */; };
 		2F7C0A5E22DCF2FC00AD2828 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5C22DCF2FC00AD2828 /* Main.storyboard */; };
 		2F7C0A6022DCF2FC00AD2828 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5F22DCF2FC00AD2828 /* Assets.xcassets */; };
 		2F7C0A6322DCF2FC00AD2828 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F7C0A6122DCF2FC00AD2828 /* LaunchScreen.storyboard */; };
@@ -51,13 +51,13 @@
 /* Begin PBXFileReference section */
 		2377E07C22FA01370021C277 /* SwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchViewController.swift; sourceTree = "<group>"; };
 		2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDocumentViewController.swift; sourceTree = "<group>"; };
-		23946B7522F2512000A69AF3 /* UIPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPageViewController.swift; sourceTree = "<group>"; };
+		23946B7522F2512000A69AF3 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		2397332E2301B5A300A378C3 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
 		23B876E122F93633006E7D16 /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
 		23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentViewControllerNew.swift; path = ../Controllers/DocumentViewControllerNew.swift; sourceTree = "<group>"; };
 		23DCA83522FB4D3800AAAE4B /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5522DCF2FC00AD2828 /* Unredactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unredactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5D22DCF2FC00AD2828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2F7C0A5F22DCF2FC00AD2828 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F7C0A6222DCF2FC00AD2828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -109,7 +109,6 @@
 			children = (
 				23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */,
 				2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */,
-				2F7C0A5A22DCF2FC00AD2828 /* DocumentViewController.swift */,
 			);
 			path = "Old Stuff (Unused)";
 			sourceTree = "<group>";
@@ -117,12 +116,13 @@
 		23946B7722F3AFD300A69AF3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				23946B7522F2512000A69AF3 /* UIPageViewController.swift */,
+				23946B7522F2512000A69AF3 /* PageViewController.swift */,
 				23B876E122F93633006E7D16 /* FolderViewController.swift */,
 				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
 				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,
 				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
 				2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */,
+				2397332E2301B5A300A378C3 /* DocumentViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -336,7 +336,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F7C0A5B22DCF2FC00AD2828 /* DocumentViewController.swift in Sources */,
 				2F7C0A9B22E6069600AD2828 /* SettingsTableViewController.swift in Sources */,
 				2F7C0A9522E2D66900AD2828 /* URL+Helpers.swift in Sources */,
 				2F7C0A8722DF863F00AD2828 /* Document.swift in Sources */,
@@ -346,11 +345,12 @@
 				2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */,
 				23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */,
 				2F7C0A9722E5A34B00AD2828 /* Array+Helpers.swift in Sources */,
-				23946B7622F2512000A69AF3 /* UIPageViewController.swift in Sources */,
+				23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */,
 				23D4B15022F4F5D800B7C5A6 /* DocumentViewControllerNew.swift in Sources */,
 				2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */,
 				2F7C0A8922DF86BC00AD2828 /* DocumentCell.swift in Sources */,
 				23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */,
+				2397332F2301B5A400A378C3 /* DocumentViewController.swift in Sources */,
 				2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */,
 				2F7C0A8F22E0451B00AD2828 /* UnredactGestureRecognizer.swift in Sources */,
 			);

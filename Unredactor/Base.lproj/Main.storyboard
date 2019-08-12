@@ -102,15 +102,15 @@
             </objects>
             <point key="canvasLocation" x="-2409.375" y="-363.38028169014086"/>
         </scene>
-        <!--View Controller-->
+        <!--Folder View Controller-->
         <scene sceneID="Y2O-hv-Zsr">
             <objects>
-                <viewController id="TpE-Ht-se4" sceneMemberID="viewController">
+                <viewController id="TpE-Ht-se4" customClass="FolderViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dd0-fw-JxH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="manilaFolderOpen copy" translatesAutoresizingMaskIntoConstraints="NO" id="zEi-Xj-rON">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="manilaFolderTexture" translatesAutoresizingMaskIntoConstraints="NO" id="zEi-Xj-rON">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wwa-9P-pBp">
@@ -300,7 +300,7 @@
         <!--UNREDACTOR-->
         <scene sceneID="7n4-fe-rms">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="Nhn-lq-kx0" customClass="UnredactorPageViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="Nhn-lq-kx0" customClass="PageViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="UNREDACTOR" largeTitleDisplayMode="never" id="UfC-rn-zgu">
                         <barButtonItem key="backBarButtonItem" title="Back" id="dI6-DH-Duu"/>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="settingsCogPNG" id="Xl7-nI-FsL">
@@ -511,7 +511,7 @@
         <!--Document View Controller-->
         <scene sceneID="g8a-xH-YIi">
             <objects>
-                <viewController storyboardIdentifier="unredactorView2" id="A8Z-1b-rJo" customClass="DocumentViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="A8Z-1b-rJo" customClass="DocumentViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3oQ-6m-CSt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -635,7 +635,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5W-cz-cCg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2390.625" y="279.92957746478874"/>
+            <point key="canvasLocation" x="-3154" y="144"/>
         </scene>
         <!--Text View Controller-->
         <scene sceneID="Ji1-mT-2yw">
@@ -675,13 +675,109 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zmh-fJ-6n1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3075" y="305.8098591549296"/>
+            <point key="canvasLocation" x="-3156" y="-374"/>
+        </scene>
+        <!--Scroll Document View Controller-->
+        <scene sceneID="Hlp-3K-hTn">
+            <objects>
+                <viewController storyboardIdentifier="unredactorView2" id="57j-43-OYW" customClass="ScrollDocumentViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hef-JT-d5g">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="S3h-SM-p5v">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xbz-sB-rrX">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="FsJ-yd-PdX">
+                                        <rect key="frame" x="32" y="56" width="256" height="496"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ScrollView" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRp-e7-g5b">
+                                                <rect key="frame" x="50" y="0.0" width="156.5" height="29.5"/>
+                                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="26"/>
+                                                <color key="textColor" red="0.1209511861" green="0.1209511861" blue="0.1209511861" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2lm-ek-SK5">
+                                                <rect key="frame" x="0.0" y="45.5" width="256" height="450.5"/>
+                                                <connections>
+                                                    <segue destination="svi-fa-nC1" kind="embed" id="UL2-e5-WDs"/>
+                                                </connections>
+                                            </containerView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="2lm-ek-SK5" firstAttribute="top" secondItem="IRp-e7-g5b" secondAttribute="bottom" constant="16" id="1kq-zS-lUd"/>
+                                            <constraint firstAttribute="bottom" secondItem="2lm-ek-SK5" secondAttribute="bottom" id="IAc-Mt-4Qa"/>
+                                            <constraint firstAttribute="trailing" secondItem="2lm-ek-SK5" secondAttribute="trailing" id="WrL-r7-Bx4"/>
+                                            <constraint firstItem="2lm-ek-SK5" firstAttribute="leading" secondItem="FsJ-yd-PdX" secondAttribute="leading" id="xxR-SM-dIA"/>
+                                        </constraints>
+                                    </stackView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image 2.1 (1)" translatesAutoresizingMaskIntoConstraints="NO" id="r6Z-29-vGy">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Xbz-sB-rrX" firstAttribute="top" secondItem="S3h-SM-p5v" secondAttribute="top" id="0XR-Do-CwR"/>
+                                    <constraint firstAttribute="bottom" secondItem="Xbz-sB-rrX" secondAttribute="bottom" id="4MC-N8-ZNb"/>
+                                    <constraint firstItem="r6Z-29-vGy" firstAttribute="leading" secondItem="S3h-SM-p5v" secondAttribute="leading" id="9TR-en-vTh"/>
+                                    <constraint firstAttribute="bottom" secondItem="r6Z-29-vGy" secondAttribute="bottom" id="Eh7-tZ-X7a"/>
+                                    <constraint firstItem="Xbz-sB-rrX" firstAttribute="leading" secondItem="r6Z-29-vGy" secondAttribute="leading" id="Hz9-34-BCB"/>
+                                    <constraint firstItem="r6Z-29-vGy" firstAttribute="centerY" secondItem="S3h-SM-p5v" secondAttribute="centerY" id="Web-F8-EK3"/>
+                                    <constraint firstAttribute="bottom" secondItem="FsJ-yd-PdX" secondAttribute="bottom" constant="16" id="bQI-t2-NPY"/>
+                                    <constraint firstItem="FsJ-yd-PdX" firstAttribute="leading" secondItem="S3h-SM-p5v" secondAttribute="leading" constant="32" id="deh-el-Adp"/>
+                                    <constraint firstItem="FsJ-yd-PdX" firstAttribute="centerX" secondItem="Xbz-sB-rrX" secondAttribute="centerX" id="g2q-gs-ovQ"/>
+                                    <constraint firstItem="r6Z-29-vGy" firstAttribute="top" secondItem="S3h-SM-p5v" secondAttribute="top" id="kyO-kt-Fvr"/>
+                                    <constraint firstItem="FsJ-yd-PdX" firstAttribute="top" secondItem="S3h-SM-p5v" secondAttribute="top" constant="56" id="l8x-OZ-QOk"/>
+                                    <constraint firstItem="r6Z-29-vGy" firstAttribute="centerX" secondItem="S3h-SM-p5v" secondAttribute="centerX" id="pP5-go-COb"/>
+                                    <constraint firstItem="Xbz-sB-rrX" firstAttribute="centerY" secondItem="S3h-SM-p5v" secondAttribute="centerY" id="r1s-YH-XyN"/>
+                                    <constraint firstAttribute="trailing" secondItem="r6Z-29-vGy" secondAttribute="trailing" id="tmW-sY-Gi2"/>
+                                    <constraint firstItem="FsJ-yd-PdX" firstAttribute="centerX" secondItem="S3h-SM-p5v" secondAttribute="centerX" id="xJT-wh-ObD"/>
+                                </constraints>
+                            </scrollView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qZO-qc-zyn">
+                                <rect key="frame" x="0.0" y="568" width="320" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="E1f-MJ-8gC"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="Xys-ji-RcS"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="H4q-JR-BWU" kind="embed" id="9BN-yq-VWY"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="qZO-qc-zyn" firstAttribute="top" secondItem="hef-JT-d5g" secondAttribute="bottom" id="0rh-GV-mTl"/>
+                            <constraint firstItem="S3h-SM-p5v" firstAttribute="bottom" secondItem="9iC-Ko-S6i" secondAttribute="bottom" id="6HZ-Wn-pRp"/>
+                            <constraint firstAttribute="trailing" secondItem="S3h-SM-p5v" secondAttribute="trailing" id="J2O-ZH-CuD"/>
+                            <constraint firstItem="qZO-qc-zyn" firstAttribute="leading" secondItem="hef-JT-d5g" secondAttribute="leading" id="KmG-pS-Rbj"/>
+                            <constraint firstItem="S3h-SM-p5v" firstAttribute="leading" secondItem="hef-JT-d5g" secondAttribute="leading" id="Rc7-6X-w3p"/>
+                            <constraint firstItem="S3h-SM-p5v" firstAttribute="top" secondItem="hef-JT-d5g" secondAttribute="top" id="f8h-cd-EZw"/>
+                            <constraint firstAttribute="trailing" secondItem="qZO-qc-zyn" secondAttribute="trailing" id="i68-Dz-cZm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="9iC-Ko-S6i"/>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="S3h-SM-p5v" id="hhf-p3-Bi5"/>
+                        <outlet property="switchView" destination="qZO-qc-zyn" id="0we-yU-OZr"/>
+                        <outlet property="textView" destination="2lm-ek-SK5" id="Uec-Ia-gKu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zb7-WJ-KuG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3975" y="-351"/>
         </scene>
     </scenes>
     <resources>
         <image name="image 2.1 (1)" width="634" height="953"/>
-        <image name="manilaFolderOpen copy" width="332" height="394"/>
+        <image name="manilaFolderTexture" width="602" height="816"/>
         <image name="metallicTexture" width="3264" height="2448"/>
         <image name="settingsCogPNG" width="22" height="22"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="UL2-e5-WDs"/>
+        <segue reference="9BN-yq-VWY"/>
+    </inferredMetricsTieBreakers>
 </document>

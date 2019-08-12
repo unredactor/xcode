@@ -12,10 +12,20 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var documents: [Document] = [Document(withText: "", unredactor: Unredactor()), Document(withText: "", unredactor: Unredactor())]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Insert model into view hierarchy from the top
+        if let folderViewController = self.window?.rootViewController as? FolderViewController  {
+            print("wow.")
+            
+            folderViewController.documents = documents
+        } else {
+            print("aww.")
+        }
+        
         return true
     }
 
@@ -40,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+    
 }
 

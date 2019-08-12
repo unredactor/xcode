@@ -80,6 +80,7 @@ class Document {
     func unredact(completion: @escaping () -> ()) {
         guard classifiedText.isRedacted else {
             print("Text not redacted, so unredact() did nothing")
+            completion()
             return
         }
         

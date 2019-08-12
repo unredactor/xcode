@@ -84,6 +84,11 @@ class TextViewController: UIViewController {
         }
     }
     
+    func configureTextView(withDocument document: Document) {
+        textView.attributedText = document.attributedText
+        textView.font = document.font
+    }
+    
     func setTextView(toEditMode editMode: EditMode) {
         switch editMode {
         case .edit:
@@ -260,14 +265,6 @@ fileprivate extension TextViewController {
     func removeObservers() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidHide, object: nil)
-    }
-    
-    func configureTextView(withDocument document: Document) {
-        textView.attributedText = document.attributedText
-        textView.font = document.font
-        
-        //selectBeginningOfTextView()
-        //textView.becomeFirstResponder()
     }
     
     func setupTapGestureRecognizer() {

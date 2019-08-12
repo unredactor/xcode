@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ScrollDocumentViewController: UIViewController {
+class ScrollDocumentViewController: DocumentViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -22,6 +22,10 @@ class ScrollDocumentViewController: UIViewController {
     var keyboardIsShown = false // Make sure nothing weird happens
     
     let unredactor = Unredactor()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -45,6 +49,9 @@ class ScrollDocumentViewController: UIViewController {
             print("ERROR: Failed to find textView in view hierarchy. Look at ScrollDocumentViewController.viewWillAppear(_:) to fix the access route.")
         } // TODO: some sort of test for this cause this is gonna break if I change anything about textViewController in code or storyboard
         // Make switch view stick to top of keyboard
+        
+        
+        setupRefreshView() // create and add a refresh view to the hierarchy that allows the user to unredact
     }
     
     // From https://stackoverflow.com/questions/10768659/leaving-inputaccessoryview-visible-after-keyboard-is-dismissed
@@ -78,6 +85,28 @@ class ScrollDocumentViewController: UIViewController {
     private func setupTextView() {
         print(switchViewController.state)
         textViewController.setTextView(toEditMode: switchViewController.state)
+    }
+    
+    private func setupRefreshView() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
+        
+        if #available(iOS 10.0, *) {
+            scrollView.refreshControl = refreshControl
+        } else {
+            scrollView.addSubview(refreshControl)
+        }
+        
+        refreshControl.addTarget(self, action: #selector(unredact(_:)), for: .valueChanged)
+    }
+    
+    @objc private func unredact(_ sender: Any) {
+        document.unredact {
+            DispatchQueue.main.async { [unowned self] in
+                self.textViewController.configureTextView(withDocument: self.document)
+                self.scrollView.refreshControl?.endRefreshing()
+            }
+        }
     }
     
     private func addShadow(to view: UIView) {
@@ -141,7 +170,8 @@ class ScrollDocumentViewController: UIViewController {
         case let textViewController as TextViewController:
             textViewController.delegate = self
             self.textViewController = textViewController
-            self.textViewController.document = Document(withText: "", unredactor: unredactor)
+            self.textViewController.document = self.document
+            //self.textViewController.configureTextView(withDocument: document)
             //textViewController.viewWillAppear(true)
         default:
             break
