@@ -13,7 +13,7 @@
 		2397332F2301B5A400A378C3 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2397332E2301B5A300A378C3 /* DocumentViewController.swift */; };
 		23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B876E122F93633006E7D16 /* FolderViewController.swift */; };
 		23BE4D192302178B005407FF /* README in Resources */ = {isa = PBXBuildFile; fileRef = 23BE4D182302178B005407FF /* README */; };
-		23D4B15022F4F5D800B7C5A6 /* DocumentViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */; };
+		23BE4D1B23022780005407FF /* EditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BE4D1A23022780005407FF /* EditMode.swift */; };
 		23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DCA83522FB4D3800AAAE4B /* TextViewController.swift */; };
 		2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */; };
 		2F7C0A5E22DCF2FC00AD2828 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5C22DCF2FC00AD2828 /* Main.storyboard */; };
@@ -22,7 +22,6 @@
 		2F7C0A6E22DCF2FC00AD2828 /* UnredactorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A6D22DCF2FC00AD2828 /* UnredactorTests.swift */; };
 		2F7C0A7922DCF2FD00AD2828 /* UnredactorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A7822DCF2FD00AD2828 /* UnredactorUITests.swift */; };
 		2F7C0A8722DF863F00AD2828 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A8622DF863F00AD2828 /* Document.swift */; };
-		2F7C0A8922DF86BC00AD2828 /* DocumentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */; };
 		2F7C0A8D22E0310400AD2828 /* Unredactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A8C22E0310400AD2828 /* Unredactor.swift */; };
 		2F7C0A8F22E0451B00AD2828 /* UnredactGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A8E22E0451B00AD2828 /* UnredactGestureRecognizer.swift */; };
 		2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A9022E0D0FF00AD2828 /* Bool+Helpers.swift */; };
@@ -56,7 +55,7 @@
 		2397332E2301B5A300A378C3 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
 		23B876E122F93633006E7D16 /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
 		23BE4D182302178B005407FF /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentViewControllerNew.swift; path = ../Controllers/DocumentViewControllerNew.swift; sourceTree = "<group>"; };
+		23BE4D1A23022780005407FF /* EditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMode.swift; sourceTree = "<group>"; };
 		23DCA83522FB4D3800AAAE4B /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5522DCF2FC00AD2828 /* Unredactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unredactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -71,7 +70,6 @@
 		2F7C0A7822DCF2FD00AD2828 /* UnredactorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnredactorUITests.swift; sourceTree = "<group>"; };
 		2F7C0A7A22DCF2FD00AD2828 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F7C0A8622DF863F00AD2828 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
-		2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCell.swift; sourceTree = "<group>"; };
 		2F7C0A8C22E0310400AD2828 /* Unredactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unredactor.swift; sourceTree = "<group>"; };
 		2F7C0A8E22E0451B00AD2828 /* UnredactGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnredactGestureRecognizer.swift; sourceTree = "<group>"; };
 		2F7C0A9022E0D0FF00AD2828 /* Bool+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Helpers.swift"; sourceTree = "<group>"; };
@@ -109,8 +107,6 @@
 		237C08A022FB95C800DE3379 /* Old Stuff (Unused) */ = {
 			isa = PBXGroup;
 			children = (
-				23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */,
-				2F7C0A8822DF86BC00AD2828 /* DocumentCell.swift */,
 			);
 			path = "Old Stuff (Unused)";
 			sourceTree = "<group>";
@@ -118,13 +114,13 @@
 		23946B7722F3AFD300A69AF3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				23946B7522F2512000A69AF3 /* PageViewController.swift */,
+				2397332E2301B5A300A378C3 /* DocumentViewController.swift */,
 				23B876E122F93633006E7D16 /* FolderViewController.swift */,
-				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
+				23946B7522F2512000A69AF3 /* PageViewController.swift */,
 				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,
+				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
 				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
 				2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */,
-				2397332E2301B5A300A378C3 /* DocumentViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -135,6 +131,7 @@
 				2F7C0A8622DF863F00AD2828 /* Document.swift */,
 				2F7C0A9222E0D8DE00AD2828 /* ClassifiedText.swift */,
 				2F7C0A8C22E0310400AD2828 /* Unredactor.swift */,
+				23BE4D1A23022780005407FF /* EditMode.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -346,13 +343,12 @@
 				2F7C0A8D22E0310400AD2828 /* Unredactor.swift in Sources */,
 				2F7C0A9322E0D8DE00AD2828 /* ClassifiedText.swift in Sources */,
 				2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */,
+				23BE4D1B23022780005407FF /* EditMode.swift in Sources */,
 				2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */,
 				23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */,
 				2F7C0A9722E5A34B00AD2828 /* Array+Helpers.swift in Sources */,
 				23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */,
-				23D4B15022F4F5D800B7C5A6 /* DocumentViewControllerNew.swift in Sources */,
 				2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */,
-				2F7C0A8922DF86BC00AD2828 /* DocumentCell.swift in Sources */,
 				23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */,
 				2397332F2301B5A400A378C3 /* DocumentViewController.swift in Sources */,
 				2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */,

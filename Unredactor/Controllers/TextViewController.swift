@@ -8,32 +8,35 @@
 
 import UIKit
 
-
+// MARK: - Delegate
 protocol TextViewControllerDelegate: class {
     func keyboardDidShow(_ notification: NSNotification)
     func keyboardWillHide(_ notification: NSNotification)
     
     func textViewDidBecomeEmpty()
     func textViewDidBecomeNotEmpty()
-    
-    func documentStateSwitched(to state: RedactionState)
 }
 
 
-
-// Handles the text view, including the placeholder text, editableness, redaction of keyboard, etc., and interfaces with the ScrollDocumentVC through a delegate. Effectively displays and edits a document.
-
+// MARK: - Class Definition
+/**
+ TextViewController manages a text view. It uses a document object to know what text to display and how
+ to display it, and modifies that document object. It also gives the text view added behavior such as placeholder
+ text and the ability to be redacted. It interfaces with ScrollDocumentViewController through a delegate.
+*/
 class TextViewController: UIViewController {
     
-    @IBOutlet weak var textView: UITextView!
+    // MARK: - Properties
+    @IBOutlet weak private var textView: UITextView!
+    
+    var document: Document!
+    var editMode: EditMode = .edit
+    
+    weak var delegate: TextViewControllerDelegate?
     
     fileprivate let placeholderText = "Enter text here..."
     
-    weak var delegate: TextViewControllerDelegate?
-    var document: Document!
-    
-    var editMode: EditMode = .edit
-
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,7 +61,11 @@ class TextViewController: UIViewController {
         removeObservers()
     }
     
-    // This function is MEANT to be used by the superior controller
+    deinit {
+        removeObservers()
+    }
+    
+    // MARK: - Interface (public functions)
     func switchState(to state: RedactionState, completion: @escaping () -> Void = { }) {
         switch state {
         case .notRedacted:
@@ -92,7 +99,6 @@ class TextViewController: UIViewController {
     func setTextView(toEditMode editMode: EditMode) {
         switch editMode {
         case .edit:
-            print("TextView text: \(textView.text)")
             if textView.textColor == .lightGray {
                 selectBeginningOfTextView()
             } else if textView.text.isEmpty || textView.text == nil {
@@ -109,7 +115,6 @@ class TextViewController: UIViewController {
     }
     
     func setTextViewEditable() {
-        print("Text view set to be editable")
         textView.isEditable = true
         editMode = .edit
         textView.becomeFirstResponder()
@@ -117,16 +122,12 @@ class TextViewController: UIViewController {
     }
     
     func setTextViewRedactable() {
-        print("Text view set to be redactable")
         textView.isEditable = false
         editMode = .redact
     }
-    
-    deinit {
-        removeObservers()
-    }
 }
 
+// MARK: - UITextViewDelegate
 extension TextViewController: UITextViewDelegate {
     func textViewDidEndEditing() {
         textView.resignFirstResponder()
@@ -138,25 +139,10 @@ extension TextViewController: UITextViewDelegate {
         textView.resignFirstResponder()
     }
     
-    /*
-    func textViewDidChange(_ textView: UITextView) {
-        let text: String = textView.attributedText.string
-        
-        if text.isEmpty {
-            delegate?.textViewDidBecomeEmpty()
-        } else {
-            delegate?.textViewDidBecomeNotEmpty()
-        }
-    }
- */
-    
-    
     // From: https://stackoverflow.com/questions/27652227/text-view-uitextview-placeholder-swift
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Combine the textView text and the replacement text to
         // Create the updated text string
-        
-        
         
         var currentText: String = ""
         
@@ -170,15 +156,12 @@ extension TextViewController: UITextViewDelegate {
         
         // If updated text view will be empty, add the placeholder
         // and set the cursor to the beginning of the text view
-        
-        
         if updatedText.isEmpty {
             setTextToPlaceholderText()
             selectBeginningOfTextView()
             document.setText(to: "")
             delegate?.textViewDidBecomeEmpty()
         }
-            
             // Else if the text view's placeholder is showing
             // and the length of the replacement string is greater than 0,
             // set the text color to black and then set its text to the replacement string
@@ -191,9 +174,7 @@ extension TextViewController: UITextViewDelegate {
             delegate?.textViewDidBecomeNotEmpty()
         } else {
             document.setText(to: updatedText)
-            
             return true
-            //print(textView.font)
         }
         
         // ...otherwise return false since the updates have
@@ -202,14 +183,13 @@ extension TextViewController: UITextViewDelegate {
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        if view.window != nil {
-            if textView.textColor == .lightGray {
-                selectBeginningOfTextView()
-            }
+        if view.window != nil && textView.textColor == .lightGray {
+            selectBeginningOfTextView()
         }
     }
 }
 
+// MARK: - UIGestureRecognizerDelegate
 extension TextViewController: UIGestureRecognizerDelegate {
     @objc func textViewTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         guard editMode == .redact else {
@@ -218,8 +198,6 @@ extension TextViewController: UIGestureRecognizerDelegate {
             
             return
         }
-        
-        //print("\(document.classifiedText.rawText)")
         
         let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document)
         
@@ -232,10 +210,6 @@ extension TextViewController: UIGestureRecognizerDelegate {
         
             textView.attributedText = document.attributedText
             textView.font = document.font
-        
-            if document.state != previousDocumentState { // If document state changed
-                delegate?.documentStateSwitched(to: document.state)
-            }
         } else if editMode == .edit {
             textView.becomeFirstResponder()
             
@@ -253,8 +227,7 @@ extension TextViewController: UIGestureRecognizerDelegate {
     }
 }
 
-// MARK: - Helper methods
-// (that you don't need to know about)
+// MARK: - Helper Functions
 fileprivate extension TextViewController {
     
     func addObservers() {
@@ -289,27 +262,6 @@ fileprivate extension TextViewController {
     
     func setupTextView() {
         setTextView(toEditMode: editMode)
-    }
-}
-
-enum EditMode { // Can be either edit or redact
-    case edit, redact
-    
-    var textColor: UIColor {
-        switch self {
-        case .edit:
-            return UIColor(white: 0.54, alpha: 0.9)
-        case .redact:
-            return UIColor(white: 0.69, alpha: 0.9)
-        }
-    }
-    
-    func toggled() -> EditMode {
-        if self == .edit {
-            return .redact
-        } else {
-            return .edit
-        }
     }
 }
 

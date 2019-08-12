@@ -9,6 +9,7 @@
 import UIKit
 import SafariServices
 
+// To be implemented later
 class SettingsTableViewController: UITableViewController {
     
     override func viewDidLoad() {

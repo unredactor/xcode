@@ -1,6 +1,6 @@
 README
 
-This app was created by Tyler Gee as an open source project as Manceps' Unredactor iOS port. If you are contributing to this project, add your name.
+This app was created by Tyler Gee as an open source project for Manceps Summer of Code. If you are contributing to this project, add your name.
 This app tries it's best to follow Apple's MVC code structure.
 
 This is the current structure of a view controller file for organizational and navigational purposes (aka where do I put this function)
@@ -17,7 +17,7 @@ protocol ViewControllerDelegate {
 */
 class ViewController: Superclass {
     // MARK: - Properties
-    - IBOutlets
+    - IBOutlets (should probably be private)
     - Public properties
         * Variables
         * Constants
@@ -29,16 +29,13 @@ class ViewController: Superclass {
     // MARK: - View Life Cycle Functions
     Put these in order of them happening (viewDidLoad, viewWillAppear, viewWillDisappear, maybe deinit)
 
-    // MARK: Functions
+    // MARK: - IBActions
+
+    // MARK: - Interface (public functions)
     - Put public functions here that are intended as the interface
 
     // MARK: - Navigation
     - functions dealing with navigation and the storyboard (basically just prepare(for:))
-}
-
-// MARK: - Helper functions
-extension ViewController {
-    - Private functions that are used solely by the class
 }
 
 // MARK: - Extensions
@@ -51,6 +48,11 @@ extension ViewController: ProtocolDelegate {
 
 ... [more extensions]
 
+// MARK: - Helper Functions
+fileprivate extension ViewController {
+- Private functions that are used solely by the class
+}
+
 // end - try to keep these under a few hundred lines, if they get larger than 300-400 you should split it up somehow, aim for under 200
 
-This whole thing is made up, if you have a suggestion or reason to change it, then do
+This whole thing is made up, if you have a suggestion or reason to change it, then do. This is by no means a strict set of rules, but merely guidelines to improve readability.

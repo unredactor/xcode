@@ -8,29 +8,35 @@
 
 import UIKit
 
-
+// MARK: - Delegate
 protocol SwitchViewControllerDelegate: class {
     func switchWasToggled(to state: EditMode)
 }
 
-class SwitchViewController: UIViewController {
+// MARK: - Class Definition
+/**
+ SwitchViewController manages a switch view: a simple view that allows you to switch between the editing and redacting modes
+ by using either a switch or by tapping on the respective labels.
+*/
+class SwitchViewController: UIViewController, CAAnimationDelegate {
     
-    var state: EditMode = .edit
+    // MARK: - Properties
     @IBOutlet weak var stateSwitch: UISwitch!
     
     @IBOutlet weak var editLabel: UILabel!
     @IBOutlet weak var redactLabel: UILabel!
     
-    private let animationDuration: TimeInterval = 2.0
-    private let shadowRadius: CGFloat = 5
+    var state: EditMode = .edit
     
     weak var delegate: SwitchViewControllerDelegate?
     
+    private let animationDuration: TimeInterval = 2.0
+    private let shadowRadius: CGFloat = 5
+    
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //updateSwitchDirection()
-        //updateViews(isAnimated: false)
         switch state {
         case .edit:
             editLabel.textColor = .white
@@ -45,22 +51,11 @@ class SwitchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        // Do any additional setup after loading the view.
-        
         updateSwitchDirection()
         updateViews(isAnimated: false)
     }
     
-    /*
-    func enableSwitch() {
-        stateSwitch.isEnabled = true
-    }
-    
-    func disableSwitch() {
-        stateSwitch.isEnabled = false
-    }
- */
-    
+    // MARK: - IBActions
     @IBAction func editButtonPressed(_ sender: Any) {
         state = .edit
         updateSwitchDirection()
@@ -75,27 +70,35 @@ class SwitchViewController: UIViewController {
         delegate?.switchWasToggled(to: .edit)
     }
     
-    private func updateViews(isAnimated animated: Bool) { // Changes the appearance of the views to reflect
+    @IBAction func toggleSwitch(_ sender: UISwitch) {
+        state = state.toggled()
+        updateViews(isAnimated: false)
+        
+        delegate?.switchWasToggled(to: state)
+    }
+}
+
+// MARK: - Helper Functions
+fileprivate extension SwitchViewController {
+    func updateViews(isAnimated animated: Bool) { // Changes the appearance of the views to reflect
         print("isAnimated: \(animated)")
         
         if state == .edit {
-            //stateSwitch.isOn = false
             removeGlowEffect(from: stateSwitch, isAnimated: animated)
             addGlowEffect(to: editLabel, isAnimated: animated)
             removeGlowEffect(from: redactLabel, isAnimated: animated)
         } else {
-            //stateSwitch.isOn = true
             addGlowEffect(to: stateSwitch, isAnimated: animated)
             addGlowEffect(to: redactLabel, isAnimated: animated)
             removeGlowEffect(from: editLabel, isAnimated: animated)
         }
     }
     
-    private func updateSwitchDirection() { // Change the direction of the switch according to the state
+    func updateSwitchDirection() { // Change the direction of the switch according to the state
         stateSwitch.isOn = state == .edit ? false : true
     }
     
-    private func addGlowEffect(to view: UIView, isAnimated animated: Bool) { // Give a label a transparent white shadow, simulating a glow
+    func addGlowEffect(to view: UIView, isAnimated animated: Bool) { // Give a label a transparent white shadow, simulating a glow
         let duration: TimeInterval = animated ? animationDuration : 0.0
         print("GlowLabelDuration: \(duration)")
         
@@ -118,7 +121,7 @@ class SwitchViewController: UIViewController {
         }
     }
     
-    private func giveFadeAnimation(toLabel label: UILabel) {
+    func giveFadeAnimation(toLabel label: UILabel) {
         let animation = CATransition()
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.type = kCATransitionFade
@@ -127,20 +130,7 @@ class SwitchViewController: UIViewController {
         label.layer.add(animation, forKey: "kCATransitionFade")
     }
     
-    /*
-    private func giveGlowEffect(to view: UIView) {
-        view.layer.shadowColor = UIColor.white.cgColor
-        view.layer.shadowOpacity = 0.9
-        view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 8
-        view.layer.shouldRasterize = true
-        view.layer.rasterizationScale = UIScreen.main.scale
-    }
-     
-     
- */
-    
-    private func removeGlowEffect(from view: UIView, isAnimated animated: Bool) { // Make the shadow completely transparent
+    func removeGlowEffect(from view: UIView, isAnimated animated: Bool) { // Make the shadow completely transparent
         let duration: TimeInterval = animated ? animationDuration : 0.0
         print("GlowLabelDuration: \(duration)")
         
@@ -164,25 +154,5 @@ class SwitchViewController: UIViewController {
             else if label == redactLabel { label.textColor = EditMode.redact.textColor }
         }
     }
-    
-    /*
-    private func removeGlowEffect(from view: UIView) {
-        view.layer.shadowColor = UIColor.clear.cgColor
-        view.layer.shadowOpacity = 0
-        view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 0
-    }
- */
-    
-    @IBAction func toggleSwitch(_ sender: UISwitch) {
-        state = state.toggled()
-        updateViews(isAnimated: false)
-        
-        delegate?.switchWasToggled(to: state)
-    }
-}
-
-extension SwitchViewController: CAAnimationDelegate {
-    
 }
 

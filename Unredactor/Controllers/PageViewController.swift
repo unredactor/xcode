@@ -8,11 +8,19 @@
 
 import UIKit
 
-class PageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+// MARK: - Class Definition
+/**
+ PageViewController manages a PageView and stores its pages [DocumentViewController], which it instantiates directly
+ from storyboard. It has built in page flipping logic, which doesn't loop (you can't keep flipping a particular
+ direction forever). It also stores the documents of its pages in an array, which it gets instantiated from FolderViewController.
+*/
+class PageViewController: UIPageViewController {
     
+    // MARK: - Properties
     var pages = [DocumentViewController]()
     var documents: [Document] = []
-
+    
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,7 +38,10 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
         
         setViewControllers([page1], direction: .forward, animated: false, completion: nil)
     }
-    
+}
+
+// MARK: - UIPageViewControllerDataSource, UIPageViewControllerDelegate
+extension PageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let currentIndex = pages.index(of: viewController as! DocumentViewController)!
         
@@ -56,15 +67,4 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return 0
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
