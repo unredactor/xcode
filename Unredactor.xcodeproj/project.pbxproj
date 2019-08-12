@@ -12,6 +12,7 @@
 		23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23946B7522F2512000A69AF3 /* PageViewController.swift */; };
 		2397332F2301B5A400A378C3 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2397332E2301B5A300A378C3 /* DocumentViewController.swift */; };
 		23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B876E122F93633006E7D16 /* FolderViewController.swift */; };
+		23BE4D192302178B005407FF /* README in Resources */ = {isa = PBXBuildFile; fileRef = 23BE4D182302178B005407FF /* README */; };
 		23D4B15022F4F5D800B7C5A6 /* DocumentViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */; };
 		23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DCA83522FB4D3800AAAE4B /* TextViewController.swift */; };
 		2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */; };
@@ -54,6 +55,7 @@
 		23946B7522F2512000A69AF3 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		2397332E2301B5A300A378C3 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
 		23B876E122F93633006E7D16 /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
+		23BE4D182302178B005407FF /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		23D4B14F22F4F5D800B7C5A6 /* DocumentViewControllerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentViewControllerNew.swift; path = ../Controllers/DocumentViewControllerNew.swift; sourceTree = "<group>"; };
 		23DCA83522FB4D3800AAAE4B /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5522DCF2FC00AD2828 /* Unredactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unredactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */,
+				23BE4D182302178B005407FF /* README */,
 				23946B7722F3AFD300A69AF3 /* Controllers */,
 				23946B7822F3B04200A69AF3 /* Model */,
 				23946B7922F3B05800A69AF3 /* Extensions */,
@@ -309,6 +312,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23BE4D192302178B005407FF /* README in Resources */,
 				2F7C0A6322DCF2FC00AD2828 /* LaunchScreen.storyboard in Resources */,
 				2F7C0A6022DCF2FC00AD2828 /* Assets.xcassets in Resources */,
 				2F7C0A5E22DCF2FC00AD2828 /* Main.storyboard in Resources */,

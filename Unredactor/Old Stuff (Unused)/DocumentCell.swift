@@ -54,7 +54,7 @@ class DocumentCell: UITableViewCell {
             document.unredact(completion: {
                 print("ending unredaction")
                 
-                DispatchQueue.main.async { // TODO: Make the button wait for the server request to finish
+                DispatchQueue.main.async { [unowned self] in// TODO: Make the button wait for the server request to finish
                     self.documentLabel.attributedText = document.attributedText
                     sender.isEnabled = true
                 }

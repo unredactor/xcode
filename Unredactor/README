@@ -1,0 +1,56 @@
+README
+
+This app was created by Tyler Gee as an open source project as Manceps' Unredactor iOS port. If you are contributing to this project, add your name.
+This app tries it's best to follow Apple's MVC code structure.
+
+This is the current structure of a view controller file for organizational and navigational purposes (aka where do I put this function)
+
+
+// MARK: - Delegate
+protocol ViewControllerDelegate {
+
+}
+
+// MARK: - Class Definition
+/*
+[Description of what the class does]
+*/
+class ViewController: Superclass {
+    // MARK: - Properties
+    - IBOutlets
+    - Public properties
+        * Variables
+        * Constants
+        * Delegate(s) (if applicable)
+    - Private properties
+        * Variables
+        * Constants
+
+    // MARK: - View Life Cycle Functions
+    Put these in order of them happening (viewDidLoad, viewWillAppear, viewWillDisappear, maybe deinit)
+
+    // MARK: Functions
+    - Put public functions here that are intended as the interface
+
+    // MARK: - Navigation
+    - functions dealing with navigation and the storyboard (basically just prepare(for:))
+}
+
+// MARK: - Helper functions
+extension ViewController {
+    - Private functions that are used solely by the class
+}
+
+// MARK: - Extensions
+
+// MARK: - [protocol name]
+extension ViewController: ProtocolDelegate {
+    - implementation of protocol
+    - (maybe?) helper functions used only in this extension
+}
+
+... [more extensions]
+
+// end - try to keep these under a few hundred lines, if they get larger than 300-400 you should split it up somehow, aim for under 200
+
+This whole thing is made up, if you have a suggestion or reason to change it, then do
