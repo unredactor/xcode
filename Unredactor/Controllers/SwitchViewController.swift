@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SwitchViewControllerDelegate {
+protocol SwitchViewControllerDelegate: class {
     func switchWasToggled(to state: EditMode)
 }
 
@@ -21,7 +21,7 @@ class SwitchViewController: UIViewController {
     @IBOutlet weak var redactLabel: UILabel!
     
     private var animationDuration: TimeInterval = 2.0
-    var delegate: SwitchViewControllerDelegate?
+    weak var delegate: SwitchViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,7 +91,7 @@ class SwitchViewController: UIViewController {
             self.giveGlowEffect(to: label)
         }
  */
-        UIView.transition(with: view, duration: duration, options: .transitionCrossDissolve, animations: {
+        UIView.transition(with: view, duration: duration, options: .transitionCrossDissolve, animations: { [unowned self] in
             if let label = view as? UILabel {
                 label.textColor = .white
             }
@@ -112,7 +112,7 @@ class SwitchViewController: UIViewController {
         let duration: TimeInterval = animated ? animationDuration : 0.0
         print("GlowLabelDuration: \(duration)")
         
-        UIView.transition(with: view, duration: duration, options: .transitionCrossDissolve, animations: {
+        UIView.transition(with: view, duration: duration, options: .transitionCrossDissolve, animations: { [unowned self] in
             if let label = view as? UILabel {
                 if label == self.editLabel {
                     label.textColor = EditMode.edit.textColor

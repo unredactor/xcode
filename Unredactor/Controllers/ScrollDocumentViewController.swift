@@ -37,14 +37,10 @@ class ScrollDocumentViewController: DocumentViewController {
         
         
         if let textView = textView.subviews.first?.subviews.first as? UITextView {
-            //textViewController.removeFromParentViewController()
-            //textView.inputView?.removeFromSuperview()
-            //self.view.addSubview(switchView)
             dismissSwitchView(isAnimated: false)
             
             textView.inputAccessoryView = switchView
             switchView.removeFromSuperview()
-            //self.addChildViewController(textView.inputAccessoryViewController!)
         } else {
             print("ERROR: Failed to find textView in view hierarchy. Look at ScrollDocumentViewController.viewWillAppear(_:) to fix the access route.")
         } // TODO: some sort of test for this cause this is gonna break if I change anything about textViewController in code or storyboard
@@ -125,7 +121,7 @@ class ScrollDocumentViewController: DocumentViewController {
         
         
         // Animate switch view down (back to normal position)
-        UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: { [unowned self] in
             self.switchView.transform = downTransform
         }, completion: { (bool) in
             print("something")
@@ -139,7 +135,7 @@ class ScrollDocumentViewController: DocumentViewController {
         
         // Animate switch view up
         //let moveUpTransform: CGAffineTransform = CGAffineTransform(translationX: 0, y: 60)
-        UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: { [unowned self] in
             self.switchView.transform = identityTransform
         }, completion: { (bool) in
             print("something")
@@ -165,14 +161,10 @@ class ScrollDocumentViewController: DocumentViewController {
         case let switchViewController as SwitchViewController:
             switchViewController.delegate = self
             self.switchViewController = switchViewController
-            //addChildViewController(switchViewController)
-            //switchViewController.didMove(toParentViewController: self)
         case let textViewController as TextViewController:
             textViewController.delegate = self
             self.textViewController = textViewController
             self.textViewController.document = self.document
-            //self.textViewController.configureTextView(withDocument: document)
-            //textViewController.viewWillAppear(true)
         default:
             break
         }

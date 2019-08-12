@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol TextViewControllerDelegate {
+protocol TextViewControllerDelegate: class {
     func keyboardDidShow(_ notification: NSNotification)
     func keyboardWillHide(_ notification: NSNotification)
     
@@ -29,7 +29,7 @@ class TextViewController: UIViewController {
     
     fileprivate let placeholderText = "Enter text here..."
     
-    var delegate: TextViewControllerDelegate?
+    weak var delegate: TextViewControllerDelegate?
     var document: Document!
     
     var editMode: EditMode = .edit
@@ -66,7 +66,7 @@ class TextViewController: UIViewController {
             completion()
         case .redacted:
             document.unredact(completion: {
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [unowned self] in
                     self.textView.attributedText = self.document.attributedText
                     completion()
                 }
@@ -131,7 +131,7 @@ extension TextViewController: UITextViewDelegate {
     func textViewDidEndEditing() {
         textView.resignFirstResponder()
         
-        self.document.setText(to: textView.text)
+        document.setText(to: textView.text)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -202,7 +202,7 @@ extension TextViewController: UITextViewDelegate {
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        if self.view.window != nil {
+        if view.window != nil {
             if textView.textColor == .lightGray {
                 selectBeginningOfTextView()
             }
@@ -258,8 +258,8 @@ extension TextViewController: UIGestureRecognizerDelegate {
 fileprivate extension TextViewController {
     
     func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(_:)), name: .UIKeyboardDidShow, object: self.view.window)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: self.view.window)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(_:)), name: .UIKeyboardDidShow, object: view.window)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: view.window)
     }
     
     func removeObservers() {
