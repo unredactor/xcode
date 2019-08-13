@@ -43,7 +43,7 @@ class PageViewController: UIPageViewController {
 // MARK: - UIPageViewControllerDataSource, UIPageViewControllerDelegate
 extension PageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        let currentIndex = pages.index(of: viewController as! DocumentViewController)!
+        let currentIndex = pages.firstIndex(of: viewController as! DocumentViewController)!
         
         guard currentIndex != 0 else { return nil } // Make sure it isn't the first page
         
@@ -52,7 +52,7 @@ extension PageViewController: UIPageViewControllerDataSource, UIPageViewControll
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        let currentIndex = pages.index(of: viewController as! DocumentViewController)!
+        let currentIndex = pages.firstIndex(of: viewController as! DocumentViewController)!
         
         guard currentIndex != self.pages.count - 1 else { return nil } // Make sure it isn't the last page
         

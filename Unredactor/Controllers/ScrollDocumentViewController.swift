@@ -28,7 +28,7 @@ class ScrollDocumentViewController: DocumentViewController {
     // Allows accessory view to be constantly visible
     override var canBecomeFirstResponder: Bool { return true }
     override var inputAccessoryView: UIView? {
-        switchViewController.removeFromParentViewController() // ??? Should I do this ???
+        switchViewController.removeFromParent() // ??? Should I do this ???
         return switchView
     }
     
@@ -89,7 +89,7 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         guard let userInfo = notification.userInfo else { return }
         
         // get the size of the keboard
-        let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as! CGRect
+        let keyboardRect = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         let keyboardSize = keyboardRect.size
         
         // Scroll the scrollView so the selected content is visible

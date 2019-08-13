@@ -112,7 +112,7 @@ fileprivate extension SwitchViewController {
         opacityAnimation.fromValue = view.layer.shadowOpacity
         opacityAnimation.toValue = 0.95
         opacityAnimation.duration = duration
-        opacityAnimation.fillMode = kCAFillModeForwards
+        opacityAnimation.fillMode = CAMediaTimingFillMode.forwards
         opacityAnimation.isRemovedOnCompletion = false
         view.layer.add(opacityAnimation, forKey: "opacityAnimationGlow")
         
@@ -123,8 +123,8 @@ fileprivate extension SwitchViewController {
     
     func giveFadeAnimation(toLabel label: UILabel) {
         let animation = CATransition()
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        animation.type = kCATransitionFade
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        animation.type = CATransitionType.fade
         animation.duration = animationDuration
         animation.delegate = self
         label.layer.add(animation, forKey: "kCATransitionFade")
@@ -145,7 +145,7 @@ fileprivate extension SwitchViewController {
         opacityAnimation.fromValue = view.layer.shadowOpacity
         opacityAnimation.toValue = 0.0
         opacityAnimation.duration = duration
-        opacityAnimation.fillMode = kCAFillModeForwards
+        opacityAnimation.fillMode = CAMediaTimingFillMode.forwards
         opacityAnimation.isRemovedOnCompletion = false
         view.layer.add(opacityAnimation, forKey: "opacityAnimationFade")
         
