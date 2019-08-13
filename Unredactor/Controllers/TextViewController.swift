@@ -118,7 +118,6 @@ class TextViewController: UIViewController {
         textView.isEditable = true
         editMode = .edit
         textView.becomeFirstResponder()
-        print(textView.text)
     }
     
     func setTextViewRedactable() {
@@ -202,8 +201,6 @@ extension TextViewController: UIGestureRecognizerDelegate {
         let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document)
         
         if editMode == .redact {
-            let previousDocumentState: RedactionState = document.state
-        
             // Make the tapped word toggle between redacted and unredacted
             document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState()
             print("\(document.classifiedText.rawText)")

@@ -54,7 +54,7 @@ class Unredactor {
         // Lesson 5.5 in App Development with Swift
         let baseURL = URL(string: "http://34.83.223.4")!
         
-        let query: [String: String] = ["api_key": "DEMO_KEY"]
+        //let query: [String: String] = ["api_key": "DEMO_KEY"]
         
         let url = baseURL.appendingPathComponent("/unredacted.json")
         
