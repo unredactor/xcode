@@ -28,7 +28,7 @@ class ScrollDocumentViewController: DocumentViewController {
     // Allows accessory view to be constantly visible
     override var canBecomeFirstResponder: Bool { return true }
     override var inputAccessoryView: UIView? {
-        switchViewController.removeFromParent() // ??? Should I do this ???
+        //switchViewController.removeFromParent() // ??? Should I do this ???
         return switchView
     }
     

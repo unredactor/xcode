@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2309D19B23027A850028C2BA /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D19A23027A850028C2BA /* SideMenuViewController.swift */; };
+		2309D19D230462DB0028C2BA /* CABasicAnimation+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */; };
 		2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2377E07C22FA01370021C277 /* SwitchViewController.swift */; };
 		2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */; };
 		23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23946B7522F2512000A69AF3 /* PageViewController.swift */; };
@@ -49,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2309D19A23027A850028C2BA /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CABasicAnimation+Helpers.swift"; sourceTree = "<group>"; };
 		2377E07C22FA01370021C277 /* SwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchViewController.swift; sourceTree = "<group>"; };
 		2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDocumentViewController.swift; sourceTree = "<group>"; };
 		23946B7522F2512000A69AF3 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 			children = (
 				2397332E2301B5A300A378C3 /* DocumentViewController.swift */,
 				23B876E122F93633006E7D16 /* FolderViewController.swift */,
+				2309D19A23027A850028C2BA /* SideMenuViewController.swift */,
 				23946B7522F2512000A69AF3 /* PageViewController.swift */,
 				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,
 				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
@@ -143,6 +148,7 @@
 				2F7C0A9022E0D0FF00AD2828 /* Bool+Helpers.swift */,
 				2F7C0A9422E2D66900AD2828 /* URL+Helpers.swift */,
 				2F7C0A9622E5A34B00AD2828 /* Array+Helpers.swift */,
+				2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -343,6 +349,7 @@
 				2F7C0A9B22E6069600AD2828 /* SettingsTableViewController.swift in Sources */,
 				2F7C0A9522E2D66900AD2828 /* URL+Helpers.swift in Sources */,
 				2F7C0A8722DF863F00AD2828 /* Document.swift in Sources */,
+				2309D19D230462DB0028C2BA /* CABasicAnimation+Helpers.swift in Sources */,
 				2F7C0A8D22E0310400AD2828 /* Unredactor.swift in Sources */,
 				2F7C0A9322E0D8DE00AD2828 /* ClassifiedText.swift in Sources */,
 				2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */,
@@ -350,6 +357,7 @@
 				2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */,
 				23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */,
 				2F7C0A9722E5A34B00AD2828 /* Array+Helpers.swift in Sources */,
+				2309D19B23027A850028C2BA /* SideMenuViewController.swift in Sources */,
 				23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */,
 				2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */,
 				23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */,

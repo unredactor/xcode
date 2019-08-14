@@ -102,6 +102,41 @@
             </objects>
             <point key="canvasLocation" x="-2409.375" y="-363.38028169014086"/>
         </scene>
+        <!--Side Menu View Controller-->
+        <scene sceneID="Qe9-Dp-P9e">
+            <objects>
+                <viewController id="BX1-Kf-Tu3" customClass="SideMenuViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DXB-bV-Z2c">
+                        <rect key="frame" x="0.0" y="0.0" width="260" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="folderSideMenu" translatesAutoresizingMaskIntoConstraints="NO" id="cPi-GC-QBm">
+                                <rect key="frame" x="0.0" y="0.0" width="260" height="568"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="folderSideMenu" translatesAutoresizingMaskIntoConstraints="NO" id="3Yo-jF-yJg" userLabel="backgroundImageView">
+                                <rect key="frame" x="0.0" y="0.0" width="260" height="568"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="cPi-GC-QBm" firstAttribute="top" secondItem="DXB-bV-Z2c" secondAttribute="top" id="2Pm-iJ-OoM"/>
+                            <constraint firstItem="cPi-GC-QBm" firstAttribute="bottom" secondItem="hKa-a2-gGk" secondAttribute="bottom" id="8kv-YP-La2"/>
+                            <constraint firstItem="3Yo-jF-yJg" firstAttribute="leading" secondItem="hKa-a2-gGk" secondAttribute="leading" id="JaA-nb-qhD"/>
+                            <constraint firstItem="cPi-GC-QBm" firstAttribute="leading" secondItem="DXB-bV-Z2c" secondAttribute="leading" id="LJX-2u-fX9"/>
+                            <constraint firstItem="3Yo-jF-yJg" firstAttribute="bottom" secondItem="hKa-a2-gGk" secondAttribute="bottom" id="ehU-hJ-zjS"/>
+                            <constraint firstAttribute="trailing" secondItem="cPi-GC-QBm" secondAttribute="trailing" id="tkg-eE-ngT"/>
+                            <constraint firstItem="3Yo-jF-yJg" firstAttribute="top" secondItem="DXB-bV-Z2c" secondAttribute="top" id="vcw-Kh-BZZ"/>
+                            <constraint firstItem="hKa-a2-gGk" firstAttribute="trailing" secondItem="3Yo-jF-yJg" secondAttribute="trailing" id="x3t-B3-z3L"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hKa-a2-gGk"/>
+                    </view>
+                    <connections>
+                        <outlet property="tintImageView" destination="3Yo-jF-yJg" id="mZP-Sv-YEg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TtE-CH-0mn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3652.5" y="-1732.3943661971832"/>
+        </scene>
         <!--Folder View Controller-->
         <scene sceneID="Y2O-hv-Zsr">
             <objects>
@@ -119,22 +154,60 @@
                                     <segue destination="Nhn-lq-kx0" kind="embed" id="dvi-aZ-oCP"/>
                                 </connections>
                             </containerView>
+                            <containerView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mMg-Py-mGy">
+                                <rect key="frame" x="0.0" y="0.0" width="260" height="568"/>
+                                <connections>
+                                    <segue destination="BX1-Kf-Tu3" kind="embed" id="6lG-oR-bOA"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7MW-7h-okF">
+                                <rect key="frame" x="0.0" y="20" width="77" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="61Z-g5-Qux"/>
+                                    <constraint firstAttribute="width" constant="77" id="jFu-ON-Kse"/>
+                                </constraints>
+                                <state key="normal" title="Show More">
+                                    <color key="titleShadowColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuButtonPressed:" destination="TpE-Ht-se4" eventType="touchUpInside" id="pNu-Ev-CP2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="GMc-9M-9VE" firstAttribute="bottom" secondItem="Wwa-9P-pBp" secondAttribute="bottom" id="0v8-on-Rla"/>
+                            <constraint firstItem="7MW-7h-okF" firstAttribute="top" secondItem="GMc-9M-9VE" secondAttribute="top" id="3Fx-5y-LON"/>
+                            <constraint firstItem="GMc-9M-9VE" firstAttribute="trailing" secondItem="mMg-Py-mGy" secondAttribute="trailing" constant="60" id="77Q-6X-Thv"/>
+                            <constraint firstItem="mMg-Py-mGy" firstAttribute="top" secondItem="Dd0-fw-JxH" secondAttribute="top" id="Dr4-U1-YFm"/>
                             <constraint firstItem="Wwa-9P-pBp" firstAttribute="trailing" secondItem="GMc-9M-9VE" secondAttribute="trailing" id="NWh-MC-QCk"/>
+                            <constraint firstItem="7MW-7h-okF" firstAttribute="leading" secondItem="GMc-9M-9VE" secondAttribute="leading" id="UHs-p5-qIA"/>
                             <constraint firstItem="Wwa-9P-pBp" firstAttribute="leading" secondItem="GMc-9M-9VE" secondAttribute="leading" id="c1d-DY-E7T"/>
+                            <constraint firstItem="mMg-Py-mGy" firstAttribute="leading" secondItem="Dd0-fw-JxH" secondAttribute="leading" id="fRN-OP-QAG"/>
                             <constraint firstItem="zEi-Xj-rON" firstAttribute="trailing" secondItem="GMc-9M-9VE" secondAttribute="trailing" id="ldM-pv-kMV"/>
                             <constraint firstItem="zEi-Xj-rON" firstAttribute="leading" secondItem="GMc-9M-9VE" secondAttribute="leading" id="mi3-fl-7kF"/>
                             <constraint firstItem="Wwa-9P-pBp" firstAttribute="top" secondItem="Dd0-fw-JxH" secondAttribute="top" id="oHb-DQ-XSP"/>
                             <constraint firstItem="zEi-Xj-rON" firstAttribute="top" secondItem="Dd0-fw-JxH" secondAttribute="top" id="r3m-lK-357"/>
+                            <constraint firstAttribute="bottom" secondItem="mMg-Py-mGy" secondAttribute="bottom" id="vBv-IL-Xxv"/>
                             <constraint firstItem="zEi-Xj-rON" firstAttribute="bottom" secondItem="GMc-9M-9VE" secondAttribute="bottom" id="zmv-QZ-Bxd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GMc-9M-9VE"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="07v-TW-AcN" appends="YES" id="7Lk-4d-yaB"/>
+                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="sideMenu" destination="mMg-Py-mGy" id="Kv3-jl-S3V"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4kO-S0-gS0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="07v-TW-AcN">
+                    <connections>
+                        <action selector="panGestureDragged:" destination="TpE-Ht-se4" id="Egy-nW-pwz"/>
+                    </connections>
+                </screenEdgePanGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-2649.375" y="-1233.8028169014085"/>
         </scene>
@@ -409,8 +482,22 @@
             </objects>
             <point key="canvasLocation" x="-3975" y="-351"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="1dh-v1-CHj">
+            <objects>
+                <viewController id="rJS-iQ-9Vz" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Czu-tV-kJy">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eMX-Vv-6nI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
     <resources>
+        <image name="folderSideMenu" width="537" height="957"/>
         <image name="image 2.1 (1)" width="634" height="953"/>
         <image name="manilaFolderTexture" width="602" height="816"/>
         <image name="metallicTexture" width="3264" height="2448"/>
