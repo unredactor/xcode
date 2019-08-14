@@ -28,8 +28,14 @@ class ScrollDocumentViewController: DocumentViewController {
     // Allows accessory view to be constantly visible
     override var canBecomeFirstResponder: Bool { return true }
     override var inputAccessoryView: UIView? {
-        //switchViewController.removeFromParent() // ??? Should I do this ???
-        return switchView
+        switchViewController.removeFromParent()
+        if !textView.isFirstResponder {
+            // ??? Should I do this ???
+            return switchView
+        } else {
+            return nil
+        }
+        
     }
     
     // MARK: - View Life Cycle
@@ -53,6 +59,7 @@ class ScrollDocumentViewController: DocumentViewController {
         case let switchViewController as SwitchViewController:
             switchViewController.delegate = self
             self.switchViewController = switchViewController
+            switchViewController.removeFromParent()
         case let textViewController as TextViewController:
             textViewController.delegate = self
             self.textViewController = textViewController
@@ -137,8 +144,8 @@ fileprivate extension ScrollDocumentViewController {
         if let textView = textView.subviews.first?.subviews.first as? UITextView {
             dismissSwitchView(isAnimated: false)
             
-            textView.inputAccessoryView = switchView
             switchView.removeFromSuperview()
+            textView.inputAccessoryView = switchView
         } else {
             print("ERROR: Failed to find textView in view hierarchy. Look at ScrollDocumentViewController.viewWillAppear(_:) to fix the access route.")
         } // TODO: some sort of test for this cause this is gonna break if I change anything about textViewController in code or storyboard

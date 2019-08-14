@@ -194,20 +194,13 @@
                             <constraint firstItem="zEi-Xj-rON" firstAttribute="bottom" secondItem="GMc-9M-9VE" secondAttribute="bottom" id="zmv-QZ-Bxd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GMc-9M-9VE"/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="07v-TW-AcN" appends="YES" id="7Lk-4d-yaB"/>
-                        </connections>
                     </view>
                     <connections>
+                        <outlet property="pageView" destination="Wwa-9P-pBp" id="S2m-5W-lbA"/>
                         <outlet property="sideMenu" destination="mMg-Py-mGy" id="Kv3-jl-S3V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4kO-S0-gS0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="07v-TW-AcN">
-                    <connections>
-                        <action selector="panGestureDragged:" destination="TpE-Ht-se4" id="Egy-nW-pwz"/>
-                    </connections>
-                </screenEdgePanGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-2649.375" y="-1233.8028169014085"/>
         </scene>
@@ -490,6 +483,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Ya2-rs-hgE"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eMX-Vv-6nI" userLabel="First Responder" sceneMemberID="firstResponder"/>

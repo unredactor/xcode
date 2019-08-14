@@ -34,7 +34,7 @@ class PageViewController: UIPageViewController {
         page2.document = documents[1]
         
         pages.append(page1)
-        pages.append(page2)
+        //pages.append(page2)
         
         setViewControllers([page1], direction: .forward, animated: false, completion: nil)
     }
