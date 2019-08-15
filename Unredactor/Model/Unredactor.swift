@@ -30,7 +30,7 @@ class Unredactor {
         
         print("unredactor.unredact() called")
         
-        getUnredactedWords { (words) in
+        getUnredactedWords(fromText: unredactedText.rawText) { (words) in
             print("unredactoed words something or another")
             
             unredactedWords = words
@@ -50,13 +50,13 @@ class Unredactor {
         }
     }
     
-    func getUnredactedWords(completion: @escaping (([String]) -> Void)) {
+    func getUnredactedWords(fromText text: String, completion: @escaping (([String]) -> Void)) {
         // Lesson 5.5 in App Development with Swift
-        let baseURL = URL(string: "http://34.83.223.4")!
+        let baseURL = URL(string: "http://unredactor.com")!
         
-        //let query: [String: String] = ["api_key": "DEMO_KEY"]
+        let query: [String: String] = ["text": text]
         
-        let url = baseURL.appendingPathComponent("/unredacted.json")
+        let url = baseURL.appendingPathComponent("api").withQueries(query)!
         
         print("Getting unredacted words")
         

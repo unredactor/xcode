@@ -19,6 +19,8 @@ class FolderViewController: UIViewController {
     
     @IBOutlet weak var pageView: UIView!
     @IBOutlet weak var sideMenu: UIView!
+    @IBOutlet weak var menuButtonView: UIView!
+    @IBOutlet weak var menuButtonImage: UIImageView!
     
     var sideMenuViewController: SideMenuViewController!
     
@@ -29,7 +31,7 @@ class FolderViewController: UIViewController {
     private let animationDuration: TimeInterval = 0.6
     private let transformIdentity = CATransform3DIdentity
     /// The shadow offset of the folder side when the folder is out of view and up
-    private let shadowOffsetBeginning: CGSize = CGSize(width: 190.0, height: 0)
+    private let shadowOffsetBeginning: CGSize = CGSize(width: 230.0, height: 0)
     /// The shadow offset of the folder while it is in between being shown and hidden
     //private let shadowOffsetMiddle: CGSize = CGSize(width: 10000.0, height: 0)
     /// The shadow offset of the folder side menu when the folder is visible and down
@@ -42,6 +44,7 @@ class FolderViewController: UIViewController {
     private var lastRotateTransform: CATransform3D?
     private var lastShadowOffset: CGSize?
     private var lastShadowGradientOpacity: CGFloat?
+    private var lastShadowRadius: CGFloat?
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -51,6 +54,7 @@ class FolderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSideMenu()
+        setupMenuButtonView()
         setupPanGestureRecognizer()
         updateSideMenu(isAnimated: false)
     }
@@ -60,6 +64,11 @@ class FolderViewController: UIViewController {
         menuIsShown.toggle()
         
         updateSideMenu(isAnimated: true)
+        animateSideMenuButtonNormal()
+    }
+    
+    @IBAction func menuButtonPressBegan(_ sender: Any) {
+        animateSideMenuButtonHighlighted()
     }
     
     
@@ -83,13 +92,6 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         sideMenu.isHidden = false
         sideMenu.layer.position = CGPoint(x: 0, y: view.frame.height / 2)
         
-        guard let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer else {
-            print("Couldn't cast gestureRecognizer in FolderViewController: UIGestureRecognizerDelegate to UIPanGestureRecgonizer.")
-            return true
-        }
-        
-        //updateSideMenuAngle(withTranslation: gestureRecognizer.translation(in: view), gestureRecognizer: gestureRecognizer, duration: 0.2)
-        
         return true
     }
     
@@ -105,19 +107,39 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         // Set all of the values to proper values w/ folder
         updateSideMenuAngle(percentageDone: percentageDone)
         updateSideMenuShadowOffset(percentageDone: percentageDone)
+        updateSideMenuShadowGradient(percentageDone: percentageDone)
+        updateSideMenuShadowRadius(percentageDone: percentageDone)
+        sideMenuViewController.updateDarkLayer(percentageDone: percentageDone, menuIsShown: menuIsShown)
         
         if gestureRecognizer.state == .ended {
             let velocity = gestureRecognizer.velocity(in: view).x
+            let percentageLeft = 1 - abs(percentageDone)
             
-            if velocity > 0 && !menuIsShown {
-                showSideMenu(duration: TimeInterval(10 / sqrt(velocity)))
+            var duration = TimeInterval(15 * percentageLeft / sqrt(velocity))
+            if duration > 1.0 { duration = 1.0 }
+            print("VELOCITY: \(velocity)")
+            if velocity > 100 {
+                showSideMenu(duration: duration)
                 menuIsShown = true
-            } else if velocity < 0 {
-                hideSideMenu(duration: TimeInterval(10 / sqrt(abs(velocity))))
+            } else if velocity < -100 {
+                hideSideMenu(duration: duration)
                 menuIsShown = false
             } else {
-                menuIsShown ? showSideMenu() : hideSideMenu() // go back to what it was
+                // Go to closest one
+                if percentageLeft > 0.5 && menuIsShown || percentageLeft < 0.5 && !menuIsShown {
+                    showSideMenu(duration: duration)
+                    menuIsShown = true
+                } else {
+                    hideSideMenu(duration: duration)
+                    menuIsShown = false
+                }
             }
+            
+            lastRotateTransform = nil
+            lastShadowOffset = nil
+            lastShadowGradientOpacity = nil
+            lastShadowRadius = nil
+            sideMenuViewController.lastDarkLayerOpacity = nil
         }
     }
     
@@ -144,12 +166,18 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         let fudgeFactor: CGFloat = 1.5
         
         if menuIsShown {
-            shadowOffset = CGSize(width: shadowOffsetBeginning.width * (-1 * percentageDone) * fudgeFactor, height: 0)
+            shadowOffset = CGSize(width: shadowOffsetBeginning.width * (-1 * percentageDone) * fudgeFactor, height: 0) // -1x because percentageDone will be negative when the user dismisses the side menu
         } else {
-            shadowOffset = CGSize(width: shadowOffsetBeginning.width * (1 - percentageDone) * fudgeFactor, height: 0)
+            shadowOffset = CGSize(width: shadowOffsetBeginning.width * (0.6 - percentageDone) * fudgeFactor, height: 0)
         }
         
+        
+        
+        if shadowOffset.width > shadowOffsetBeginning.width { shadowOffset.width = shadowOffsetBeginning.width }
+        if shadowOffset.width < 0 { shadowOffset.width = 0 }
+        
         print("Shadow Offset: \(shadowOffset)")
+        print("percentageDone: \(percentageDone)")
         
         let shadowOffsetAnimation = CABasicAnimation(keyPath: "shadowOffset", toValue: shadowOffset, fromValue: lastShadowOffset, duration: duration)
         lastShadowOffset = shadowOffset
@@ -160,18 +188,43 @@ extension FolderViewController: UIGestureRecognizerDelegate {
     private func updateSideMenuShadowGradient(percentageDone: CGFloat, duration: TimeInterval = 0.0) {
         var opacity: CGFloat
         
+        let fudgeFactor: CGFloat = 1.5
+        
+        
         if menuIsShown {
-            opacity = -1 * percentageDone
+            opacity = -1 * percentageDone * fudgeFactor // -1x because percentageDone will be negative when the user dismisses the side menu
         } else {
-            opacity = percentageDone
+            opacity = (0.6 - percentageDone) * fudgeFactor
         }
         
-        let shadowGradientOpacityAnimation = CABasicAnimation(keyPath: "opacity", toValue: opacity, fromValue: lastShadowGradientOpacity)
+        let shadowGradientOpacityAnimation = CABasicAnimation(keyPath: "opacity", toValue: opacity, fromValue: lastShadowGradientOpacity, duration: duration)
         lastShadowGradientOpacity = opacity
         
         if let sublayer = sideMenu.layer.sublayers?.first {
             sublayer.add(shadowGradientOpacityAnimation, forKey: "shadowGradient")
         }
+    }
+    
+    private func updateSideMenuShadowRadius(percentageDone: CGFloat, duration: TimeInterval = 0.0) {
+        var shadowRadius: CGFloat
+        
+        let maxShadowRadius: CGFloat = 50
+        let minShadowRadius: CGFloat = 15
+        let fudgeFactor: CGFloat = 1.3
+        
+        if menuIsShown {
+            shadowRadius = maxShadowRadius * (-1 * percentageDone) * fudgeFactor + 15 // -1x because percentageDone will be negative when the user dismisses the side menu
+        } else {
+            shadowRadius = maxShadowRadius * (0.6 - percentageDone) * fudgeFactor + 15
+        }
+        
+        if shadowRadius > maxShadowRadius { shadowRadius = maxShadowRadius }
+        if shadowRadius < minShadowRadius { shadowRadius = minShadowRadius }
+        
+        let shadowRadiusAnimation = CABasicAnimation(keyPath: "shadowRadius", toValue: shadowRadius, fromValue: lastShadowRadius, duration: duration)
+        lastShadowRadius = shadowRadius
+        
+        sideMenu.layer.add(shadowRadiusAnimation, forKey: "shadowRadius")
     }
 }
 
@@ -191,13 +244,14 @@ fileprivate extension FolderViewController {
         sideMenu.layer.shadowColor = UIColor.black.cgColor
         sideMenu.layer.position = CGPoint(x: 0, y: view.frame.height / 2)
         sideMenu.layer.shadowRadius = 50
-        sideMenu.layer.shadowOpacity = 0.4
+        sideMenu.layer.shadowOpacity = 0.6
         sideMenu.layer.shadowOffset = shadowOffsetBeginning
         sideMenu.isHidden = true
+        menuIsShown = false
         
         // Create gradient layer
         let color1: UIColor = .clear
-        let color2: UIColor = UIColor.black.withAlphaComponent(0.2)
+        let color2: UIColor = UIColor.black.withAlphaComponent(1.0)
         let shadowGradient = CAGradientLayer()
         shadowGradient.name = "shadowGradient"
         shadowGradient.frame = sideMenu.frame
@@ -242,46 +296,81 @@ fileprivate extension FolderViewController {
         
         sideMenu.isHidden = false
         
-        let flipToShowAnimation = CABasicAnimation(keyPath: "transform", toValue: transformIdentity, fromValue: nil, duration: duration)
+        let flipToShowAnimation = CABasicAnimation(keyPath: "transform", toValue: transformIdentity, fromValue: lastRotateTransform, duration: duration)
         sideMenu.layer.position = CGPoint(x: 0, y: view.frame.height / 2)
         sideMenu.layer.add(flipToShowAnimation, forKey: "showTransform")
         
-        let shadowOffsetAnimation = CABasicAnimation(keyPath: "shadowOffset", toValue: shadowOffsetEnd, fromValue: nil, duration: duration)
+        let shadowOffsetAnimation = CABasicAnimation(keyPath: "shadowOffset", toValue: shadowOffsetEnd, fromValue: lastShadowOffset, duration: duration)
         sideMenu.layer.add(shadowOffsetAnimation, forKey: "showShadowOffset")
         
-        let shadowAnimation = CABasicAnimation(keyPath: "opacity", toValue: 0.0, fromValue: nil, duration: duration)
+        let shadowAnimation = CABasicAnimation(keyPath: "opacity", toValue: 0.0, fromValue: lastShadowGradientOpacity, duration: duration)
         if let sublayer = sideMenu.layer.sublayers?.first {
             sublayer.add(shadowAnimation, forKey: "showShadow")
         }
         
-        let blurAnimation = CABasicAnimation(keyPath: "shadowRadius", toValue: 15, fromValue: nil, duration: duration)
+        let blurAnimation = CABasicAnimation(keyPath: "shadowRadius", toValue: 15, fromValue: lastShadowRadius, duration: duration)
         sideMenu.layer.add(blurAnimation, forKey: "showBlurAnimation")
         
-        sideMenuViewController.animateLighten(withDuration: duration)
+        sideMenuViewController.animateDarken(withDuration: duration)
         
         sideMenu.isUserInteractionEnabled = true
     }
     
     func hideSideMenu(duration: TimeInterval = 0.0) {
         
-        let flipToHideAnimation = CABasicAnimation(keyPath: "transform", toValue: flipToHideTransform, fromValue: nil, duration: duration)
+        let flipToHideAnimation = CABasicAnimation(keyPath: "transform", toValue: flipToHideTransform, fromValue: lastRotateTransform, duration: duration)
         sideMenu.layer.position = CGPoint(x: 0, y: view.frame.height / 2)
         sideMenu.layer.add(flipToHideAnimation, forKey: "hideTransform")
         
-        let shadowOffsetAnimation = CABasicAnimation(keyPath: "shadowOffset", toValue: shadowOffsetBeginning, fromValue: nil, duration: duration)
+        let shadowOffsetAnimation = CABasicAnimation(keyPath: "shadowOffset", toValue: shadowOffsetBeginning, fromValue: lastShadowOffset, duration: duration)
         sideMenu.layer.add(shadowOffsetAnimation, forKey: "hideShadowOffset")
         
-        let shadowAnimation = CABasicAnimation(keyPath: "opacity", toValue: 1.0, fromValue: nil, duration: duration)
+        let shadowAnimation = CABasicAnimation(keyPath: "opacity", toValue: 1.0, fromValue: lastShadowGradientOpacity, duration: duration)
         if let sublayer = sideMenu.layer.sublayers?.first {
             sublayer.add(shadowAnimation, forKey: "hideShadow")
         }
  
-        let blurAnimation = CABasicAnimation(keyPath: "shadowRadius", toValue: 100, fromValue: nil, duration: duration)
+        let blurAnimation = CABasicAnimation(keyPath: "shadowRadius", toValue: 50, fromValue: lastShadowRadius, duration: duration)
         sideMenu.layer.add(blurAnimation, forKey: "hideBlurAnimation")
         
         // Also darken the side menu
-        sideMenuViewController.animateDarken(withDuration: duration)
+        sideMenuViewController.animateLighten(withDuration: duration)
         
         sideMenu.isUserInteractionEnabled = false
+    }
+    
+    func setupMenuButtonView() {
+        // Round corners
+        menuButtonView.layer.cornerRadius = 15
+        menuButtonView.clipsToBounds = true
+        
+        // Make transclucent and blurry
+        menuButtonView.backgroundColor = UIColor.white.withAlphaComponent(0.4)
+        let blurEffect = UIBlurEffect(style: .dark)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        menuButtonView.insertSubview(blurView, at: 0)
+        
+        // Align blurView with view
+        NSLayoutConstraint.activate([
+            blurView.heightAnchor.constraint(equalTo: menuButtonView.heightAnchor),
+            blurView.widthAnchor.constraint(equalTo: menuButtonView.widthAnchor)
+            ])
+        
+        // Make image view transparent
+        menuButtonImage.image = menuButtonImage.image?.withRenderingMode(.alwaysTemplate)
+        menuButtonImage.tintColor = UIColor.white.withAlphaComponent(0.4)
+    }
+    
+    func animateSideMenuButtonNormal() {
+        UIView.animate(withDuration: 0.1) { [unowned self] in
+            self.menuButtonView.backgroundColor = self.menuButtonView.backgroundColor?.adjusted(hueBy: 0, saturationBy: 0, brightnessBy: -0.4)
+        }
+    }
+    
+    func animateSideMenuButtonHighlighted() {
+        UIView.animate(withDuration: 0.1) { [unowned self] in
+            self.menuButtonView.backgroundColor = self.menuButtonView.backgroundColor?.adjusted(hueBy: 0, saturationBy: 0, brightnessBy: 0.4)
+        }
     }
 }
