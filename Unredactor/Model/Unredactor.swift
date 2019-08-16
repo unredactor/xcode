@@ -52,25 +52,32 @@ class Unredactor {
     
     func getUnredactedWords(fromText text: String, completion: @escaping (([String]) -> Void)) {
         // Lesson 5.5 in App Development with Swift
-        let baseURL = URL(string: "http://unredactor.com")!
+        let baseURL = URL(string: "http://unredactor.com/api?text=hello")!
         
-        let query: [String: String] = ["text": text]
+        //let query: [String: String] = ["text": text]
         
-        let url = baseURL.appendingPathComponent("api").withQueries(query)!
+        //let url = baseURL.appendingPathComponent("/api").withQueries(query)!
         
         print("Getting unredacted words")
         
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: baseURL) { (data, response, error) in
             print("donig something with the task")
             let jsonDecoder = JSONDecoder()
             
-            if let data = data, let unredactorInfo = try? jsonDecoder.decode(Array<UnredactorInfo>.self, from:data) { //let unredactorInfo = try? jsonDecoder.decode(UnredactorInfo.self, from: data) {
+            if let response = response {
+                print("RESPONSE: \(response)")
+            }
+            
+            if let error = error {
+                print("ERROR: \(error)")
+            }
+            
+            if let data = data {
+                if let unredactorInfo = try? jsonDecoder.decode(Array<UnredactorInfo>.self, from:data) { //let unredactorInfo = try? jsonDecoder.decode(UnredactorInfo.self, from: data) {
                 
-                completion(unredactorInfo.first!.words)
-                print(String(data: data, encoding: .utf8)!)
-                //print(response)
-                //print(unredactorInfo)
-                //completion(unredactorInfo.words)
+                    completion([unredactorInfo.first!.words])
+                    print(String(data: data, encoding: .utf8)!)
+                }
             } else {
                 print("didn't work i guess lmao gotem")
                 completion(["getUnredactedWords() failed; couldn't properly parse JSON response."])
@@ -82,10 +89,11 @@ class Unredactor {
         task.resume()
     }
     
+    // MARK: - Unredactor Info
     struct UnredactorInfo: Codable {
         var text: String // original text
         var unredacted_text: String // unredacted text
-        var words: [String] // unredacted words
+        var words: String // unredacted words
         
         enum CodingKeys: String, CodingKey {
             case text// = "text"
@@ -97,7 +105,7 @@ class Unredactor {
             let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
             self.text = try valueContainer.decode(String.self, forKey: .text)
             self.unredacted_text = try valueContainer.decode(String.self, forKey: .unredacted_text)
-            self.words = try valueContainer.decode([String].self, forKey: .words)
+            self.words = try valueContainer.decode(String.self, forKey: .words)
         }
     }
     

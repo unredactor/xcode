@@ -23,6 +23,7 @@ class FolderViewController: UIViewController {
     @IBOutlet weak var menuButtonImage: UIImageView!
     
     var sideMenuViewController: SideMenuViewController!
+    var pageViewController: PageViewController!
     
     var documents: [Document] = []
     
@@ -31,7 +32,7 @@ class FolderViewController: UIViewController {
     private let animationDuration: TimeInterval = 0.6
     private let transformIdentity = CATransform3DIdentity
     /// The shadow offset of the folder side when the folder is out of view and up
-    private let shadowOffsetBeginning: CGSize = CGSize(width: 230.0, height: 0)
+    private let shadowOffsetBeginning: CGSize = CGSize(width: 200.0, height: 0)
     /// The shadow offset of the folder while it is in between being shown and hidden
     //private let shadowOffsetMiddle: CGSize = CGSize(width: 10000.0, height: 0)
     /// The shadow offset of the folder side menu when the folder is visible and down
@@ -77,7 +78,9 @@ class FolderViewController: UIViewController {
         switch segue.destination {
         case let pageViewController as PageViewController:
             pageViewController.documents = documents
+            self.pageViewController = pageViewController
         case let sideMenuViewController as SideMenuViewController:
+            sideMenuViewController.delegate = self
             self.sideMenuViewController = sideMenuViewController
         default:
             break
@@ -91,6 +94,11 @@ extension FolderViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         sideMenu.isHidden = false
         sideMenu.layer.position = CGPoint(x: 0, y: view.frame.height / 2)
+        
+        if !menuIsShown {
+            pageViewController.dismissKeyboardOfCurrentPage()
+            //self.resignFirstResponder()
+        }
         
         return true
     }
@@ -117,7 +125,8 @@ extension FolderViewController: UIGestureRecognizerDelegate {
             
             var duration = TimeInterval(15 * percentageLeft / sqrt(velocity))
             if duration > 1.0 { duration = 1.0 }
-            print("VELOCITY: \(velocity)")
+            
+            // TODO: Reformat this to make more sense/be more concise
             if velocity > 100 {
                 showSideMenu(duration: duration)
                 menuIsShown = true
@@ -176,9 +185,6 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         if shadowOffset.width > shadowOffsetBeginning.width { shadowOffset.width = shadowOffsetBeginning.width }
         if shadowOffset.width < 0 { shadowOffset.width = 0 }
         
-        print("Shadow Offset: \(shadowOffset)")
-        print("percentageDone: \(percentageDone)")
-        
         let shadowOffsetAnimation = CABasicAnimation(keyPath: "shadowOffset", toValue: shadowOffset, fromValue: lastShadowOffset, duration: duration)
         lastShadowOffset = shadowOffset
         
@@ -226,6 +232,20 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         
         sideMenu.layer.add(shadowRadiusAnimation, forKey: "shadowRadius")
     }
+}
+
+// MARK: - SideMenuViewControllerDelegate
+extension FolderViewController: SideMenuViewControllerDelegate {
+    func menuButtonPressed() {
+        hideSideMenu(duration: animationDuration)
+        menuIsShown = false
+    }
+    
+    func panGestureRecognizerValueChanged(gestureRecognizer: UIPanGestureRecognizer) {
+        panGestureDragged(gestureRecognizer)
+    }
+    
+    
 }
 
 // MARK: - Helper Functions
@@ -287,6 +307,8 @@ fileprivate extension FolderViewController {
     func updateSideMenu(isAnimated animated: Bool = true) {
         if menuIsShown {
             showSideMenu(duration: animationDuration)
+            pageViewController.dismissKeyboardOfCurrentPage()
+            //self.resignFirstResponder()
         } else {
             hideSideMenu(duration: animationDuration)
         }
@@ -345,7 +367,7 @@ fileprivate extension FolderViewController {
         menuButtonView.clipsToBounds = true
         
         // Make transclucent and blurry
-        menuButtonView.backgroundColor = UIColor.white.withAlphaComponent(0.4)
+        menuButtonView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
         let blurEffect = UIBlurEffect(style: .dark)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.translatesAutoresizingMaskIntoConstraints = false
@@ -364,13 +386,13 @@ fileprivate extension FolderViewController {
     
     func animateSideMenuButtonNormal() {
         UIView.animate(withDuration: 0.1) { [unowned self] in
-            self.menuButtonView.backgroundColor = self.menuButtonView.backgroundColor?.adjusted(hueBy: 0, saturationBy: 0, brightnessBy: -0.4)
+            self.menuButtonView.backgroundColor = self.menuButtonView.backgroundColor?.adjusted(hueBy: 0, saturationBy: 0, brightnessBy: -40)
         }
     }
     
     func animateSideMenuButtonHighlighted() {
         UIView.animate(withDuration: 0.1) { [unowned self] in
-            self.menuButtonView.backgroundColor = self.menuButtonView.backgroundColor?.adjusted(hueBy: 0, saturationBy: 0, brightnessBy: 0.4)
+            self.menuButtonView.backgroundColor = self.menuButtonView.backgroundColor?.adjusted(hueBy: 0, saturationBy: 0, brightnessBy: 40)
         }
     }
 }

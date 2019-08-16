@@ -52,6 +52,13 @@ class ScrollDocumentViewController: DocumentViewController {
         setupRefreshView() // create and add a refresh view to the hierarchy that allows the user to unredact
     }
     
+    // MARK: - Interface (public functinos)
+    override func dismissKeyboard() {
+        textViewController.dismissKeyboard()
+        print("Attempted to resign first responder")
+        self.resignFirstResponder()
+    }
+    
     // MARK: - Navigation
     // Nice technique for using switch let statements from https://medium.com/@superpeteblaze/ios-swift-tip-getting-references-to-container-child-view-controllers-653fe58e6f5e
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -176,7 +183,7 @@ fileprivate extension ScrollDocumentViewController {
     
     private func addShadow(to view: UIView) {
         view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.3
+        view.layer.shadowOpacity = 0.5
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 10
         view.layer.shouldRasterize = true

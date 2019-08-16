@@ -17,7 +17,9 @@ import UIKit
 class PageViewController: UIPageViewController {
     
     // MARK: - Properties
-    var pages = [DocumentViewController]()
+    var currentIndex: Int = 0
+    
+    private var pages = [DocumentViewController]()
     var documents: [Document] = []
     
     // MARK: - View Life Cycle
@@ -27,7 +29,7 @@ class PageViewController: UIPageViewController {
         self.delegate = self
         self.dataSource = self
         
-        let page1: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView") as? DocumentViewController // TODO: Update names
+        let page1: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2") as? DocumentViewController // TODO: Update names
         let page2: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2") as? DocumentViewController
         
         page1.document = documents[0]
@@ -38,26 +40,34 @@ class PageViewController: UIPageViewController {
         
         setViewControllers([page1], direction: .forward, animated: false, completion: nil)
     }
+    
+    // MARK: - Interface (public functions)
+    func dismissKeyboardOfCurrentPage() {
+        print("currentIndex: \(currentIndex)")
+        pages[currentIndex].dismissKeyboard()
+        //self.resignFirstResponder()
+    }
 }
 
 // MARK: - UIPageViewControllerDataSource, UIPageViewControllerDelegate
 extension PageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        let currentIndex = pages.firstIndex(of: viewController as! DocumentViewController)!
-        
-        guard currentIndex != 0 else { return nil } // Make sure it isn't the first page
-        
-        let previousIndex = abs((currentIndex - 1) % pages.count)
-        return pages[previousIndex]
+        if currentIndex <= 0 {
+            return nil
+        } else {
+            currentIndex -= 1
+            return pages[currentIndex]
+        }
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        let currentIndex = pages.firstIndex(of: viewController as! DocumentViewController)!
-        
-        guard currentIndex != self.pages.count - 1 else { return nil } // Make sure it isn't the last page
-        
-        let nextIndex = abs((currentIndex + 1) % pages.count)
-        return pages[nextIndex]
+        if currentIndex >= pages.count - 1 {
+            return nil
+        } else {
+            currentIndex += 1
+            return pages[currentIndex]
+        }
     }
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {

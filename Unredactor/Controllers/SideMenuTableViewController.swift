@@ -8,13 +8,24 @@
 
 import UIKit
 
-class SideMenuTableTableViewController: UITableViewController {
-
+// View Definition
+/**
+ SideMenuTableViewController manages the table view within the side menu and what/how it is displayed
+*/
+class SideMenuTableViewController: UITableViewController {
+    
+    // MARK: - Properties
     @IBOutlet var imageViews: [UIImageView]!
     private let imageViewColor: UIColor = UIColor.black.withAlphaComponent(0.3)
     
+    // MARK: - View LIfe Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    // MARK: - Interface
+    func selectAlgorithm(atIndex index: Int) {
+        tableView.selectRow(at: IndexPath(row: index, section: 0), animated: false, scrollPosition: .none)
     }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -55,7 +66,7 @@ class SideMenuTableTableViewController: UITableViewController {
 
 
 // MARK: - Helper Methods
-fileprivate extension SideMenuTableTableViewController {
+fileprivate extension SideMenuTableViewController {
     func setupImageViews() {
         for imageView in imageViews {
             imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)

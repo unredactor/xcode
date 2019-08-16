@@ -66,6 +66,10 @@ class TextViewController: UIViewController {
     }
     
     // MARK: - Interface (public functions)
+    func dismissKeyboard() {
+        textView.resignFirstResponder()
+    }
+    
     func switchState(to state: RedactionState, completion: @escaping () -> Void = { }) {
         switch state {
         case .notRedacted:
