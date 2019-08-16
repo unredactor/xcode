@@ -12,6 +12,7 @@ import UIKit
 protocol SideMenuViewControllerDelegate: class {
     func menuButtonPressed()
     func panGestureRecognizerValueChanged(gestureRecognizer: UIPanGestureRecognizer)
+    func didSelectRow(_ row: Int)
 }
 
 // MARK: - View Definition
@@ -78,6 +79,23 @@ class SideMenuViewController: UIViewController {
         
         tintImageView.layer.add(darkLayerOpacityAnimation, forKey: "darkLayerOpacity")
     }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.destination {
+        case let sideMenuTableViewController as SideMenuTableViewController:
+            sideMenuTableViewController.delegate = self
+        default:
+            break
+        }
+    }
+}
+
+// MARK: - SideMenuTableViewControllerDelegate
+extension SideMenuViewController: SideMenuTableViewControllerDelegate {
+    func didSelectRow(_ row: Int) {
+        delegate?.didSelectRow(row)
+    }
 }
 
 // MARK: - UIGestureRecognizerDelegate
@@ -86,6 +104,7 @@ extension SideMenuViewController: UIGestureRecognizerDelegate {
         delegate?.panGestureRecognizerValueChanged(gestureRecognizer: gestureRecognizer)
     }
 }
+
 
 // MARK: - Helper Functions
 fileprivate extension SideMenuViewController {

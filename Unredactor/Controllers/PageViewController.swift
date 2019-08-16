@@ -19,8 +19,8 @@ class PageViewController: UIPageViewController {
     // MARK: - Properties
     var currentIndex: Int = 0
     
-    private var pages = [DocumentViewController]()
-    var documents: [Document] = []
+    private var pages = [UIViewController]()
+    var documents: [Document] = [Document(withText: "", unredactor: Unredactor()), Document(withText: "", unredactor: Unredactor())]
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -44,8 +44,26 @@ class PageViewController: UIPageViewController {
     // MARK: - Interface (public functions)
     func dismissKeyboardOfCurrentPage() {
         print("currentIndex: \(currentIndex)")
-        pages[currentIndex].dismissKeyboard()
+        
+        if let currentPage = pages[currentIndex] as? DocumentViewController {
+            currentPage.dismissKeyboard()
+        }
         //self.resignFirstResponder()
+    }
+    
+    func flipToPage(atIndex index: Int) {
+        var direction: UIPageViewController.NavigationDirection
+        if index > currentIndex {
+            direction = .forward
+        } else if index < currentIndex {
+            direction = .reverse
+        } else {
+            return
+        }
+        
+        currentIndex = index
+        
+        setViewControllers([pages[currentIndex]], direction: direction, animated: true, completion: nil)
     }
 }
 

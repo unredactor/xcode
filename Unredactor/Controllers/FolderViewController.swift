@@ -92,10 +92,19 @@ class FolderViewController: UIViewController {
 extension FolderViewController: UIGestureRecognizerDelegate {
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer else { return false }
+        
         sideMenu.isHidden = false
         sideMenu.layer.position = CGPoint(x: 0, y: view.frame.height / 2)
+        let xVelocity = gestureRecognizer.velocity(in: view).x
         
-        if !menuIsShown {
+        guard abs(xVelocity) > 80 else {
+            print("Gesture not horizontal; ")
+            return false
+        }
+        print("Gesture horizontal")
+        
+        if !menuIsShown  {
             pageViewController.dismissKeyboardOfCurrentPage()
             //self.resignFirstResponder()
         }
@@ -236,6 +245,10 @@ extension FolderViewController: UIGestureRecognizerDelegate {
 
 // MARK: - SideMenuViewControllerDelegate
 extension FolderViewController: SideMenuViewControllerDelegate {
+    func didSelectRow(_ row: Int) {
+        pageViewController.flipToPage(atIndex: row)
+    }
+    
     func menuButtonPressed() {
         hideSideMenu(duration: animationDuration)
         menuIsShown = false

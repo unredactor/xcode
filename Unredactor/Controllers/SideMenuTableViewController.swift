@@ -8,6 +8,11 @@
 
 import UIKit
 
+// MARK: - Delegate
+protocol SideMenuTableViewControllerDelegate: class {
+    func didSelectRow(_ row: Int)
+}
+
 // View Definition
 /**
  SideMenuTableViewController manages the table view within the side menu and what/how it is displayed
@@ -16,6 +21,9 @@ class SideMenuTableViewController: UITableViewController {
     
     // MARK: - Properties
     @IBOutlet var imageViews: [UIImageView]!
+    
+    weak var delegate: SideMenuTableViewControllerDelegate?
+    
     private let imageViewColor: UIColor = UIColor.black.withAlphaComponent(0.3)
     
     // MARK: - View LIfe Cycle
@@ -62,6 +70,11 @@ class SideMenuTableViewController: UITableViewController {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //super.tableView(tableView, didSelectRowAt: indexPath)
+        delegate?.didSelectRow(rowForIndexPath(indexPath))
+    }
 }
 
 
@@ -72,6 +85,36 @@ fileprivate extension SideMenuTableViewController {
             imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
             imageView.tintColor = imageViewColor
         }
+    }
+    
+    func rowForIndexPath(_ indexPath: IndexPath) -> Int {
+        guard indexPath.section > 0 else { return indexPath.row }
+        
+        var row = 0
+        for section in 1...indexPath.section {
+            row += tableView.numberOfRows(inSection: section)
+        }
+        row += indexPath.row
+        
+        return row
+    }
+    
+    func indexPathForRow(_ row: Int) -> IndexPath {
+        guard row < tableView.numberOfRows(inSection: 0) else { return IndexPath(row: row, section: 0) }
+        
+        var rowCount = row
+        let numberOfSections = tableView.numberOfSections
+        for section in 0..<numberOfSections {
+            let numberOfRowsInSection = tableView.numberOfRows(inSection: section)
+            if rowCount > numberOfRowsInSection - 1 {
+                rowCount -= numberOfRowsInSection
+            } else {
+                return IndexPath(row: rowCount, section: section)
+            }
+        }
+        
+        print("Looped through all IndexPaths without finding appropriate row. Check in indexPathForRow(_ row: Int) -> IndexPath in SideMenuTableViewController; the logic is incorrect.")
+        return IndexPath(row: 0, section: 0)
     }
 }
 
