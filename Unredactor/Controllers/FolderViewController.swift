@@ -8,6 +8,8 @@
 
 import UIKit
 
+// TODO: - Move animation for sideMenu to a SideMenuAnimationController object (yet to be created)
+
 // MARK: - Class Definition
 /**
  FolderViewController manages the highest level of views, including the background, folder side menu, and PageViewController.
@@ -16,18 +18,22 @@ import UIKit
 class FolderViewController: UIViewController {
     
     // MARK: - Properties
-    
     @IBOutlet weak var pageView: UIView!
     @IBOutlet weak var sideMenu: UIView!
-    @IBOutlet weak var menuButtonView: UIView!
-    @IBOutlet weak var menuButtonImage: UIImageView!
     
     var sideMenuViewController: SideMenuViewController!
     var pageViewController: PageViewController!
     
-    var documents: [Document] = []
+    var documents: [Document] = [Document(withText: "", unredactor: Unredactor()), Document(withText: "", unredactor: Unredactor())]
     
-    var menuIsShown: Bool = false
+    var menuIsShown: Bool = false {
+        willSet {
+            print("willSet")
+            if newValue == false {
+                pageViewController.setCurrentPageFirstResponder()
+            }
+        }
+    }
     
     private let animationDuration: TimeInterval = 0.6
     private let transformIdentity = CATransform3DIdentity
@@ -55,23 +61,9 @@ class FolderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSideMenu()
-        setupMenuButtonView()
         setupPanGestureRecognizer()
         updateSideMenu(isAnimated: false)
     }
-    
-    // MARK: - IBActions
-    @IBAction func menuButtonPressed(_ sender: Any) {
-        menuIsShown.toggle()
-        
-        updateSideMenu(isAnimated: true)
-        animateSideMenuButtonNormal()
-    }
-    
-    @IBAction func menuButtonPressBegan(_ sender: Any) {
-        animateSideMenuButtonHighlighted()
-    }
-    
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -82,6 +74,8 @@ class FolderViewController: UIViewController {
         case let sideMenuViewController as SideMenuViewController:
             sideMenuViewController.delegate = self
             self.sideMenuViewController = sideMenuViewController
+        case let fileButtonViewController as FileButtonViewController:
+            fileButtonViewController.delegate = self
         default:
             break
         }
@@ -97,8 +91,9 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         sideMenu.isHidden = false
         sideMenu.layer.position = CGPoint(x: 0, y: view.frame.height / 2)
         let xVelocity = gestureRecognizer.velocity(in: view).x
+        let yVelocity = gestureRecognizer.velocity(in: view).y
         
-        guard abs(xVelocity) > 80 else {
+        guard abs(xVelocity) > abs(yVelocity) + 30 else { // 30 is a fudge factor to prevent the user from dismissing the keyboard without showing the side menu
             print("Gesture not horizontal; ")
             return false
         }
@@ -107,6 +102,10 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         if !menuIsShown  {
             pageViewController.dismissKeyboardOfCurrentPage()
             //self.resignFirstResponder()
+            
+            if gestureRecognizer.state == .ended {
+                pageViewController.setCurrentPageFirstResponder()
+            }
         }
         
         return true
@@ -128,6 +127,8 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         updateSideMenuShadowRadius(percentageDone: percentageDone)
         sideMenuViewController.updateDarkLayer(percentageDone: percentageDone, menuIsShown: menuIsShown)
         
+        print("\n0")
+        
         if gestureRecognizer.state == .ended {
             let velocity = gestureRecognizer.velocity(in: view).x
             let percentageLeft = 1 - abs(percentageDone)
@@ -135,19 +136,24 @@ extension FolderViewController: UIGestureRecognizerDelegate {
             var duration = TimeInterval(15 * percentageLeft / sqrt(velocity))
             if duration > 1.0 { duration = 1.0 }
             
+            print("test")
             // TODO: Reformat this to make more sense/be more concise
             if velocity > 100 {
+                print("1")
                 showSideMenu(duration: duration)
                 menuIsShown = true
             } else if velocity < -100 {
+                print("2")
                 hideSideMenu(duration: duration)
                 menuIsShown = false
             } else {
                 // Go to closest one
                 if percentageLeft > 0.5 && menuIsShown || percentageLeft < 0.5 && !menuIsShown {
+                    print("3")
                     showSideMenu(duration: duration)
                     menuIsShown = true
                 } else {
+                    print("4")
                     hideSideMenu(duration: duration)
                     menuIsShown = false
                 }
@@ -246,7 +252,12 @@ extension FolderViewController: UIGestureRecognizerDelegate {
 // MARK: - SideMenuViewControllerDelegate
 extension FolderViewController: SideMenuViewControllerDelegate {
     func didSelectRow(_ row: Int) {
-        pageViewController.flipToPage(atIndex: row)
+        let duration = animationDuration / 2
+        hideSideMenu(duration: duration)
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration - 0.1) { [unowned self] in
+            self.pageViewController.flipToPage(atIndex: row)
+        }
+        menuIsShown = false
     }
     
     func menuButtonPressed() {
@@ -259,6 +270,14 @@ extension FolderViewController: SideMenuViewControllerDelegate {
     }
     
     
+}
+
+// MARK: - FileButtonViewControllerDelegate
+extension FolderViewController: FileButtonViewControllerDelegate {
+    func fileButtonPressed() {
+        menuIsShown.toggle()
+        updateSideMenu(isAnimated: true)
+    }
 }
 
 // MARK: - Helper Functions
@@ -293,6 +312,9 @@ fileprivate extension FolderViewController {
         shadowGradient.endPoint = CGPoint(x: 1, y: 0.5)
         shadowGradient.zPosition = 5 // Move in front of side menu
         sideMenu.layer.insertSublayer(shadowGradient, at: 0)
+        
+        // Set selected to match shown view
+        sideMenuViewController.selectRow(atRow: pageViewController.currentIndex)
     }
     
     // from: https://stackoverflow.com/questions/1968017/changing-my-calayers-anchorpoint-moves-the-view
@@ -372,40 +394,5 @@ fileprivate extension FolderViewController {
         sideMenuViewController.animateLighten(withDuration: duration)
         
         sideMenu.isUserInteractionEnabled = false
-    }
-    
-    func setupMenuButtonView() {
-        // Round corners
-        menuButtonView.layer.cornerRadius = 15
-        menuButtonView.clipsToBounds = true
-        
-        // Make transclucent and blurry
-        menuButtonView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
-        let blurEffect = UIBlurEffect(style: .dark)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        menuButtonView.insertSubview(blurView, at: 0)
-        
-        // Align blurView with view
-        NSLayoutConstraint.activate([
-            blurView.heightAnchor.constraint(equalTo: menuButtonView.heightAnchor),
-            blurView.widthAnchor.constraint(equalTo: menuButtonView.widthAnchor)
-            ])
-        
-        // Make image view transparent
-        menuButtonImage.image = menuButtonImage.image?.withRenderingMode(.alwaysTemplate)
-        menuButtonImage.tintColor = UIColor.white.withAlphaComponent(0.4)
-    }
-    
-    func animateSideMenuButtonNormal() {
-        UIView.animate(withDuration: 0.1) { [unowned self] in
-            self.menuButtonView.backgroundColor = self.menuButtonView.backgroundColor?.adjusted(hueBy: 0, saturationBy: 0, brightnessBy: -40)
-        }
-    }
-    
-    func animateSideMenuButtonHighlighted() {
-        UIView.animate(withDuration: 0.1) { [unowned self] in
-            self.menuButtonView.backgroundColor = self.menuButtonView.backgroundColor?.adjusted(hueBy: 0, saturationBy: 0, brightnessBy: 40)
-        }
     }
 }

@@ -11,7 +11,9 @@
 		2309D19D230462DB0028C2BA /* CABasicAnimation+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */; };
 		23159A842305C938007D57DE /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A832305C938007D57DE /* SideMenuTableViewController.swift */; };
 		23159A86230602AE007D57DE /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A85230602AE007D57DE /* UIColor+Helpers.swift */; };
+		23159A882307138A007D57DE /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A872307138A007D57DE /* ScrollViewController.swift */; };
 		2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2377E07C22FA01370021C277 /* SwitchViewController.swift */; };
+		2387F78D2308A91A00F918B8 /* FileButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387F78C2308A91A00F918B8 /* FileButtonViewController.swift */; };
 		2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */; };
 		23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23946B7522F2512000A69AF3 /* PageViewController.swift */; };
 		2397332F2301B5A400A378C3 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2397332E2301B5A300A378C3 /* DocumentViewController.swift */; };
@@ -57,7 +59,9 @@
 		2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CABasicAnimation+Helpers.swift"; sourceTree = "<group>"; };
 		23159A832305C938007D57DE /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		23159A85230602AE007D57DE /* UIColor+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
+		23159A872307138A007D57DE /* ScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewController.swift; sourceTree = "<group>"; };
 		2377E07C22FA01370021C277 /* SwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchViewController.swift; sourceTree = "<group>"; };
+		2387F78C2308A91A00F918B8 /* FileButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileButtonViewController.swift; sourceTree = "<group>"; };
 		2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDocumentViewController.swift; sourceTree = "<group>"; };
 		23946B7522F2512000A69AF3 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		2397332E2301B5A300A378C3 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 		237C08A022FB95C800DE3379 /* Old Stuff (Unused) */ = {
 			isa = PBXGroup;
 			children = (
+				2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */,
 			);
 			path = "Old Stuff (Unused)";
 			sourceTree = "<group>";
@@ -127,10 +132,11 @@
 				2309D19A23027A850028C2BA /* SideMenuViewController.swift */,
 				23159A832305C938007D57DE /* SideMenuTableViewController.swift */,
 				23946B7522F2512000A69AF3 /* PageViewController.swift */,
+				23159A872307138A007D57DE /* ScrollViewController.swift */,
 				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,
+				2387F78C2308A91A00F918B8 /* FileButtonViewController.swift */,
 				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
 				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
-				2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -362,11 +368,13 @@
 				2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */,
 				23BE4D1B23022780005407FF /* EditMode.swift in Sources */,
 				2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */,
+				23159A882307138A007D57DE /* ScrollViewController.swift in Sources */,
 				23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */,
 				23159A86230602AE007D57DE /* UIColor+Helpers.swift in Sources */,
 				2F7C0A9722E5A34B00AD2828 /* Array+Helpers.swift in Sources */,
 				2309D19B23027A850028C2BA /* SideMenuViewController.swift in Sources */,
 				23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */,
+				2387F78D2308A91A00F918B8 /* FileButtonViewController.swift in Sources */,
 				2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */,
 				23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */,
 				2397332F2301B5A400A378C3 /* DocumentViewController.swift in Sources */,

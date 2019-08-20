@@ -96,8 +96,11 @@ class TextViewController: UIViewController {
     }
     
     func configureTextView(withDocument document: Document) {
-        textView.attributedText = document.attributedText
+        self.document = document
         textView.font = document.font
+
+        guard textView.textColor != UIColor.lightGray else { return }
+        textView.attributedText = document.attributedText
     }
     
     func setTextView(toEditMode editMode: EditMode) {

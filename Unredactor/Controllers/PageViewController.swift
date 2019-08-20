@@ -26,17 +26,18 @@ class PageViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.delegate = self
-        self.dataSource = self
+        //self.delegate = self
+        //self.dataSource = self
+        
         
         let page1: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2") as? DocumentViewController // TODO: Update names
-        let page2: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2") as? DocumentViewController
+        let page2: ScrollViewController! = storyboard?.instantiateViewController(withIdentifier: "About") as? ScrollViewController
         
         page1.document = documents[0]
-        page2.document = documents[1]
+        //page2.document = documents[1]
         
         pages.append(page1)
-        //pages.append(page2)
+        pages.append(page2)
         
         setViewControllers([page1], direction: .forward, animated: false, completion: nil)
     }
@@ -51,6 +52,12 @@ class PageViewController: UIPageViewController {
         //self.resignFirstResponder()
     }
     
+    func setCurrentPageFirstResponder() {
+        if let currentPage = pages[currentIndex] as? ScrollDocumentViewController {
+            currentPage.becomeFirstResponder()
+        }
+    }
+    
     func flipToPage(atIndex index: Int) {
         var direction: UIPageViewController.NavigationDirection
         if index > currentIndex {
@@ -62,11 +69,13 @@ class PageViewController: UIPageViewController {
         }
         
         currentIndex = index
-        
+        print("currentIndex: \(currentIndex)")
         setViewControllers([pages[currentIndex]], direction: direction, animated: true, completion: nil)
+        setCurrentPageFirstResponder()
     }
 }
 
+/*
 // MARK: - UIPageViewControllerDataSource, UIPageViewControllerDelegate
 extension PageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
@@ -96,3 +105,4 @@ extension PageViewController: UIPageViewControllerDataSource, UIPageViewControll
         return 0
     }
 }
+*/

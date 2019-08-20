@@ -10,19 +10,19 @@ import UIKit
 
 // MARK: - Class Definition
 /**
- ScrollDocumentViewController manages a scroll view (for a particular document). It mainly serves to tie
- together the child view controllers (textViewController and switchViewController).
+ ScrollDocumentViewController is a subclass of ScrollViewController that conforms to DocumentViewController. It adds a TextViewController, SwitchViewController, and UIRefreshControl to allow the user to edit, redact, and unredact a document.
 */
-class ScrollDocumentViewController: DocumentViewController {
+class ScrollDocumentViewController: ScrollViewController, DocumentViewController {
     
     // MARK: - Properties
-    @IBOutlet weak private var scrollView: UIScrollView!
     
     @IBOutlet weak private var switchView: UIView!
     @IBOutlet weak private var textView: UIView!
     
     var switchViewController: SwitchViewController!
     var textViewController: TextViewController!
+    
+    var document: Document!
     
     // From https://stackoverflow.com/questions/10768659/leaving-inputaccessoryview-visible-after-keyboard-is-dismissed
     // Allows accessory view to be constantly visible
@@ -41,19 +41,21 @@ class ScrollDocumentViewController: DocumentViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-        setupScrollView() // for now, just add a shadow to the document so it looks nice.
         setupSwitchView() // also add a shadow to the switch view and dismiss the switch view
         setupTextView() // align text view behavior with switch behavior
         setupRefreshView() // create and add a refresh view to the hierarchy that allows the user to unredact
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //setupScrollView() // for now, just add a shadow to the document so it looks nice.
+        
+    }
+    
     // MARK: - Interface (public functinos)
-    override func dismissKeyboard() {
+    func dismissKeyboard() {
         textViewController.dismissKeyboard()
         print("Attempted to resign first responder")
         self.resignFirstResponder()
@@ -129,14 +131,6 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
 
 // MARK: - Helper Functions
 fileprivate extension ScrollDocumentViewController {
-    func setupScrollView() {
-        guard let backgroundView = scrollView.subviews.first else {
-            print("Setup scroll view unsuccessful; backgroundView not found in subviews as first view")
-            return
-        }
-        
-        addShadow(to: backgroundView)
-    }
     
     func setupSwitchView() {
         addShadow(to: switchView)
@@ -179,15 +173,6 @@ fileprivate extension ScrollDocumentViewController {
                 self.scrollView.refreshControl?.endRefreshing()
             }
         }
-    }
-    
-    private func addShadow(to view: UIView) {
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.5
-        view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 10
-        view.layer.shouldRasterize = true
-        view.layer.rasterizationScale = UIScreen.main.scale
     }
     
     private func dismissSwitchView(isAnimated: Bool = true) {

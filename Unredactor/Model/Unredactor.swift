@@ -52,7 +52,7 @@ class Unredactor {
     
     func getUnredactedWords(fromText text: String, completion: @escaping (([String]) -> Void)) {
         // Lesson 5.5 in App Development with Swift
-        let baseURL = URL(string: "http://unredactor.com/api?text=hello")!
+        let baseURL = URL(string: "https://unredactor.com/api?text=hello")!
         
         //let query: [String: String] = ["text": text]
         
@@ -73,14 +73,16 @@ class Unredactor {
             }
             
             if let data = data {
-                if let unredactorInfo = try? jsonDecoder.decode(Array<UnredactorInfo>.self, from:data) { //let unredactorInfo = try? jsonDecoder.decode(UnredactorInfo.self, from: data) {
+                if let unredactorInfo = try? jsonDecoder.decode(UnredactorInfo.self, from:data) {
                 
-                    completion([unredactorInfo.first!.words])
+                    completion(unredactorInfo.unredacted_words)
                     print(String(data: data, encoding: .utf8)!)
+                } else {
+                    completion(["getUnredactedWords() failed; couldn't properly parse JSON response."])
                 }
             } else {
                 print("didn't work i guess lmao gotem")
-                completion(["getUnredactedWords() failed; couldn't properly parse JSON response."])
+                completion(["getUnredactedWords() failed; couldn't get JSON response from server"])
             }
         }
         
@@ -93,19 +95,19 @@ class Unredactor {
     struct UnredactorInfo: Codable {
         var text: String // original text
         var unredacted_text: String // unredacted text
-        var words: String // unredacted words
+        var unredacted_words: [String] // unredacted words
         
         enum CodingKeys: String, CodingKey {
             case text// = "text"
             case unredacted_text// = "unredacted_text"
-            case words// = "words"
+            case unredacted_words// = "words"
         }
         
         init(from decoder: Decoder) throws {
             let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
             self.text = try valueContainer.decode(String.self, forKey: .text)
             self.unredacted_text = try valueContainer.decode(String.self, forKey: .unredacted_text)
-            self.words = try valueContainer.decode(String.self, forKey: .words)
+            self.unredacted_words = try valueContainer.decode([String].self, forKey: .unredacted_words)
         }
     }
     

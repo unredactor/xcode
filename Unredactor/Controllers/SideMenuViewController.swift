@@ -23,8 +23,6 @@ class SideMenuViewController: UIViewController {
     
     // MARK: - Properties
     @IBOutlet weak var tintImageView: UIImageView!
-    @IBOutlet weak var fileIconImageView: UIImageView!
-    @IBOutlet weak var menuButtonView: UIView!
     
     var lastDarkLayerOpacity: CGFloat?
     
@@ -32,18 +30,18 @@ class SideMenuViewController: UIViewController {
     
     let textColor: UIColor = .black
     
+    private var sideMenuTableViewController: SideMenuTableViewController!
+    
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTintImageView()
-        setupFileIconImageView()
         setupPanGestureRecognizer()
-        setupMenuButtonView()
     }
     
-    //MARK: - IBActions
-    @IBAction func menuButtonPressed(_ sender: Any) {
-        delegate?.menuButtonPressed()
+    /// Set a row to appear to be selected. Does not perform the action associated with selecting it.
+    func selectRow(atRow row: Int) {
+        sideMenuTableViewController.selectRow(atRow: row, isAnimated: false) // Not animated because this is just for setup
     }
     
     // MARK: - Interface (public functions)
@@ -85,6 +83,9 @@ class SideMenuViewController: UIViewController {
         switch segue.destination {
         case let sideMenuTableViewController as SideMenuTableViewController:
             sideMenuTableViewController.delegate = self
+            self.sideMenuTableViewController = sideMenuTableViewController
+        case let fileButtonViewController as FileButtonViewController:
+            fileButtonViewController.delegate = self
         default:
             break
         }
@@ -105,40 +106,20 @@ extension SideMenuViewController: UIGestureRecognizerDelegate {
     }
 }
 
+// MARK: - FileButtonViewControllerDelegate
+extension SideMenuViewController: FileButtonViewControllerDelegate {
+    func fileButtonPressed() {
+        delegate?.menuButtonPressed()
+    }
+    
+    
+}
 
 // MARK: - Helper Functions
 fileprivate extension SideMenuViewController {
     func setupTintImageView() {
         tintImageView.tintColor = .white
         tintImageView.image = tintImageView.image?.withRenderingMode(.alwaysTemplate)
-    }
-    
-    func setupFileIconImageView() {
-        fileIconImageView.tintColor = UIColor.black.withAlphaComponent(0.4)
-        fileIconImageView.image = fileIconImageView.image?.withRenderingMode(.alwaysTemplate)
-    }
-    
-    func setupMenuButtonView() {
-        // Round corners
-        menuButtonView.layer.cornerRadius = 15
-        menuButtonView.clipsToBounds = true
-        
-        // Make transclucent and blurry
-        menuButtonView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
-        let blurEffect = UIBlurEffect(style: .dark)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        menuButtonView.insertSubview(blurView, at: 0)
-        
-        // Align blurView with view
-        NSLayoutConstraint.activate([
-            blurView.heightAnchor.constraint(equalTo: menuButtonView.heightAnchor),
-            blurView.widthAnchor.constraint(equalTo: menuButtonView.widthAnchor)
-            ])
-        
-        // Make image view transparent
-        fileIconImageView.image = fileIconImageView.image?.withRenderingMode(.alwaysTemplate)
-        fileIconImageView.tintColor = UIColor.white.withAlphaComponent(0.4)
     }
     
     func setupPanGestureRecognizer() {

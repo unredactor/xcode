@@ -32,8 +32,10 @@ class SideMenuTableViewController: UITableViewController {
     }
     
     // MARK: - Interface
-    func selectAlgorithm(atIndex index: Int) {
-        tableView.selectRow(at: IndexPath(row: index, section: 0), animated: false, scrollPosition: .none)
+    func selectRow(atRow row: Int, isAnimated animated: Bool) {
+        let selectedRow = indexPathForRow(row)
+        tableView.selectRow(at: selectedRow, animated: animated, scrollPosition: .none)
+        tableView.reloadData()
     }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -71,6 +73,14 @@ class SideMenuTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        } else {
+            return 3
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //super.tableView(tableView, didSelectRowAt: indexPath)
         delegate?.didSelectRow(rowForIndexPath(indexPath))
@@ -92,9 +102,11 @@ fileprivate extension SideMenuTableViewController {
         
         var row = 0
         for section in 1...indexPath.section {
-            row += tableView.numberOfRows(inSection: section)
+            row += tableView.numberOfRows(inSection: section - 1)
+            print("numberofrows: \(tableView.numberOfRows(inSection: section - 1))")
         }
         row += indexPath.row
+        print("row: \(indexPath.row)")
         
         return row
     }
