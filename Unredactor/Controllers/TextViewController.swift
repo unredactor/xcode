@@ -187,11 +187,15 @@ extension TextViewController: UITextViewDelegate {
             let textWasDeleted = updatedText.count < textView.text.count
             if textWasDeleted {
                 document.removeLastCharacter()
+                textView.attributedText = document.attributedText
+                textView.font = document.font
             } else {
                 document.appendCharacterToText(text)
+                textView.attributedText = document.attributedText
+                textView.font = document.font
             }
             
-            return true
+            return false
         }
         
         // ...otherwise return false since the updates have

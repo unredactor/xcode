@@ -36,7 +36,7 @@ class Document {
                 attributedWord.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: word.unredactorPrediction!.count))
             }
             
-            attributedText.append(attributedSpace)
+            if string != " " { attributedText.append(attributedSpace) } // If the string is " ", this means the user typed a space. This is used to separate words of different redaction states when typing. If the space was added, this would produce two spaces when the user typed only one. There should only be one " " word if any, and it should be at the end of the sentence.
             attributedText.append(attributedWord)
         }
         
