@@ -108,6 +108,10 @@ fileprivate extension SideMenuTableViewController {
     func rowForIndexPath(_ indexPath: IndexPath) -> Int {
         guard indexPath.section > 0 else { return indexPath.row }
         
+        if indexPath == IndexPath(row: 0, section: 1) {
+            return 1
+        }
+        
         var row = 0
         for section in 1...indexPath.section {
             row += numberOfRows(inSection: section - 1)

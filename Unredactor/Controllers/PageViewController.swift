@@ -30,18 +30,19 @@ class PageViewController: UIPageViewController {
         //self.dataSource = self
         
         
-        let page1: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2") as? DocumentViewController // TODO: Update names
-        let page2: ScrollViewController! = storyboard?.instantiateViewController(withIdentifier: "About") as? ScrollViewController
-        let page3: ScrollViewController! = storyboard?.instantiateViewController(withIdentifier: "Creators") as? ScrollViewController
-        let page4: UnredactorWebsiteViewController! = storyboard?.instantiateViewController(withIdentifier: "Website") as? UnredactorWebsiteViewController
-        let page5: MancepsWebsiteViewController! = storyboard?.instantiateViewController(withIdentifier: "Manceps") as? MancepsWebsiteViewController
+        let unredactor: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2") as? DocumentViewController // TODO: Update names
+        let chatbot: ChatViewController! = storyboard?.instantiateViewController(withIdentifier: "chatbot") as? ChatViewController
+        let about: ScrollViewController! = storyboard?.instantiateViewController(withIdentifier: "About") as? ScrollViewController
+        let creators: ScrollViewController! = storyboard?.instantiateViewController(withIdentifier: "Creators") as? ScrollViewController
+        let website: UnredactorWebsiteViewController! = storyboard?.instantiateViewController(withIdentifier: "Website") as? UnredactorWebsiteViewController
+        let manceps: MancepsWebsiteViewController! = storyboard?.instantiateViewController(withIdentifier: "Manceps") as? MancepsWebsiteViewController
         
-        page1.document = documents[0]
+        unredactor.document = documents[0]
         //page2.document = documents[1]
         
-        pages.append(contentsOf: [page1, page2, page3, page4, page5])
+        pages.append(contentsOf: [unredactor, chatbot, about, creators, website, manceps])
         
-        setViewControllers([page1], direction: .forward, animated: false, completion: nil)
+        setViewControllers([unredactor], direction: .forward, animated: false, completion: nil)
     }
     
     // MARK: - Interface (public functions)

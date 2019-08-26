@@ -384,13 +384,13 @@
         <!--Chat View Controller-->
         <scene sceneID="HCk-xt-o5m">
             <objects>
-                <viewController id="6Ab-x0-yt1" customClass="ChatViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="chatbot" id="6Ab-x0-yt1" customClass="ChatViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bcv-5a-d1v">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hsR-m1-E4a">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="485"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="userMessage" rowHeight="60" id="5oK-yx-CSN" customClass="MessageTableViewCell" customModule="Unredactor" customModuleProvider="target">
@@ -403,7 +403,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4l8-Z8-DDQ">
                                                     <rect key="frame" x="81" y="11" width="224" height="38"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text message here..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aX1-Y0-M7C">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text message here..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aX1-Y0-M7C">
                                                             <rect key="frame" x="16" y="8" width="192" height="22"/>
                                                             <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -441,7 +441,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LdR-ty-EUU">
                                                     <rect key="frame" x="15" y="11" width="224" height="38"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text message here..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nv5-Jk-NOm">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text message here..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nv5-Jk-NOm">
                                                             <rect key="frame" x="16" y="8" width="192" height="22"/>
                                                             <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -472,13 +472,13 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="htE-Sh-Eea">
-                                <rect key="frame" x="0.0" y="485" width="320" height="83"/>
+                                <rect key="frame" x="0.0" y="519" width="320" height="49"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rbo-63-330">
-                                        <rect key="frame" x="259" y="43" width="45" height="32"/>
+                                        <rect key="frame" x="260" y="8" width="44" height="33"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="45" id="YWg-pJ-Tn6"/>
-                                            <constraint firstAttribute="height" constant="32" id="rud-P2-Yhu"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="YWg-pJ-Tn6"/>
+                                            <constraint firstAttribute="height" constant="33" id="kVa-x4-rWY"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <state key="normal" title="Send"/>
@@ -486,8 +486,8 @@
                                             <action selector="sendButtonPressed:" destination="6Ab-x0-yt1" eventType="touchUpInside" id="BJW-0b-nfV"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="B4k-Yt-503">
-                                        <rect key="frame" x="16" y="8" width="235" height="67"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" scrollEnabled="NO" text="This is just so that this view will show up; ill try to fix it later." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="B4k-Yt-503">
+                                        <rect key="frame" x="16" y="8" width="236" height="33"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="250" constant="44" id="Oxj-sC-uLm"/>
@@ -495,15 +495,26 @@
                                         <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DrA-kj-CNa">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="0.5"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="Dlb-V6-cfZ"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" secondItem="B4k-Yt-503" secondAttribute="height" constant="16" id="66b-2G-Y4D"/>
+                                    <constraint firstItem="DrA-kj-CNa" firstAttribute="top" secondItem="htE-Sh-Eea" secondAttribute="top" id="ABq-5o-VPQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="DrA-kj-CNa" secondAttribute="trailing" id="Mbu-Pk-D8M"/>
                                     <constraint firstAttribute="bottom" secondItem="B4k-Yt-503" secondAttribute="bottom" constant="8" id="TZB-2c-WJe"/>
                                     <constraint firstItem="B4k-Yt-503" firstAttribute="leading" secondItem="htE-Sh-Eea" secondAttribute="leading" constant="16" id="UlE-TU-g7S"/>
                                     <constraint firstAttribute="trailing" secondItem="Rbo-63-330" secondAttribute="trailing" constant="16" id="X4y-5f-noc"/>
+                                    <constraint firstAttribute="height" secondItem="B4k-Yt-503" secondAttribute="height" constant="16" id="gr4-ED-Kyh"/>
                                     <constraint firstAttribute="bottom" secondItem="Rbo-63-330" secondAttribute="bottom" constant="8" id="i8O-T5-w1K"/>
                                     <constraint firstItem="B4k-Yt-503" firstAttribute="top" secondItem="htE-Sh-Eea" secondAttribute="top" constant="8" id="lez-O7-Emg"/>
+                                    <constraint firstItem="DrA-kj-CNa" firstAttribute="leading" secondItem="htE-Sh-Eea" secondAttribute="leading" id="mul-f1-YAE"/>
+                                    <constraint firstItem="Rbo-63-330" firstAttribute="top" secondItem="htE-Sh-Eea" secondAttribute="top" constant="8" id="vAK-yA-LHe"/>
                                     <constraint firstItem="Rbo-63-330" firstAttribute="leading" secondItem="B4k-Yt-503" secondAttribute="trailing" constant="8" id="wPM-80-Br1"/>
                                 </constraints>
                             </view>

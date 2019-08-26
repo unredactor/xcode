@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+class Chatbot {
+    func reply(toMessage message: Message, completion: @escaping (Message) -> Void) {
+        // Calculate message
+        let replyMessage = message
+        
+        completion(replyMessage)
+    }
+}

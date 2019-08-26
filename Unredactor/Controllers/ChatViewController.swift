@@ -17,12 +17,16 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var messageInputView: UIView!
     @IBOutlet weak var messageTextView: UITextView!
     
-    var messages: [Message] = []
+    var messages: [Message] = [Message(withText: "hello", fromSender: .user), Message(withText: "hi", fromSender: .chatbot)]
+    let chatbot = Chatbot()
 
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMessageInputView()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     @IBAction func sendButtonPressed(_ sender: Any) {
@@ -32,13 +36,18 @@ class ChatViewController: UIViewController {
         tableView.reloadData()
         
         // Reply
-        
+        chatbot.reply(toMessage: newMessage) { [unowned self] (replyMessage: Message) in
+            self.messages.append(replyMessage)
+            DispatchQueue.main.async { self.tableView.reloadData() }
+        }
     }
 }
 
 // MARK: - Table View Data Source & Delegate
 extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        print("Message Number: \(messages.count)")
         return messages.count
     }
     
@@ -75,6 +84,7 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - Helper Methods
 fileprivate extension ChatViewController {
     func setupMessageInputView() {
+        messageInputView.removeFromSuperview()
         messageTextView.inputAccessoryView = messageInputView
     }
 }
