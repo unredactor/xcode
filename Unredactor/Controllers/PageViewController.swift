@@ -32,12 +32,14 @@ class PageViewController: UIPageViewController {
         
         let page1: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2") as? DocumentViewController // TODO: Update names
         let page2: ScrollViewController! = storyboard?.instantiateViewController(withIdentifier: "About") as? ScrollViewController
+        let page3: ScrollViewController! = storyboard?.instantiateViewController(withIdentifier: "Creators") as? ScrollViewController
+        let page4: UnredactorWebsiteViewController! = storyboard?.instantiateViewController(withIdentifier: "Website") as? UnredactorWebsiteViewController
+        let page5: MancepsWebsiteViewController! = storyboard?.instantiateViewController(withIdentifier: "Manceps") as? MancepsWebsiteViewController
         
         page1.document = documents[0]
         //page2.document = documents[1]
         
-        pages.append(page1)
-        pages.append(page2)
+        pages.append(contentsOf: [page1, page2, page3, page4, page5])
         
         setViewControllers([page1], direction: .forward, animated: false, completion: nil)
     }
@@ -69,9 +71,7 @@ class PageViewController: UIPageViewController {
         }
         
         currentIndex = index
-        print("currentIndex: \(currentIndex)")
         setViewControllers([pages[currentIndex]], direction: direction, animated: true, completion: nil)
-        setCurrentPageFirstResponder()
     }
 }
 

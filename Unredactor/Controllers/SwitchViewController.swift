@@ -26,7 +26,7 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     @IBOutlet weak var editLabel: UILabel!
     @IBOutlet weak var redactLabel: UILabel!
     
-    var state: EditMode = .edit
+    var state: EditMode = .editable
     
     weak var delegate: SwitchViewControllerDelegate?
     
@@ -38,9 +38,9 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
         super.viewDidLoad()
         
         switch state {
-        case .edit:
+        case .editable:
             editLabel.textColor = .white
-        case .redact:
+        case .redactable:
             redactLabel.textColor = .white
         }
         
@@ -57,17 +57,17 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     
     // MARK: - IBActions
     @IBAction func editButtonPressed(_ sender: Any) {
-        state = .edit
+        state = .editable
         updateSwitchDirection()
         updateViews(isAnimated: false)
-        delegate?.switchWasToggled(to: .edit)
+        delegate?.switchWasToggled(to: .editable)
     }
     
     @IBAction func redactButtonPressed(_ sender: Any) {
-        state = .redact
+        state = .redactable
         updateSwitchDirection()
         updateViews(isAnimated: false)
-        delegate?.switchWasToggled(to: .edit)
+        delegate?.switchWasToggled(to: .editable)
     }
     
     @IBAction func toggleSwitch(_ sender: UISwitch) {
@@ -83,7 +83,7 @@ fileprivate extension SwitchViewController {
     func updateViews(isAnimated animated: Bool) { // Changes the appearance of the views to reflect
         print("isAnimated: \(animated)")
         
-        if state == .edit {
+        if state == .editable {
             removeGlowEffect(from: stateSwitch, isAnimated: animated)
             addGlowEffect(to: editLabel, isAnimated: animated)
             removeGlowEffect(from: redactLabel, isAnimated: animated)
@@ -95,7 +95,7 @@ fileprivate extension SwitchViewController {
     }
     
     func updateSwitchDirection() { // Change the direction of the switch according to the state
-        stateSwitch.isOn = state == .edit ? false : true
+        stateSwitch.isOn = state == .editable ? false : true
     }
     
     func addGlowEffect(to view: UIView, isAnimated animated: Bool) { // Give a label a transparent white shadow, simulating a glow
@@ -150,8 +150,8 @@ fileprivate extension SwitchViewController {
         view.layer.add(opacityAnimation, forKey: "opacityAnimationFade")
         
         if let label = view as? UILabel {
-            if label == editLabel { label.textColor = EditMode.edit.textColor }
-            else if label == redactLabel { label.textColor = EditMode.redact.textColor }
+            if label == editLabel { label.textColor = EditMode.editable.textColor }
+            else if label == redactLabel { label.textColor = EditMode.redactable.textColor }
         }
     }
 }

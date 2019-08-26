@@ -16,12 +16,30 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         
         var rawText: String = ""
         for word in self.words {
-            rawText.append(word.string)
+            let string = word.string
+            
+            rawText.append(string)
             rawText.append(" ")
         }
-        rawText.removeLast() // Remove the last space that was aded
+        rawText.removeLast() // Remove the last space that was added
+        print("rawText: \(rawText)")
         
         return rawText
+    }
+    
+    var urlText: String {
+        var urlText: String = ""
+        for word in self.words {
+            var string = word.string
+            if word.redactionState == .redacted { string = "unk" }
+            
+            urlText.append(string)
+            urlText.append("%20") // space for urls
+        }
+        
+        for _ in 0..<3 { urlText.removeLast() } // Remove the "%20" at the end
+        
+        return urlText
     }
     
     var maskTokenText: String {
@@ -146,6 +164,8 @@ class ClassifiedString {
     var lastRedactionState: RedactionState?
     
     func toggleRedactionState() {
+        print("Toggling word: \(string)")
+        
         switch redactionState {
         case .notRedacted:
             redactionState = lastRedactionState ?? .redacted

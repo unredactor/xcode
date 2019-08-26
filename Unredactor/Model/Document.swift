@@ -51,8 +51,42 @@ class Document {
         return attributedText
     }
     
+    /// Sets the text of the document. Will cause the document to forget the redaction state of words. Do not use if you are modifying the text from a similar state (eg. in a text input view)
     func setText(to text: String) {
         self.classifiedText.words = ClassifiedText.classifiedWordsFromText(text)
+    }
+    
+    /// Appends a character to the last word in a text. If the character is a space, adds an empty word with text "" and redaciotn state .notRedacted.
+    func appendCharacterToText(_ character: String) {
+        for word in classifiedText.words {
+            print("Before: Word: \(word), State: \(word.redactionState)")
+        }
+        
+        if character == " " {
+            classifiedText.words.append(ClassifiedString(" "))
+        } else if let lastWord = classifiedText.words.last {
+            if lastWord.string == " " {
+                lastWord.string = character
+            } else {
+                lastWord.string.append(character)
+            }
+        } else {
+            classifiedText.words.append(ClassifiedString(character)) // Create the first word
+        }
+        
+        for word in classifiedText.words {
+            print("After: Word: \(word), State: \(word.redactionState)")
+        }
+    }
+    
+    func removeLastCharacter() {
+        guard let lastWord = classifiedText.words.last else { return }
+        
+        if lastWord.string.count > 1 {
+            lastWord.string.removeLast()
+        } else {
+            classifiedText.words.removeLast()
+        }
     }
     
     // Just making basic boolean more accesible without having to dig through properties

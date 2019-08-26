@@ -17,6 +17,7 @@
 		2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */; };
 		23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23946B7522F2512000A69AF3 /* PageViewController.swift */; };
 		2397332F2301B5A400A378C3 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2397332E2301B5A300A378C3 /* DocumentViewController.swift */; };
+		23B64005230DA4C4002ED14C /* WebsiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B64004230DA4C4002ED14C /* WebsiteViewController.swift */; };
 		23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B876E122F93633006E7D16 /* FolderViewController.swift */; };
 		23BE4D192302178B005407FF /* README in Resources */ = {isa = PBXBuildFile; fileRef = 23BE4D182302178B005407FF /* README */; };
 		23BE4D1B23022780005407FF /* EditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BE4D1A23022780005407FF /* EditMode.swift */; };
@@ -65,6 +66,7 @@
 		2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDocumentViewController.swift; sourceTree = "<group>"; };
 		23946B7522F2512000A69AF3 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		2397332E2301B5A300A378C3 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
+		23B64004230DA4C4002ED14C /* WebsiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteViewController.swift; sourceTree = "<group>"; };
 		23B876E122F93633006E7D16 /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
 		23BE4D182302178B005407FF /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		23BE4D1A23022780005407FF /* EditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMode.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				23946B7522F2512000A69AF3 /* PageViewController.swift */,
 				23159A872307138A007D57DE /* ScrollViewController.swift */,
 				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,
+				23B64004230DA4C4002ED14C /* WebsiteViewController.swift */,
 				2387F78C2308A91A00F918B8 /* FileButtonViewController.swift */,
 				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
 				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
@@ -366,6 +369,7 @@
 				2F7C0A8D22E0310400AD2828 /* Unredactor.swift in Sources */,
 				2F7C0A9322E0D8DE00AD2828 /* ClassifiedText.swift in Sources */,
 				2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */,
+				23B64005230DA4C4002ED14C /* WebsiteViewController.swift in Sources */,
 				23BE4D1B23022780005407FF /* EditMode.swift in Sources */,
 				2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */,
 				23159A882307138A007D57DE /* ScrollViewController.swift in Sources */,

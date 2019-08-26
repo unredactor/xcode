@@ -34,7 +34,8 @@ class SideMenuTableViewController: UITableViewController {
     // MARK: - Interface
     func selectRow(atRow row: Int, isAnimated animated: Bool) {
         let selectedRow = indexPathForRow(row)
-        tableView.selectRow(at: selectedRow, animated: animated, scrollPosition: .none)
+        tableView.selectRow(at: selectedRow, animated: animated, scrollPosition: .top)
+        tableView.delegate?.tableView?(tableView, didSelectRowAt: selectedRow)
         tableView.reloadData()
     }
 
@@ -73,12 +74,19 @@ class SideMenuTableViewController: UITableViewController {
         return cell
     }
     
+    /// Returns the actual number of rows in each section. In section 0, there is an extra empty row for spacing/drawing purposes. Use the private helper method numberOfRows(inSection:) for internal logic purposes.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
-        } else {
             return 3
+        } else {
+            return 4
         }
+    }
+    
+    
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 20
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -102,8 +110,8 @@ fileprivate extension SideMenuTableViewController {
         
         var row = 0
         for section in 1...indexPath.section {
-            row += tableView.numberOfRows(inSection: section - 1)
-            print("numberofrows: \(tableView.numberOfRows(inSection: section - 1))")
+            row += numberOfRows(inSection: section - 1)
+            print("numberofrows: \(numberOfRows(inSection: section - 1))")
         }
         row += indexPath.row
         print("row: \(indexPath.row)")
@@ -112,12 +120,12 @@ fileprivate extension SideMenuTableViewController {
     }
     
     func indexPathForRow(_ row: Int) -> IndexPath {
-        guard row < tableView.numberOfRows(inSection: 0) else { return IndexPath(row: row, section: 0) }
+        guard row < numberOfRows(inSection: 0) else { return IndexPath(row: row, section: 0) }
         
         var rowCount = row
         let numberOfSections = tableView.numberOfSections
         for section in 0..<numberOfSections {
-            let numberOfRowsInSection = tableView.numberOfRows(inSection: section)
+            let numberOfRowsInSection = numberOfRows(inSection: section)
             if rowCount > numberOfRowsInSection - 1 {
                 rowCount -= numberOfRowsInSection
             } else {
@@ -127,6 +135,13 @@ fileprivate extension SideMenuTableViewController {
         
         print("Looped through all IndexPaths without finding appropriate row. Check in indexPathForRow(_ row: Int) -> IndexPath in SideMenuTableViewController; the logic is incorrect.")
         return IndexPath(row: 0, section: 0)
+    }
+    
+    func numberOfRows(inSection section: Int) -> Int {
+        // This allows a visual padding row to be placed at the bottom of section 0 without having to manually account for it in logic. The other section (there is only 1 other section for now) can be computed normally, as it has no padding row (because there is no section below it).
+        
+        if section == 0 { return 1 }
+        else { return tableView.numberOfRows(inSection: section) }
     }
 }
 

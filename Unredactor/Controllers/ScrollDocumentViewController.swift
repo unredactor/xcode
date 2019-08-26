@@ -24,6 +24,14 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
     
     var document: Document!
     
+    var isTextViewInteractionEnabled = true {
+        didSet {
+            if isTextViewInteractionEnabled == true {
+                
+            }
+        }
+    }
+    
     // From https://stackoverflow.com/questions/10768659/leaving-inputaccessoryview-visible-after-keyboard-is-dismissed
     // Allows accessory view to be constantly visible
     override var canBecomeFirstResponder: Bool { return true }
@@ -49,9 +57,7 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //setupScrollView() // for now, just add a shadow to the document so it looks nice.
-        
+        setTextViewEditable()
     }
     
     // MARK: - Interface (public functinos)
@@ -83,9 +89,9 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
 extension ScrollDocumentViewController: SwitchViewControllerDelegate {
     func switchWasToggled(to state: EditMode) {
         switch state {
-        case .edit:
+        case .editable:
             setTextViewEditable()
-        case .redact:
+        case .redactable:
             setTextViewRedactable()
         }
     }

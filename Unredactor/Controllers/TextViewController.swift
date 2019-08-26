@@ -30,7 +30,7 @@ class TextViewController: UIViewController {
     @IBOutlet weak private var textView: UITextView!
     
     var document: Document!
-    var editMode: EditMode = .edit
+    var editMode: EditMode = .editable
     
     weak var delegate: TextViewControllerDelegate?
     
@@ -105,7 +105,7 @@ class TextViewController: UIViewController {
     
     func setTextView(toEditMode editMode: EditMode) {
         switch editMode {
-        case .edit:
+        case .editable:
             if textView.textColor == .lightGray {
                 selectBeginningOfTextView()
             } else if textView.text.isEmpty || textView.text == nil {
@@ -115,21 +115,26 @@ class TextViewController: UIViewController {
                 selectEndOfTextView()
             }
             setTextViewEditable()
-        case .redact:
+        case .redactable:
             setTextViewRedactable()
             textView.resignFirstResponder()
         }
     }
     
+    func updateTextViewEditMode() {
+        if editMode == .editable { setTextViewEditable() }
+        else { setTextViewRedactable() }
+    }
+    
     func setTextViewEditable() {
         textView.isEditable = true
-        editMode = .edit
+        editMode = .editable
         textView.becomeFirstResponder()
     }
     
     func setTextViewRedactable() {
         textView.isEditable = false
-        editMode = .redact
+        editMode = .redactable
     }
 }
 
@@ -174,12 +179,18 @@ extension TextViewController: UITextViewDelegate {
         else if textView.textColor == .lightGray && !text.isEmpty {
             textView.textColor = .black
             print("Replacement Text: \(text)")
-            document.setText(to: text)
+            document.appendCharacterToText(text)
             textView.attributedText = document.attributedText
             textView.font = document.font
             delegate?.textViewDidBecomeNotEmpty()
         } else {
-            document.setText(to: updatedText)
+            let textWasDeleted = updatedText.count < textView.text.count
+            if textWasDeleted {
+                document.removeLastCharacter()
+            } else {
+                document.appendCharacterToText(text)
+            }
+            
             return true
         }
         
@@ -198,7 +209,7 @@ extension TextViewController: UITextViewDelegate {
 // MARK: - UIGestureRecognizerDelegate
 extension TextViewController: UIGestureRecognizerDelegate {
     @objc func textViewTapped(_ gestureRecognizer: UITapGestureRecognizer) {
-        guard editMode == .redact else {
+        guard editMode == .redactable else {
             // EditMode must be edit, so let's start editing
             textView.becomeFirstResponder()
             
@@ -207,14 +218,21 @@ extension TextViewController: UIGestureRecognizerDelegate {
         
         let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document)
         
-        if editMode == .redact {
+        if editMode == .redactable {
+            for word in document.classifiedText.words {
+                print("Before: Word: \(word), State: \(word.redactionState)")
+            }
+            
             // Make the tapped word toggle between redacted and unredacted
             document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState()
-            print("\(document.classifiedText.rawText)")
+            
+            for word in document.classifiedText.words {
+                print("After: Word: \(word), State: \(word.redactionState)")
+            }
         
             textView.attributedText = document.attributedText
             textView.font = document.font
-        } else if editMode == .edit {
+        } else if editMode == .editable {
             textView.becomeFirstResponder()
             
             let selectedPosition = textView.position(from: textView.beginningOfDocument, offset: characterIndexTapped) ?? textView.endOfDocument
