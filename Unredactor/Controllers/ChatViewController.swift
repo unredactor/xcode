@@ -12,28 +12,38 @@ import UIKit
 class ChatViewController: UIViewController {
     
     // MARK: - Properties
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak private var tableView: UITableView!
     
-    @IBOutlet weak var messageInputView: UIView!
-    @IBOutlet weak var messageTextView: UITextView!
+    @IBOutlet weak private var messageInputView: UIView!
+    @IBOutlet weak private var messageTextField: UITextField!
     
     var messages: [Message] = [Message(withText: "This is a long test message to try to find bugs in the program", fromSender: .user), Message(withText: "hi", fromSender: .chatbot)]
     let chatbot = Chatbot()
+    
+    var bottomConstraint: NSLayoutConstraint?
 
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupMessageInputView()
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.allowsSelection = false
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 60
+        tableView.estimatedRowHeight = 44
+        
+        bottomConstraint = NSLayoutConstraint(item: messageInputView!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        
+        view.addConstraint(bottomConstraint!)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        messageTextField.becomeFirstResponder()
     }
     
+    // MARK: - IBActions
     @IBAction func sendButtonPressed(_ sender: Any) {
-        let newMessage = Message(withText: messageTextView.text, fromSender: .user)
+        let newMessage = Message(withText: messageTextField.text!, fromSender: .user)
         
         messages.append(newMessage)
         
@@ -53,6 +63,11 @@ class ChatViewController: UIViewController {
             self.tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
         }
     }
+    
+    // MARK: - Interface (public functions)
+    func dismissKeyboard() {
+        messageTextField.resignFirstResponder()
+    }
 }
 
 // MARK: - Table View Data Source & Delegate
@@ -68,40 +83,42 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
         
         print("Sender: \(message.sender)" )
         
-        if message.sender == .user {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "userMessage") as! MessageTableViewCell
-            
-            cell.configure(withMessage: message)
-            
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "chatbotMessage") as! MessageTableViewCell
-            
-            cell.configure(withMessage: message)
-            
-            return cell
-        }
+        var identifier: String
+        if message.sender == .user { identifier = "userMessage" }
+        else { identifier = "chatbotMessage" }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! MessageTableViewCell
+        cell.configure(withMessage: message)
+        cell.selectionStyle = .none
+        
+        return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let message = messages[indexPath.row]
-        
-        // From: https://www.youtube.com/watch?v=bNtsekO51iQ
-        let maximumMessageWidth: CGFloat = 200
-        let size = CGSize(width: maximumMessageWidth, height: CGFloat.greatestFiniteMagnitude)
-        let options = NSStringDrawingOptions.usesLineFragmentOrigin
-        let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont(name: "Courier", size: 17)!], context: nil)
-        
-        return estimatedFrame.height + 32
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        messageTextField.endEditing(true)
     }
 }
 
 // MARK: - Helper Methods
 fileprivate extension ChatViewController {
-    func setupMessageInputView() {
-        //messageInputView.removeFromSuperview()
-        //messageTextView.inputAccessoryView = messageInputView
+    @objc func handleKeyboardNotification(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+            
+            let isKeyboardShowing = (notification.name == UIResponder.keyboardWillShowNotification)
+            
+            bottomConstraint?.constant = isKeyboardShowing ? -keyboardFrame.height : 0
+            
+            UIView.animate(withDuration: 0, delay: 0, options: .curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: { [unowned self] (completed) in
+                let lastIndexPath = IndexPath(row: self.messages.count - 1, section: 0)
+                self.tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
+            })
+        }
     }
+    
+    
 }
 
 // MARK: - Table View Cell
@@ -110,7 +127,6 @@ class MessageTableViewCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var bubbleView: UIView!
     
-    
     func configure(withMessage message: Message) {
         label.text = message.text
     }
@@ -118,7 +134,12 @@ class MessageTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         // Make the bubbles rounded
         bubbleView.layer.cornerRadius = 4
-        bubbleView.layer.masksToBounds = true
+        bubbleView.layer.masksToBounds = false
+        bubbleView.layer.shadowOffset = CGSize(width: 2, height: 2)
+        bubbleView.layer.shadowOpacity = 0.1
+        bubbleView.layer.shadowRadius = 2
+        
+        label.text = "test"
     }
 }
 

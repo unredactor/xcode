@@ -428,7 +428,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="1" green="0.31888686131386856" blue="0.41320474375896299" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.23224658794322797" green="0.43280824228778436" blue="0.87274749087591241" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="aX1-Y0-M7C" firstAttribute="centerX" secondItem="4l8-Z8-DDQ" secondAttribute="centerX" id="RNO-Bm-2LK"/>
                                                         <constraint firstAttribute="bottom" secondItem="aX1-Y0-M7C" secondAttribute="bottom" constant="8" id="Rqo-KM-I7a"/>
@@ -444,6 +444,7 @@
                                                 <constraint firstItem="4l8-Z8-DDQ" firstAttribute="top" secondItem="xEI-cx-zMr" secondAttribute="topMargin" id="9qF-l4-eQg"/>
                                                 <constraint firstItem="4l8-Z8-DDQ" firstAttribute="trailing" secondItem="xEI-cx-zMr" secondAttribute="trailingMargin" id="Gic-eQ-UbM"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="4l8-Z8-DDQ" secondAttribute="bottom" id="WE7-Vx-20s"/>
+                                                <constraint firstItem="4l8-Z8-DDQ" firstAttribute="centerY" secondItem="xEI-cx-zMr" secondAttribute="centerY" id="nKX-ZQ-8OJ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -466,24 +467,25 @@
                                                             <rect key="frame" x="16" y="8" width="133" height="22"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.141851049270073" green="0.141851049270073" blue="0.141851049270073" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="0.89777518667443823" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="nv5-Jk-NOm" firstAttribute="centerY" secondItem="LdR-ty-EUU" secondAttribute="centerY" id="5fk-Sm-FU2"/>
-                                                        <constraint firstAttribute="trailing" secondItem="nv5-Jk-NOm" secondAttribute="trailing" constant="16" id="HjK-aM-5px"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nv5-Jk-NOm" secondAttribute="trailing" id="HjK-aM-5px"/>
                                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="JwR-gc-xRR"/>
-                                                        <constraint firstItem="nv5-Jk-NOm" firstAttribute="leading" secondItem="LdR-ty-EUU" secondAttribute="leading" constant="16" id="KAY-5W-wjq"/>
+                                                        <constraint firstItem="nv5-Jk-NOm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LdR-ty-EUU" secondAttribute="leading" id="KAY-5W-wjq"/>
                                                         <constraint firstItem="nv5-Jk-NOm" firstAttribute="top" secondItem="LdR-ty-EUU" secondAttribute="top" constant="8" id="PTC-Gs-uan"/>
                                                         <constraint firstAttribute="bottom" secondItem="nv5-Jk-NOm" secondAttribute="bottom" constant="8" id="RS2-5p-Ai0"/>
                                                         <constraint firstItem="nv5-Jk-NOm" firstAttribute="centerX" secondItem="LdR-ty-EUU" secondAttribute="centerX" id="db2-d2-92t"/>
+                                                        <constraint firstItem="nv5-Jk-NOm" firstAttribute="leading" secondItem="LdR-ty-EUU" secondAttribute="leading" constant="16" id="kkM-zG-0RU"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="LdR-ty-EUU" secondAttribute="bottom" id="4I6-3T-tcw"/>
+                                                <constraint firstItem="LdR-ty-EUU" firstAttribute="centerY" secondItem="bM3-6g-lfS" secondAttribute="centerY" id="MVu-tO-1mY"/>
                                                 <constraint firstItem="LdR-ty-EUU" firstAttribute="leading" secondItem="bM3-6g-lfS" secondAttribute="leadingMargin" id="QEw-xh-nfz"/>
                                                 <constraint firstItem="LdR-ty-EUU" firstAttribute="top" secondItem="bM3-6g-lfS" secondAttribute="topMargin" id="tlS-bZ-Zd9"/>
                                             </constraints>
@@ -502,7 +504,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rbo-63-330">
                                         <rect key="frame" x="260" y="8" width="44" height="33"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="YWg-pJ-Tn6"/>
+                                            <constraint firstAttribute="width" constant="44" id="YWg-pJ-Tn6"/>
                                             <constraint firstAttribute="height" constant="33" id="kVa-x4-rWY"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -511,36 +513,32 @@
                                             <action selector="sendButtonPressed:" destination="6Ab-x0-yt1" eventType="touchUpInside" id="BJW-0b-nfV"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" scrollEnabled="NO" text="This is just so that this view will show up; ill try to fix it later." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="B4k-Yt-503">
-                                        <rect key="frame" x="16" y="8" width="236" height="33"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" priority="250" constant="44" id="Oxj-sC-uLm"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DrA-kj-CNa">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="0.5"/>
-                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.79699855535279807" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="0.5" id="Dlb-V6-cfZ"/>
+                                            <constraint firstAttribute="height" constant="0.5" id="ilZ-cg-MNq"/>
                                         </constraints>
                                     </view>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Say something to chatbot..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1wk-Ca-1sb">
+                                        <rect key="frame" x="16" y="8" width="228" height="33"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="DrA-kj-CNa" firstAttribute="top" secondItem="htE-Sh-Eea" secondAttribute="top" id="ABq-5o-VPQ"/>
                                     <constraint firstAttribute="trailing" secondItem="DrA-kj-CNa" secondAttribute="trailing" id="Mbu-Pk-D8M"/>
-                                    <constraint firstAttribute="bottom" secondItem="B4k-Yt-503" secondAttribute="bottom" constant="8" id="TZB-2c-WJe"/>
-                                    <constraint firstItem="B4k-Yt-503" firstAttribute="leading" secondItem="htE-Sh-Eea" secondAttribute="leading" constant="16" id="UlE-TU-g7S"/>
+                                    <constraint firstAttribute="bottom" secondItem="1wk-Ca-1sb" secondAttribute="bottom" constant="8" id="PAs-HL-BC2"/>
                                     <constraint firstAttribute="trailing" secondItem="Rbo-63-330" secondAttribute="trailing" constant="16" id="X4y-5f-noc"/>
-                                    <constraint firstAttribute="height" secondItem="B4k-Yt-503" secondAttribute="height" constant="16" id="gr4-ED-Kyh"/>
+                                    <constraint firstItem="1wk-Ca-1sb" firstAttribute="centerY" secondItem="htE-Sh-Eea" secondAttribute="centerY" id="g4m-bM-AOF"/>
                                     <constraint firstAttribute="bottom" secondItem="Rbo-63-330" secondAttribute="bottom" constant="8" id="i8O-T5-w1K"/>
-                                    <constraint firstItem="B4k-Yt-503" firstAttribute="top" secondItem="htE-Sh-Eea" secondAttribute="top" constant="8" id="lez-O7-Emg"/>
                                     <constraint firstItem="DrA-kj-CNa" firstAttribute="leading" secondItem="htE-Sh-Eea" secondAttribute="leading" id="mul-f1-YAE"/>
+                                    <constraint firstItem="Rbo-63-330" firstAttribute="leading" secondItem="1wk-Ca-1sb" secondAttribute="trailing" constant="16" id="qSK-7x-eeD"/>
+                                    <constraint firstItem="1wk-Ca-1sb" firstAttribute="leading" secondItem="htE-Sh-Eea" secondAttribute="leading" constant="16" id="tTD-sl-ztp"/>
                                     <constraint firstItem="Rbo-63-330" firstAttribute="top" secondItem="htE-Sh-Eea" secondAttribute="top" constant="8" id="vAK-yA-LHe"/>
-                                    <constraint firstItem="Rbo-63-330" firstAttribute="leading" secondItem="B4k-Yt-503" secondAttribute="trailing" constant="8" id="wPM-80-Br1"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -553,7 +551,7 @@
                             <constraint firstItem="WIv-GO-kvx" firstAttribute="trailing" secondItem="4oP-28-D8N" secondAttribute="trailing" id="Uxl-44-6hq"/>
                             <constraint firstItem="4oP-28-D8N" firstAttribute="leading" secondItem="WIv-GO-kvx" secondAttribute="leading" id="X7k-PL-SFb"/>
                             <constraint firstItem="hsR-m1-E4a" firstAttribute="trailing" secondItem="WIv-GO-kvx" secondAttribute="trailing" id="Xnn-9W-vhM"/>
-                            <constraint firstAttribute="bottom" secondItem="htE-Sh-Eea" secondAttribute="bottom" id="j9z-7J-Cza"/>
+                            <constraint firstItem="htE-Sh-Eea" firstAttribute="bottom" secondItem="WIv-GO-kvx" secondAttribute="bottom" id="aBW-QG-0IE"/>
                             <constraint firstItem="htE-Sh-Eea" firstAttribute="leading" secondItem="WIv-GO-kvx" secondAttribute="leading" id="tOK-4m-Pu0"/>
                             <constraint firstItem="htE-Sh-Eea" firstAttribute="top" secondItem="hsR-m1-E4a" secondAttribute="bottom" id="zpt-ee-ubC"/>
                         </constraints>
@@ -561,7 +559,7 @@
                     </view>
                     <connections>
                         <outlet property="messageInputView" destination="htE-Sh-Eea" id="wEA-jH-p5r"/>
-                        <outlet property="messageTextView" destination="B4k-Yt-503" id="5ih-jp-Xjf"/>
+                        <outlet property="messageTextField" destination="1wk-Ca-1sb" id="V1V-nj-nHu"/>
                         <outlet property="tableView" destination="hsR-m1-E4a" id="6ae-2p-kSZ"/>
                     </connections>
                 </viewController>

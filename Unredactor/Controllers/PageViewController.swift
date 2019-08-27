@@ -51,6 +51,8 @@ class PageViewController: UIPageViewController {
         
         if let currentPage = pages[currentIndex] as? DocumentViewController {
             currentPage.dismissKeyboard()
+        } else if let currentPage = pages[currentIndex] as? ChatViewController {
+            currentPage.dismissKeyboard()
         }
         //self.resignFirstResponder()
     }
