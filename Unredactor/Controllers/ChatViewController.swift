@@ -28,10 +28,10 @@ class ChatViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 44
+        //tableView.rowHeight = UITableView.automaticDimension
+        //tableView.estimatedRowHeight = 60
         
-        bottomConstraint = NSLayoutConstraint(item: messageInputView!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        bottomConstraint = NSLayoutConstraint(item: messageInputView!, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0)
         
         view.addConstraint(bottomConstraint!)
         
@@ -39,6 +39,11 @@ class ChatViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         messageTextField.becomeFirstResponder()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     // MARK: - IBActions
@@ -91,7 +96,21 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
         cell.configure(withMessage: message)
         cell.selectionStyle = .none
         
+        cell.setNeedsLayout()
+        
         return cell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let message = messages[indexPath.row]
+        
+        let width: CGFloat = 200 - 32
+        
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = message.text.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: UIFont(name: "Courier", size: 17)!], context: nil)
+        
+        return boundingBox.height + 32
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -125,21 +144,31 @@ fileprivate extension ChatViewController {
 class MessageTableViewCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var bubbleView: UIView!
+    //@IBOutlet weak var bubbleView: UIView!
+    
+    var message: Message?
+    
+    lazy var bubbleView: UIView = {
+        let view = UIView()
+        let userBubbleColor = UIColor.blue
+        let chatbotBubbleColor = UIColor(white: 0.95, alpha: 1)
+        view.backgroundColor = (message?.sender == .user) ? userBubbleColor : chatbotBubbleColor
+        view.layer.cornerRadius = 5
+        view.layer.masksToBounds = true
+        return view
+    }()
     
     func configure(withMessage message: Message) {
         label.text = message.text
+        self.message = message
     }
     
-    override func awakeFromNib() {
-        // Make the bubbles rounded
-        bubbleView.layer.cornerRadius = 4
-        bubbleView.layer.masksToBounds = false
-        bubbleView.layer.shadowOffset = CGSize(width: 2, height: 2)
-        bubbleView.layer.shadowOpacity = 0.1
-        bubbleView.layer.shadowRadius = 2
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.setNeedsLayout()
+        contentView.layoutIfNeeded()
         
-        label.text = "test"
+        //contentView.insertSubview(bubbleView, at: 0)
     }
 }
 
