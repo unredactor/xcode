@@ -466,6 +466,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="bubbleView" destination="4l8-Z8-DDQ" id="PIr-QH-yxp"/>
                                             <outlet property="label" destination="aX1-Y0-M7C" id="Kbc-5w-7Qo"/>
                                         </connections>
                                     </tableViewCell>

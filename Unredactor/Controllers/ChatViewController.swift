@@ -144,10 +144,11 @@ fileprivate extension ChatViewController {
 class MessageTableViewCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
-    //@IBOutlet weak var bubbleView: UIView!
+    @IBOutlet weak var bubbleView: UIView!
     
     var message: Message?
     
+    /*
     lazy var bubbleView: UIView = {
         let view = UIView()
         let userBubbleColor = UIColor.blue
@@ -157,6 +158,7 @@ class MessageTableViewCell: UITableViewCell {
         view.layer.masksToBounds = true
         return view
     }()
+ */
     
     func configure(withMessage message: Message) {
         label.text = message.text
