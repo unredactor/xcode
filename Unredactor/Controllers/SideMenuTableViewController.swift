@@ -49,8 +49,6 @@ class SideMenuTableViewController: UITableViewController {
         header.backgroundColor = .clear
         header.contentView.backgroundColor = .clear
         
-        print(UIFont.fontNames(forFamilyName: "Courier"))
-        
         let backgroundView = UIView(frame: header.frame)
         backgroundView.backgroundColor = .clear
         header.backgroundView = backgroundView
@@ -108,10 +106,6 @@ fileprivate extension SideMenuTableViewController {
     func rowForIndexPath(_ indexPath: IndexPath) -> Int {
         guard indexPath.section > 0 else { return indexPath.row }
         
-        if indexPath == IndexPath(row: 0, section: 1) {
-            return 1
-        }
-        
         var row = 0
         for section in 1...indexPath.section {
             row += numberOfRows(inSection: section - 1)
@@ -144,7 +138,7 @@ fileprivate extension SideMenuTableViewController {
     func numberOfRows(inSection section: Int) -> Int {
         // This allows a visual padding row to be placed at the bottom of section 0 without having to manually account for it in logic. The other section (there is only 1 other section for now) can be computed normally, as it has no padding row (because there is no section below it).
         
-        if section == 0 { return 1 }
+        if section == 0 { return 2 }
         else { return tableView.numberOfRows(inSection: section) }
     }
 }

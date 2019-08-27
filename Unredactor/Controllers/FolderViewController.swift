@@ -28,7 +28,6 @@ class FolderViewController: UIViewController {
     
     var menuIsShown: Bool = false {
         willSet {
-            print("willSet")
             if newValue == false {
                 pageViewController.setCurrentPageFirstResponder()
             }
@@ -94,10 +93,8 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         let yVelocity = gestureRecognizer.velocity(in: view).y
         
         guard abs(xVelocity) > abs(yVelocity) + 30 else { // 30 is a fudge factor to prevent the user from dismissing the keyboard without showing the side menu
-            print("Gesture not horizontal; ")
             return false
         }
-        print("Gesture horizontal")
         
         if !menuIsShown  {
             pageViewController.dismissKeyboardOfCurrentPage()
@@ -127,8 +124,6 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         updateSideMenuShadowRadius(percentageDone: percentageDone)
         sideMenuViewController.updateDarkLayer(percentageDone: percentageDone, menuIsShown: menuIsShown)
         
-        print("\n0")
-        
         if gestureRecognizer.state == .ended {
             let velocity = gestureRecognizer.velocity(in: view).x
             let percentageLeft = 1 - abs(percentageDone)
@@ -136,24 +131,19 @@ extension FolderViewController: UIGestureRecognizerDelegate {
             var duration = TimeInterval(15 * percentageLeft / sqrt(velocity))
             if duration > 1.0 { duration = 1.0 }
             
-            print("test")
             // TODO: Reformat this to make more sense/be more concise
             if velocity > 100 {
-                print("1")
                 showSideMenu(duration: duration)
                 menuIsShown = true
             } else if velocity < -100 {
-                print("2")
                 hideSideMenu(duration: duration)
                 menuIsShown = false
             } else {
                 // Go to closest one
                 if percentageLeft > 0.5 && menuIsShown || percentageLeft < 0.5 && !menuIsShown {
-                    print("3")
                     showSideMenu(duration: duration)
                     menuIsShown = true
                 } else {
-                    print("4")
                     hideSideMenu(duration: duration)
                     menuIsShown = false
                 }

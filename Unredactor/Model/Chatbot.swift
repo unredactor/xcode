@@ -11,8 +11,11 @@ import Foundation
 class Chatbot {
     func reply(toMessage message: Message, completion: @escaping (Message) -> Void) {
         // Calculate message
-        let replyMessage = message
+        let replyMessage = Message(withText: "This is an automated reply", fromSender: .chatbot)
         
-        completion(replyMessage)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+            completion(replyMessage)
+        }
+        
     }
 }

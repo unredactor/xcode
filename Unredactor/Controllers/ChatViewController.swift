@@ -17,7 +17,7 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var messageInputView: UIView!
     @IBOutlet weak var messageTextView: UITextView!
     
-    var messages: [Message] = [Message(withText: "hello", fromSender: .user), Message(withText: "hi", fromSender: .chatbot)]
+    var messages: [Message] = [Message(withText: "This is a long test message to try to find bugs in the program", fromSender: .user), Message(withText: "hi", fromSender: .chatbot)]
     let chatbot = Chatbot()
 
     // MARK: - View Life Cycle
@@ -27,18 +27,30 @@ class ChatViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.allowsSelection = false
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 60
     }
     
     @IBAction func sendButtonPressed(_ sender: Any) {
         let newMessage = Message(withText: messageTextView.text, fromSender: .user)
+        
         messages.append(newMessage)
         
-        tableView.reloadData()
+        let lastIndexPath = IndexPath(row: messages.count - 1, section: 0)
+        
+        tableView.insertRows(at: [lastIndexPath], with: .automatic)
+        tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
+        
+        //Insert a row at the end of the table view
         
         // Reply
         chatbot.reply(toMessage: newMessage) { [unowned self] (replyMessage: Message) in
             self.messages.append(replyMessage)
-            DispatchQueue.main.async { self.tableView.reloadData() }
+            
+            let lastIndexPath = IndexPath(row: self.messages.count - 1, section: 0)
+            self.tableView.insertRows(at: [lastIndexPath], with: .automatic)
+            self.tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
         }
     }
 }
@@ -53,6 +65,8 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = messages[indexPath.row]
+        
+        print("Sender: \(message.sender)" )
         
         if message.sender == .user {
             let cell = tableView.dequeueReusableCell(withIdentifier: "userMessage") as! MessageTableViewCell
@@ -73,8 +87,9 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
         let message = messages[indexPath.row]
         
         // From: https://www.youtube.com/watch?v=bNtsekO51iQ
-        let size = CGSize(width: view.frame.width, height: 1000)
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let maximumMessageWidth: CGFloat = 200
+        let size = CGSize(width: maximumMessageWidth, height: CGFloat.greatestFiniteMagnitude)
+        let options = NSStringDrawingOptions.usesLineFragmentOrigin
         let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont(name: "Courier", size: 17)!], context: nil)
         
         return estimatedFrame.height + 32
@@ -84,8 +99,8 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - Helper Methods
 fileprivate extension ChatViewController {
     func setupMessageInputView() {
-        messageInputView.removeFromSuperview()
-        messageTextView.inputAccessoryView = messageInputView
+        //messageInputView.removeFromSuperview()
+        //messageTextView.inputAccessoryView = messageInputView
     }
 }
 
@@ -93,9 +108,17 @@ fileprivate extension ChatViewController {
 class MessageTableViewCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var bubbleView: UIView!
+    
     
     func configure(withMessage message: Message) {
         label.text = message.text
+    }
+    
+    override func awakeFromNib() {
+        // Make the bubbles rounded
+        bubbleView.layer.cornerRadius = 4
+        bubbleView.layer.masksToBounds = true
     }
 }
 
