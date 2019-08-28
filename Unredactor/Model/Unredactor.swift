@@ -28,7 +28,7 @@ class Unredactor {
         // Placeholder definition of unredactedWords - get from API
         //unredactedWords = Array(repeating: "prediction", count: redactedWords.count)// TODO: Replace with accessing the API and stuff]
         
-        getUnredactedWords(fromText: unredactedText.urlText, withRequestType: .post) { (words) in
+        getUnredactedWords(fromText: unredactedText.urlText, withRequestType: .get) { (words) in
             
             unredactedWords = words
             

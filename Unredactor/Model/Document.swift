@@ -74,10 +74,14 @@ class Document {
     func removeLastCharacter() {
         guard let lastWord = classifiedText.words.last else { return }
         
-        if lastWord.string.count > 1 {
-            lastWord.string.removeLast()
+        let string: String = (lastWord.redactionState == RedactionState.unredacted) ? lastWord.unredactorPrediction! : lastWord.string
+        
+        if string.count > 1 {
+            if lastWord.redactionState == RedactionState.unredacted { lastWord.unredactorPrediction?.removeLast() }
+            else { lastWord.string.removeLast() }
         } else {
             classifiedText.words.removeLast()
+            if lastWord.string != " " { classifiedText.words.append(ClassifiedString(" ")) }
         }
     }
     

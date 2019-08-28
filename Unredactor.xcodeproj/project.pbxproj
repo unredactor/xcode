@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		23066B782315F64300A9E8B0 /* TypingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B772315F64300A9E8B0 /* TypingIndicatorViewController.swift */; };
+		23066B7C2316F5B200A9E8B0 /* VerticalPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B7B2316F5B200A9E8B0 /* VerticalPageViewController.swift */; };
 		2309D19B23027A850028C2BA /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D19A23027A850028C2BA /* SideMenuViewController.swift */; };
 		2309D19D230462DB0028C2BA /* CABasicAnimation+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */; };
 		23159A842305C938007D57DE /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A832305C938007D57DE /* SideMenuTableViewController.swift */; };
@@ -61,6 +62,7 @@
 
 /* Begin PBXFileReference section */
 		23066B772315F64300A9E8B0 /* TypingIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorViewController.swift; sourceTree = "<group>"; };
+		23066B7B2316F5B200A9E8B0 /* VerticalPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalPageViewController.swift; sourceTree = "<group>"; };
 		2309D19A23027A850028C2BA /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CABasicAnimation+Helpers.swift"; sourceTree = "<group>"; };
 		23159A832305C938007D57DE /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +184,14 @@
 			path = TypingIndicator;
 			sourceTree = "<group>";
 		};
+		23066B7A2316F59700A9E8B0 /* Creators */ = {
+			isa = PBXGroup;
+			children = (
+				23066B7B2316F5B200A9E8B0 /* VerticalPageViewController.swift */,
+			);
+			path = Creators;
+			sourceTree = "<group>";
+		};
 		237C08A022FB95C800DE3379 /* Old Stuff (Unused) */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +206,7 @@
 				23066B712315F53300A9E8B0 /* ParentViewControllers */,
 				23066B722315F55D00A9E8B0 /* RootView */,
 				23066B702315F50F00A9E8B0 /* Unredactor */,
+				23066B7A2316F59700A9E8B0 /* Creators */,
 				23066B742315F5D600A9E8B0 /* ChatView */,
 				23B64004230DA4C4002ED14C /* WebsiteViewController.swift */,
 			);
@@ -443,6 +454,7 @@
 				23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */,
 				2387F78D2308A91A00F918B8 /* FileButtonViewController.swift in Sources */,
 				2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */,
+				23066B7C2316F5B200A9E8B0 /* VerticalPageViewController.swift in Sources */,
 				23E607C32314764200E00A27 /* Chatbot.swift in Sources */,
 				23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */,
 				2397332F2301B5A400A378C3 /* DocumentViewController.swift in Sources */,
