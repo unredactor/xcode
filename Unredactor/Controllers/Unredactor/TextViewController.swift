@@ -223,16 +223,9 @@ extension TextViewController: UIGestureRecognizerDelegate {
         let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document)
         
         if editMode == .redactable {
-            for word in document.classifiedText.words {
-                print("Before: Word: \(word), State: \(word.redactionState)")
-            }
             
             // Make the tapped word toggle between redacted and unredacted
             document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState()
-            
-            for word in document.classifiedText.words {
-                print("After: Word: \(word), State: \(word.redactionState)")
-            }
         
             textView.attributedText = document.attributedText
             textView.font = document.font

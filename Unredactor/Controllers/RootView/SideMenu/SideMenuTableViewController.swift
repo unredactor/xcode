@@ -75,7 +75,7 @@ class SideMenuTableViewController: UITableViewController {
     /// Returns the actual number of rows in each section. In section 0, there is an extra empty row for spacing/drawing purposes. Use the private helper method numberOfRows(inSection:) for internal logic purposes.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 3
+            return 2
         } else {
             return 4
         }
@@ -138,7 +138,7 @@ fileprivate extension SideMenuTableViewController {
     func numberOfRows(inSection section: Int) -> Int {
         // This allows a visual padding row to be placed at the bottom of section 0 without having to manually account for it in logic. The other section (there is only 1 other section for now) can be computed normally, as it has no padding row (because there is no section below it).
         
-        if section == 0 { return 2 }
+        if section == 0 { return tableView.numberOfRows(inSection: section) - 1 }
         else { return tableView.numberOfRows(inSection: section) }
     }
 }

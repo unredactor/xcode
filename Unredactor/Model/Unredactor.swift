@@ -28,10 +28,7 @@ class Unredactor {
         // Placeholder definition of unredactedWords - get from API
         //unredactedWords = Array(repeating: "prediction", count: redactedWords.count)// TODO: Replace with accessing the API and stuff]
         
-        print("unredactor.unredact() called")
-        
-        getUnredactedWords(fromText: unredactedText.urlText) { (words) in
-            print("unredactoed words something or another")
+        getUnredactedWords(fromText: unredactedText.urlText, withRequestType: .post) { (words) in
             
             unredactedWords = words
             
@@ -50,46 +47,56 @@ class Unredactor {
         }
     }
     
-    func getUnredactedWords(fromText text: String, completion: @escaping (([String]) -> Void)) {
-        // Lesson 5.5 in App Development with Swift
-        let urlString = "https://unredactor.com/api?text=" + text
-        print("urlString: \(urlString)")
-        let baseURL = URL(string: urlString)!
+    private enum RequestType {
+        case get, post
+    }
+    
+    private func getUnredactedWords(fromText text: String, withRequestType requestType: RequestType, completion: @escaping (([String]) -> Void)) {
         
-        //let query: [String: String] = ["text": text]
+        var task: URLSessionDataTask
         
-        //let url = baseURL.appendingPathComponent("/api").withQueries(query)!
-        
-        print("Getting unredacted words")
-        
-        let task = URLSession.shared.dataTask(with: baseURL) { (data, response, error) in
-            print("donig something with the task")
-            let jsonDecoder = JSONDecoder()
+        if requestType == .get {
+            let urlString = "https://unredactor.com/api?text=" + text
+            print("urlString: \(urlString)")
+            let baseURL = URL(string: urlString)!
             
-            if let response = response {
-                print("RESPONSE: \(response)")
+            task = URLSession.shared.dataTask(with: baseURL) { (data, response, error) in
+                self.handleServerResponse(data: data, response: response, error: error, completion: { (unredactedWords) in
+                    completion(unredactedWords)
+                })
             }
+        } else { // requestType = .post
+            //from: https://stackoverflow.com/questions/26364914/http-request-in-swift-with-post-method (accepted answer)
+            let url = URL(string: "https://unredactor.com/unredactor")!
+            var request = URLRequest(url: url)
+            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
+            let parameters: [String: Any] = [
+                "text": text,
+            ]
+            request.httpBody = parameters.percentEscaped().data(using: .utf8)
             
-            if let error = error {
-                print("ERROR: \(error)")
-            }
-            
-            if let data = data {
-                if let unredactorInfo = try? jsonDecoder.decode(UnredactorInfo.self, from:data) {
-                
-                    completion(unredactorInfo.unredacted_words)
-                    print(String(data: data, encoding: .utf8)!)
-                } else {
-                    completion(["getUnredactedWords() failed; couldn't properly parse JSON response."])
+            task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                guard let data = data,
+                    let response = response as? HTTPURLResponse,
+                    error == nil else {                                              // check for fundamental networking error
+                        print("error", error ?? "Unknown error")
+                        return
                 }
-            } else {
-                print("didn't work i guess lmao gotem")
-                completion(["getUnredactedWords() failed; couldn't get JSON response from server"])
+                
+                guard (200 ... 299) ~= response.statusCode else {                    // check for http errors
+                    print("statusCode should be 2xx, but is \(response.statusCode)")
+                    print("response = \(response)")
+                    return
+                }
+                
+                let responseString = String(data: data, encoding: .utf8)
+                print("responseString = \(responseString)")
             }
+            
         }
         
-        
-        
+        // Start the task
         task.resume()
     }
     
@@ -113,10 +120,28 @@ class Unredactor {
         }
     }
     
-    // Find the beginning of each instance of a mask token in a given string and return those indices (like the string was a [char])
-    private func findMaskTokens(inString string: String) -> [Int] {
-        // Maybe implement this, but the unredactor API should do this for us, so it doesn't really matter
+    private func handleServerResponse(data: Data?, response: URLResponse?, error: Error?, completion: @escaping ([String]) -> Void) {
+        let jsonDecoder = JSONDecoder()
         
-        return [0]
+        if let response = response {
+            print("RESPONSE: \(response)")
+        }
+        
+        if let error = error {
+            print("ERROR: \(error)")
+        }
+        
+        if let data = data {
+            if let unredactorInfo = try? jsonDecoder.decode(UnredactorInfo.self, from:data) {
+                
+                completion(unredactorInfo.unredacted_words)
+                print(String(data: data, encoding: .utf8)!)
+            } else {
+                completion(["getUnredactedWords() failed; couldn't properly parse JSON response."])
+            }
+        } else {
+            print("didn't work i guess lmao gotem")
+            completion(["getUnredactedWords() failed; couldn't get JSON response from server"])
+        }
     }
 }

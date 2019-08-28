@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23066B782315F64300A9E8B0 /* TypingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B772315F64300A9E8B0 /* TypingIndicatorViewController.swift */; };
 		2309D19B23027A850028C2BA /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D19A23027A850028C2BA /* SideMenuViewController.swift */; };
 		2309D19D230462DB0028C2BA /* CABasicAnimation+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */; };
 		23159A842305C938007D57DE /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A832305C938007D57DE /* SideMenuTableViewController.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23066B772315F64300A9E8B0 /* TypingIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorViewController.swift; sourceTree = "<group>"; };
 		2309D19A23027A850028C2BA /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CABasicAnimation+Helpers.swift"; sourceTree = "<group>"; };
 		23159A832305C938007D57DE /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,62 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23066B702315F50F00A9E8B0 /* Unredactor */ = {
+			isa = PBXGroup;
+			children = (
+				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,
+				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
+				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
+			);
+			path = Unredactor;
+			sourceTree = "<group>";
+		};
+		23066B712315F53300A9E8B0 /* ParentViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2397332E2301B5A300A378C3 /* DocumentViewController.swift */,
+				23159A872307138A007D57DE /* ScrollViewController.swift */,
+			);
+			path = ParentViewControllers;
+			sourceTree = "<group>";
+		};
+		23066B722315F55D00A9E8B0 /* RootView */ = {
+			isa = PBXGroup;
+			children = (
+				23946B7522F2512000A69AF3 /* PageViewController.swift */,
+				23B876E122F93633006E7D16 /* FolderViewController.swift */,
+				2387F78C2308A91A00F918B8 /* FileButtonViewController.swift */,
+				23066B732315F58A00A9E8B0 /* SideMenu */,
+			);
+			path = RootView;
+			sourceTree = "<group>";
+		};
+		23066B732315F58A00A9E8B0 /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				2309D19A23027A850028C2BA /* SideMenuViewController.swift */,
+				23159A832305C938007D57DE /* SideMenuTableViewController.swift */,
+			);
+			path = SideMenu;
+			sourceTree = "<group>";
+		};
+		23066B742315F5D600A9E8B0 /* ChatView */ = {
+			isa = PBXGroup;
+			children = (
+				23E607BE23146DD300E00A27 /* ChatViewController.swift */,
+				23066B792315F65000A9E8B0 /* TypingIndicator */,
+			);
+			path = ChatView;
+			sourceTree = "<group>";
+		};
+		23066B792315F65000A9E8B0 /* TypingIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				23066B772315F64300A9E8B0 /* TypingIndicatorViewController.swift */,
+			);
+			path = TypingIndicator;
+			sourceTree = "<group>";
+		};
 		237C08A022FB95C800DE3379 /* Old Stuff (Unused) */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,18 +193,11 @@
 		23946B7722F3AFD300A69AF3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2397332E2301B5A300A378C3 /* DocumentViewController.swift */,
-				23B876E122F93633006E7D16 /* FolderViewController.swift */,
-				2309D19A23027A850028C2BA /* SideMenuViewController.swift */,
-				23159A832305C938007D57DE /* SideMenuTableViewController.swift */,
-				23946B7522F2512000A69AF3 /* PageViewController.swift */,
-				23159A872307138A007D57DE /* ScrollViewController.swift */,
-				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,
+				23066B712315F53300A9E8B0 /* ParentViewControllers */,
+				23066B722315F55D00A9E8B0 /* RootView */,
+				23066B702315F50F00A9E8B0 /* Unredactor */,
+				23066B742315F5D600A9E8B0 /* ChatView */,
 				23B64004230DA4C4002ED14C /* WebsiteViewController.swift */,
-				2387F78C2308A91A00F918B8 /* FileButtonViewController.swift */,
-				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
-				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
-				23E607BE23146DD300E00A27 /* ChatViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -378,6 +429,7 @@
 				2F7C0A8D22E0310400AD2828 /* Unredactor.swift in Sources */,
 				2F7C0A9322E0D8DE00AD2828 /* ClassifiedText.swift in Sources */,
 				23E607C123146E3000E00A27 /* Message.swift in Sources */,
+				23066B782315F64300A9E8B0 /* TypingIndicatorViewController.swift in Sources */,
 				2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */,
 				23B64005230DA4C4002ED14C /* WebsiteViewController.swift in Sources */,
 				23BE4D1B23022780005407FF /* EditMode.swift in Sources */,
@@ -566,10 +618,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E88BK26E9L;
+				DEVELOPMENT_TEAM = UY8VPSD484;
 				INFOPLIST_FILE = Unredactor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = manceps.Unredactor;
+				PRODUCT_BUNDLE_IDENTIFIER = manceps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -581,10 +633,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E88BK26E9L;
+				DEVELOPMENT_TEAM = UY8VPSD484;
 				INFOPLIST_FILE = Unredactor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = manceps.Unredactor;
+				PRODUCT_BUNDLE_IDENTIFIER = manceps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

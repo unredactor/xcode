@@ -28,6 +28,7 @@ class ChatViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        messageTextField.delegate = self
         //tableView.rowHeight = UITableView.automaticDimension
         //tableView.estimatedRowHeight = 60
         
@@ -48,25 +49,9 @@ class ChatViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func sendButtonPressed(_ sender: Any) {
-        let newMessage = Message(withText: messageTextField.text!, fromSender: .user)
-        
-        messages.append(newMessage)
-        
-        let lastIndexPath = IndexPath(row: messages.count - 1, section: 0)
-        
-        tableView.insertRows(at: [lastIndexPath], with: .automatic)
-        tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
-        
-        //Insert a row at the end of the table view
-        
-        // Reply
-        chatbot.reply(toMessage: newMessage) { [unowned self] (replyMessage: Message) in
-            self.messages.append(replyMessage)
-            
-            let lastIndexPath = IndexPath(row: self.messages.count - 1, section: 0)
-            self.tableView.insertRows(at: [lastIndexPath], with: .automatic)
-            self.tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
-        }
+        messageTextField.resignFirstResponder()
+        addMessage()
+        //messageTextField.text = ""
     }
     
     // MARK: - Interface (public functions)
@@ -118,6 +103,17 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+// MARK: - UITextFieldDelegate
+extension ChatViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        addMessage()
+        textField.resignFirstResponder()
+        //textField.text = ""
+        
+        return true
+    }
+}
+
 // MARK: - Helper Methods
 fileprivate extension ChatViewController {
     @objc func handleKeyboardNotification(notification: NSNotification) {
@@ -137,7 +133,31 @@ fileprivate extension ChatViewController {
         }
     }
     
-    
+    // Uses the current text of the text field to add a messsage
+    func addMessage() {
+        let newMessage = Message(withText: messageTextField.text!, fromSender: .user)
+        
+        messages.append(newMessage)
+        print("NewMessage: \(newMessage)")
+        
+        let lastIndexPath = IndexPath(row: messages.count - 1, section: 0)
+        
+        tableView.insertRows(at: [lastIndexPath], with: .automatic)
+        tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
+        
+        //Insert a row at the end of the table view
+        
+        // Reply
+        chatbot.reply(toMessage: newMessage) { [unowned self] (replyMessage: Message) in
+            self.messages.append(replyMessage)
+            
+            let lastIndexPath = IndexPath(row: self.messages.count - 1, section: 0)
+            self.tableView.insertRows(at: [lastIndexPath], with: .automatic)
+            self.tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
+        }
+        
+        messageTextField.text = ""
+    }
 }
 
 // MARK: - Table View Cell
@@ -170,7 +190,8 @@ class MessageTableViewCell: UITableViewCell {
         contentView.setNeedsLayout()
         contentView.layoutIfNeeded()
         
-        //contentView.insertSubview(bubbleView, at: 0)
+        bubbleView.layer.cornerRadius = 15
+        bubbleView.layer.masksToBounds = true
     }
 }
 

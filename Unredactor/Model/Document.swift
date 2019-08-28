@@ -58,10 +58,6 @@ class Document {
     
     /// Appends a character to the last word in a text. If the character is a space, adds an empty word with text "" and redaciotn state .notRedacted.
     func appendCharacterToText(_ character: String) {
-        for word in classifiedText.words {
-            print("Before: Word: \(word), State: \(word.redactionState)")
-        }
-        
         if character == " " {
             classifiedText.words.append(ClassifiedString(" "))
         } else if let lastWord = classifiedText.words.last {
@@ -72,10 +68,6 @@ class Document {
             }
         } else {
             classifiedText.words.append(ClassifiedString(character)) // Create the first word
-        }
-        
-        for word in classifiedText.words {
-            print("After: Word: \(word), State: \(word.redactionState)")
         }
     }
     
