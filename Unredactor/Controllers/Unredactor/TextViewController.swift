@@ -163,6 +163,7 @@ extension TextViewController: UITextViewDelegate {
         // Create the updated text string
         
         var currentText: String = ""
+        let previousRedactionState = document.redactionState
         
         if textView.text.isEmpty {
             currentText = textView.attributedText.string
@@ -198,6 +199,10 @@ extension TextViewController: UITextViewDelegate {
                 document.removeLastCharacter()
                 textView.attributedText = document.attributedText
                 textView.font = document.font
+                
+                if document.redactionState != .redacted && previousRedactionState == .redacted {
+                    delegate?.textViewDidBecomeNotRedacted()
+                }
             } else {
                 document.appendCharacterToText(text)
                 textView.attributedText = document.attributedText

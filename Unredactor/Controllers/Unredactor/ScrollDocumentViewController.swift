@@ -36,8 +36,8 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
     private var pulseAnimation: CABasicAnimation {
         let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
         pulseAnimation.duration = 0.8
-        pulseAnimation.fromValue = 0.0
-        pulseAnimation.toValue = 1
+        pulseAnimation.fromValue = unredactLabel.alpha
+        pulseAnimation.toValue = 0
         pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         pulseAnimation.autoreverses = true
         pulseAnimation.repeatCount = .greatestFiniteMagnitude
@@ -231,7 +231,6 @@ fileprivate extension ScrollDocumentViewController {
     }
     
     func showUnredactLabel() {
-        unredactLabel.layer.add(pulseAnimation, forKey: pulseAnimationKey)
         
         UIView.animate(withDuration: 0.5, animations: { [unowned self] in
             self.unredactLabel.alpha = 1.0

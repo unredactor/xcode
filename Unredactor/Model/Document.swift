@@ -75,6 +75,15 @@ class Document {
     
     /// Appends a character to the last word in a text. If the character is a space, adds an empty word with text "" and redaciotn state .notRedacted.
     func appendCharacterToText(_ character: String) {
+        // TODO: Optimize implementation - This guard statement is for diction, where an entire sentence or paragraph may be added. This is an incredibly inefficient but robust way of solving it.
+        guard character.count <= 1 else {
+            for char in character {
+                appendCharacterToText(String(char))
+            }
+            
+            return
+        }
+        
         if character == " " {
             classifiedText.words.append(ClassifiedString(" "))
         } else if let lastWord = classifiedText.words.last {
