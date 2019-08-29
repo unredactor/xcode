@@ -63,6 +63,12 @@ class PageViewController: UIPageViewController {
         }
     }
     
+    func setCurrentPageUserInteractionEnabled(to isUserInteractionEnabled: Bool) {
+        if let currentPage = pages[currentIndex] as? ScrollDocumentViewController {
+            currentPage.isTextViewInteractionEnabled = isUserInteractionEnabled
+        }
+    }
+    
     func flipToPage(atIndex index: Int) {
         var direction: UIPageViewController.NavigationDirection
         if index > currentIndex {

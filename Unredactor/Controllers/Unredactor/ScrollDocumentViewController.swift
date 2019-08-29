@@ -26,9 +26,7 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
     
     var isTextViewInteractionEnabled = true {
         didSet {
-            if isTextViewInteractionEnabled == true {
-                
-            }
+            textViewController.setTextViewIsUserInteractionEnabled(to: isTextViewInteractionEnabled)
         }
     }
     

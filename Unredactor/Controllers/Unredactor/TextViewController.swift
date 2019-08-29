@@ -126,6 +126,10 @@ class TextViewController: UIViewController {
         else { setTextViewRedactable() }
     }
     
+    func setTextViewIsUserInteractionEnabled(to isUserInteractionEnabled: Bool) {
+        textView.isUserInteractionEnabled = isUserInteractionEnabled
+    }
+    
     func setTextViewEditable() {
         textView.isEditable = true
         editMode = .editable
@@ -213,6 +217,10 @@ extension TextViewController: UITextViewDelegate {
 // MARK: - UIGestureRecognizerDelegate
 extension TextViewController: UIGestureRecognizerDelegate {
     @objc func textViewTapped(_ gestureRecognizer: UITapGestureRecognizer) {
+        
+        print("IS USER INTERACTION ENABLED? \(textView.isUserInteractionEnabled)")
+        guard textView.isUserInteractionEnabled == true else { return }
+        
         guard editMode == .redactable else {
             // EditMode must be edit, so let's start editing
             textView.becomeFirstResponder()

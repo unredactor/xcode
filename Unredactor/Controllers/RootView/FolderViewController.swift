@@ -32,6 +32,11 @@ class FolderViewController: UIViewController {
                 pageViewController.setCurrentPageFirstResponder()
             }
         }
+        
+        // Stop the user from bringing up the keyboard or interacting with the page while the menu is shown
+        didSet {
+            pageViewController.setCurrentPageUserInteractionEnabled(to: !menuIsShown)
+        }
     }
     
     private let animationDuration: TimeInterval = 0.6

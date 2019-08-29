@@ -150,8 +150,8 @@
 		23066B722315F55D00A9E8B0 /* RootView */ = {
 			isa = PBXGroup;
 			children = (
-				23946B7522F2512000A69AF3 /* PageViewController.swift */,
 				23B876E122F93633006E7D16 /* FolderViewController.swift */,
+				23946B7522F2512000A69AF3 /* PageViewController.swift */,
 				2387F78C2308A91A00F918B8 /* FileButtonViewController.swift */,
 				23066B732315F58A00A9E8B0 /* SideMenu */,
 			);
