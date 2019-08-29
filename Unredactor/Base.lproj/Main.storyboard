@@ -10,98 +10,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Scroll Document View Controller-->
-        <scene sceneID="5Ic-Gt-tlC">
-            <objects>
-                <viewController storyboardIdentifier="unredactorView" id="261-wd-RED" customClass="ScrollDocumentViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="g0b-9M-FDb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="hN9-Bf-rbz">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ilZ-Xy-Uss">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="PeV-Z8-mdL">
-                                        <rect key="frame" x="32" y="56" width="350" height="664"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chatbot" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmu-nh-2u8">
-                                                <rect key="frame" x="120.33333333333334" y="0.0" width="109.33333333333334" height="29.666666666666668"/>
-                                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="26"/>
-                                                <color key="textColor" red="0.12095118613138686" green="0.12095118613138686" blue="0.12095118613138686" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="evJ-M7-HVT">
-                                                <rect key="frame" x="0.0" y="45.666666666666686" width="350" height="618.33333333333326"/>
-                                                <connections>
-                                                    <segue destination="svi-fa-nC1" kind="embed" id="IpL-Id-3k6"/>
-                                                </connections>
-                                            </containerView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="evJ-M7-HVT" secondAttribute="bottom" id="AHz-Kv-p4D"/>
-                                            <constraint firstItem="evJ-M7-HVT" firstAttribute="leading" secondItem="PeV-Z8-mdL" secondAttribute="leading" id="NHA-i3-8Jk"/>
-                                            <constraint firstAttribute="trailing" secondItem="evJ-M7-HVT" secondAttribute="trailing" id="fuk-Q1-G5t"/>
-                                            <constraint firstItem="evJ-M7-HVT" firstAttribute="top" secondItem="Pmu-nh-2u8" secondAttribute="bottom" constant="16" id="lP4-UE-uqg"/>
-                                        </constraints>
-                                    </stackView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image 2.1 (1)" translatesAutoresizingMaskIntoConstraints="NO" id="OP2-GF-LTL">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                    </imageView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="ilZ-Xy-Uss" firstAttribute="leading" secondItem="OP2-GF-LTL" secondAttribute="leading" id="2NH-Ac-Uuf"/>
-                                    <constraint firstItem="OP2-GF-LTL" firstAttribute="centerX" secondItem="hN9-Bf-rbz" secondAttribute="centerX" id="2ef-rh-nWi"/>
-                                    <constraint firstAttribute="bottom" secondItem="PeV-Z8-mdL" secondAttribute="bottom" constant="16" id="4bL-AO-fso"/>
-                                    <constraint firstAttribute="bottom" secondItem="OP2-GF-LTL" secondAttribute="bottom" id="8le-ev-3a1"/>
-                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="centerX" secondItem="hN9-Bf-rbz" secondAttribute="centerX" id="9qv-83-IaO"/>
-                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="top" secondItem="hN9-Bf-rbz" secondAttribute="top" constant="56" id="AV7-sj-L0t"/>
-                                    <constraint firstItem="OP2-GF-LTL" firstAttribute="centerY" secondItem="hN9-Bf-rbz" secondAttribute="centerY" id="Ei1-uN-PiZ"/>
-                                    <constraint firstItem="ilZ-Xy-Uss" firstAttribute="centerY" secondItem="hN9-Bf-rbz" secondAttribute="centerY" id="MkA-nd-Mvx"/>
-                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="leading" secondItem="hN9-Bf-rbz" secondAttribute="leading" constant="32" id="ZXd-ux-hBm"/>
-                                    <constraint firstItem="ilZ-Xy-Uss" firstAttribute="top" secondItem="hN9-Bf-rbz" secondAttribute="top" id="h7o-VZ-Jax"/>
-                                    <constraint firstItem="OP2-GF-LTL" firstAttribute="top" secondItem="hN9-Bf-rbz" secondAttribute="top" id="r0x-s2-Tys"/>
-                                    <constraint firstItem="OP2-GF-LTL" firstAttribute="leading" secondItem="hN9-Bf-rbz" secondAttribute="leading" id="t90-40-5mi"/>
-                                    <constraint firstItem="PeV-Z8-mdL" firstAttribute="centerX" secondItem="ilZ-Xy-Uss" secondAttribute="centerX" id="tEw-Op-any"/>
-                                    <constraint firstAttribute="trailing" secondItem="OP2-GF-LTL" secondAttribute="trailing" id="xnm-eq-Rm1"/>
-                                    <constraint firstAttribute="bottom" secondItem="ilZ-Xy-Uss" secondAttribute="bottom" id="yuB-3x-jin"/>
-                                </constraints>
-                            </scrollView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cmL-1s-a4H">
-                                <rect key="frame" x="0.0" y="736" width="414" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="Smm-d3-bKx"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="co0-QP-Mut"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="H4q-JR-BWU" kind="embed" identifier="embedSwitchView" id="Xlh-iB-uoe"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="cmL-1s-a4H" firstAttribute="leading" secondItem="g0b-9M-FDb" secondAttribute="leading" id="0nU-qC-vUM"/>
-                            <constraint firstItem="hN9-Bf-rbz" firstAttribute="bottom" secondItem="Xrd-Dh-Ik8" secondAttribute="bottom" id="7sf-nZ-Up0"/>
-                            <constraint firstItem="cmL-1s-a4H" firstAttribute="top" secondItem="g0b-9M-FDb" secondAttribute="bottom" id="JLX-Gc-k2p"/>
-                            <constraint firstAttribute="trailing" secondItem="hN9-Bf-rbz" secondAttribute="trailing" id="USA-NU-wVa"/>
-                            <constraint firstItem="hN9-Bf-rbz" firstAttribute="top" secondItem="g0b-9M-FDb" secondAttribute="top" id="YIQ-7T-9wL"/>
-                            <constraint firstAttribute="trailing" secondItem="cmL-1s-a4H" secondAttribute="trailing" id="bWk-x2-lVY"/>
-                            <constraint firstItem="hN9-Bf-rbz" firstAttribute="leading" secondItem="g0b-9M-FDb" secondAttribute="leading" id="fIR-fZ-iqH"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Xrd-Dh-Ik8"/>
-                    </view>
-                    <connections>
-                        <outlet property="scrollView" destination="hN9-Bf-rbz" id="rug-XV-PYr"/>
-                        <outlet property="switchView" destination="cmL-1s-a4H" id="i1h-pJ-p51"/>
-                        <outlet property="textView" destination="evJ-M7-HVT" id="kDv-MY-a27"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VZi-ZZ-WzC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2409.375" y="-363.38028169014086"/>
-        </scene>
         <!--Scroll View Controller-->
         <scene sceneID="Gwz-mH-rY2">
             <objects>
@@ -1094,7 +1002,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="350" height="618.33333333333326"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DXu-vq-Y4S">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXu-vq-Y4S" customClass="UnredactorTextView" customModule="Unredactor" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="350" height="618.33333333333337"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <attributedString key="attributedText">
@@ -1159,7 +1067,7 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="2lm-ek-SK5" firstAttribute="top" secondItem="IRp-e7-g5b" secondAttribute="bottom" constant="16" id="1kq-zS-lUd"/>
-                                            <constraint firstAttribute="bottom" secondItem="2lm-ek-SK5" secondAttribute="bottom" id="IAc-Mt-4Qa"/>
+                                            <constraint firstAttribute="bottom" secondItem="2lm-ek-SK5" secondAttribute="bottom" constant="16" id="IAc-Mt-4Qa"/>
                                             <constraint firstAttribute="trailing" secondItem="2lm-ek-SK5" secondAttribute="trailing" id="WrL-r7-Bx4"/>
                                             <constraint firstItem="2lm-ek-SK5" firstAttribute="leading" secondItem="FsJ-yd-PdX" secondAttribute="leading" id="xxR-SM-dIA"/>
                                         </constraints>
@@ -1900,8 +1808,6 @@ By engaging in the Manceps Summer of Code program, he has gotten much better at 
         <image name="websiteIcon" width="460.33334350585938" height="460.33334350585938"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UL2-e5-WDs"/>
-        <segue reference="9BN-yq-VWY"/>
         <segue reference="IOh-gk-NiV"/>
     </inferredMetricsTieBreakers>
 </document>

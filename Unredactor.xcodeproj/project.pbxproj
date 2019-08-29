@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		23066B782315F64300A9E8B0 /* TypingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B772315F64300A9E8B0 /* TypingIndicatorViewController.swift */; };
 		23066B7C2316F5B200A9E8B0 /* VerticalPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B7B2316F5B200A9E8B0 /* VerticalPageViewController.swift */; };
+		23066B7E2317577B00A9E8B0 /* UnredactorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B7D2317577B00A9E8B0 /* UnredactorTextView.swift */; };
 		2309D19B23027A850028C2BA /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D19A23027A850028C2BA /* SideMenuViewController.swift */; };
 		2309D19D230462DB0028C2BA /* CABasicAnimation+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */; };
 		23159A842305C938007D57DE /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A832305C938007D57DE /* SideMenuTableViewController.swift */; };
@@ -63,6 +64,7 @@
 /* Begin PBXFileReference section */
 		23066B772315F64300A9E8B0 /* TypingIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorViewController.swift; sourceTree = "<group>"; };
 		23066B7B2316F5B200A9E8B0 /* VerticalPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalPageViewController.swift; sourceTree = "<group>"; };
+		23066B7D2317577B00A9E8B0 /* UnredactorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnredactorTextView.swift; sourceTree = "<group>"; };
 		2309D19A23027A850028C2BA /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CABasicAnimation+Helpers.swift"; sourceTree = "<group>"; };
 		23159A832305C938007D57DE /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 			children = (
 				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,
 				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
+				23066B7D2317577B00A9E8B0 /* UnredactorTextView.swift */,
 				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
 			);
 			path = Unredactor;
@@ -434,6 +437,7 @@
 			files = (
 				2F7C0A9B22E6069600AD2828 /* SettingsTableViewController.swift in Sources */,
 				23159A842305C938007D57DE /* SideMenuTableViewController.swift in Sources */,
+				23066B7E2317577B00A9E8B0 /* UnredactorTextView.swift in Sources */,
 				2F7C0A9522E2D66900AD2828 /* URL+Helpers.swift in Sources */,
 				2F7C0A8722DF863F00AD2828 /* Document.swift in Sources */,
 				2309D19D230462DB0028C2BA /* CABasicAnimation+Helpers.swift in Sources */,

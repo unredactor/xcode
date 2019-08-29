@@ -27,7 +27,7 @@ protocol TextViewControllerDelegate: class {
 class TextViewController: UIViewController {
     
     // MARK: - Properties
-    @IBOutlet weak private var textView: UITextView!
+    @IBOutlet weak private var textView: UnredactorTextView!
     
     var document: Document!
     var editMode: EditMode = .editable
@@ -228,13 +228,13 @@ extension TextViewController: UIGestureRecognizerDelegate {
             return
         }
         
-        let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document)
+        guard let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document) else { return }
         
         if editMode == .redactable {
             
             // Make the tapped word toggle between redacted and unredacted
             document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState()
-        
+            
             textView.attributedText = document.attributedText
             textView.font = document.font
         } else if editMode == .editable {

@@ -60,6 +60,9 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
     }
     
     func wordForCharacterIndex(_ characterIndex: Int) -> ClassifiedString? {
+        let numberOfCharacters = rawText.count
+        guard characterIndex >= 0 && characterIndex < numberOfCharacters else { return nil }
+        
         var startIndex = 0
         var endIndex = 0 // Place we are at in the sequence currently
         for word in words {

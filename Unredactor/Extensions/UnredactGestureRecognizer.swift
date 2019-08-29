@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension UITapGestureRecognizer {
-    func characterIndexTapped(inDocument document: Document) -> Int {
+    func characterIndexTapped(inDocument document: Document) -> Int? {
         let textView = self.view as! UITextView
         let attributedText = document.attributedText
         
@@ -23,14 +23,21 @@ extension UITapGestureRecognizer {
         layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
         
-        textContainer.size = CGSize(width: textView.frame.size.width, height: textView.frame.size.height) //Add 200 to make it arbitrarily high
+        let width = textView.frame.size.width
+        let sizeThatFits = textView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+        textContainer.size = CGSize(width: width, height: sizeThatFits.height)
         
         // Find the tapped character location and compare it to the specified range
-        let locationOfTouchInTextView = self.location(in: textView)
+        let locationOfTouchInTextView = self.location(in: textView) // Location within UIView (from 0,0 at bottom left)
         
         let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInTextView.x,
                                                      y: locationOfTouchInTextView.y)
-        //let locationOfTouchInTextContainer = self.location(in: view)
+        
+        print("Location of touch in text view: \(locationOfTouchInTextView)")
+        print("height: \(textView.frame.height)")
+        guard locationOfTouchInTextView.y > 0 && locationOfTouchInTextView.y < sizeThatFits.height else { return nil } // -5 is to clip off the space where you can tap under a word but it interprets that you have tapped the last word in the sentence
+        
+        
         let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         print("Index of character tapped: \(indexOfCharacter)")
         
