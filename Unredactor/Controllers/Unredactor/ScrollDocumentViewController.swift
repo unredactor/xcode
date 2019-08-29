@@ -199,7 +199,7 @@ fileprivate extension ScrollDocumentViewController {
     @objc func unredact(_ sender: Any) {
         document.unredact {
             DispatchQueue.main.async { [unowned self] in
-                self.textViewController.configureTextView(withDocument: self.document)
+                self.textViewController.configureTextView(withDocument: self.document, isAnimated: true)
                 self.scrollView.refreshControl?.endRefreshing()
                 self.hideUnredactLabel()
             }

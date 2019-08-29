@@ -98,12 +98,19 @@ class TextViewController: UIViewController {
     }
  */
     
-    func configureTextView(withDocument document: Document) {
+    func configureTextView(withDocument document: Document, isAnimated: Bool = false) {
         self.document = document
         textView.font = document.font
-
+        
         guard textView.textColor != UIColor.lightGray else { return }
-        textView.attributedText = document.attributedText
+        
+        if isAnimated {
+            UIView.transition(with: textView, duration: 0.5, options: .transitionCrossDissolve, animations: { [unowned self] in
+                self.textView.attributedText = self.document.attributedText
+            })
+        } else {
+            textView.attributedText = document.attributedText
+        }
     }
     
     func setTextView(toEditMode editMode: EditMode) {
@@ -246,8 +253,9 @@ extension TextViewController: UIGestureRecognizerDelegate {
             // Make the tapped word toggle between redacted and unredacted
             document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState()
             
-            textView.attributedText = document.attributedText
-            textView.font = document.font
+            UIView.transition(with: textView, duration: 0.15, options: .transitionCrossDissolve, animations: { [unowned self] in
+                self.textView.attributedText = self.document.attributedText
+            })
             
             // Notify delegate if there are changes
             if document.redactionState == .redacted && previousRedactionState != .redacted { delegate?.textViewDidBecomeRedacted() }
