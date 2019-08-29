@@ -21,11 +21,12 @@ class Document {
         
         let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: "")//, attributes: attributes)
         let attributedSpace = NSMutableAttributedString(string: " ")
+        let redactedAttributedSpace = NSMutableAttributedString(string: " ", attributes: [NSAttributedString.Key.backgroundColor : UIColor.black])
         
         //attributedText.addAttributes([.font: font], range: NSMakeRange(0, attributedText.string.count)) // Sets the font of the attributed text
         //attributedText.addAttribute(.font, value: font, range: NSMakeRange(0, attributedText.string.count))
         
-        for word in classifiedText.words {
+        for (index, word) in classifiedText.words.enumerated() {
             let string = word.redactionState == .unredacted ? word.unredactorPrediction! : word.string
             let attributedWord = NSMutableAttributedString(string: string)
             if word.redactionState == .redacted {
@@ -36,7 +37,23 @@ class Document {
                 attributedWord.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: word.unredactorPrediction!.count))
             }
             
-            if string != " " { attributedText.append(attributedSpace) } // If the string is " ", this means the user typed a space. This is used to separate words of different redaction states when typing. If the space was added, this would produce two spaces when the user typed only one. There should only be one " " word if any, and it should be at the end of the sentence.
+            if string != " " {
+                
+                // TODO: Clean up this logic
+                if index > 0 {
+                    let lastWord = classifiedText.words[index - 1]
+                    if lastWord.redactionState == .redacted && word.redactionState == .redacted {
+                        attributedText.append(redactedAttributedSpace)
+                    } else {
+                        attributedText.append(attributedSpace)
+                    }
+                } else {
+                    attributedText.append(attributedSpace)
+                }
+                
+                
+                
+            } // If the string is " ", this means the user typed a space. This is used to separate words of different redaction states when typing. If the space was added, this would produce two spaces when the user typed only one. There should only be one " " word if any, and it should be at the end of the sentence.
             attributedText.append(attributedWord)
         }
         
