@@ -58,8 +58,20 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         return maskTokenText
     }
     
+    var numberOfCharacters: Int {
+        var numberOfCharacters: Int = 0
+        for word in words {
+            let string: String = (word.redactionState == .unredacted) ? word.unredactorPrediction! : word.string
+            numberOfCharacters += string.count
+        }
+        
+        // Account for spaces
+        numberOfCharacters += words.count - 1
+        
+        return numberOfCharacters
+    }
+    
     func wordForCharacterIndex(_ characterIndex: Int) -> ClassifiedString? {
-        let numberOfCharacters = rawText.count
         guard characterIndex >= 0 && characterIndex < numberOfCharacters else { return nil }
         
         var startIndex = 0
