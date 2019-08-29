@@ -15,7 +15,7 @@ class Document {
     var classifiedText: ClassifiedText // Base text that was entered is accessible through classifiedText.rawText
     //var redactedText: String? // Text where redacted words are replaced with unk. This is likely what would be sent to the API
     
-    var font = UIFont(name: "Courier", size: 17)!
+    var font = UIFont(name: "Courier", size: 20)!
     
     var attributedText: NSAttributedString { // Text that is used by the DocumentCell to display black bars. Needs to remember the length of redacted words (so it looks nicer)
         
