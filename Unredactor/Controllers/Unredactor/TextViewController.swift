@@ -73,7 +73,6 @@ class TextViewController: UIViewController {
     func switchState(to state: RedactionState, completion: @escaping () -> Void = { }) {
         switch state {
         case .notRedacted:
-            print("something")
             completion()
         case .redacted:
             document.unredact(completion: {
@@ -169,6 +168,10 @@ extension TextViewController: UITextViewDelegate {
         
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
+        let textWasDeleted = updatedText.count <= textView.text.count // they are equal in the case that you press backspace and there is no text yet
+        
+        print("UPDATED TEXT: |\(updatedText)|")
+        
         // If updated text view will be empty, add the placeholder
         // and set the cursor to the beginning of the text view
         if updatedText.isEmpty {
@@ -180,15 +183,15 @@ extension TextViewController: UITextViewDelegate {
             // Else if the text view's placeholder is showing
             // and the length of the replacement string is greater than 0,
             // set the text color to black and then set its text to the replacement string
-        else if textView.textColor == .lightGray && !text.isEmpty {
+        else if textView.textColor == .lightGray {
+            guard !textWasDeleted && !text.isEmpty else { return false }
+            
             textView.textColor = .black
-            print("Replacement Text: \(text)")
             document.appendCharacterToText(text)
             textView.attributedText = document.attributedText
             textView.font = document.font
             delegate?.textViewDidBecomeNotEmpty()
         } else {
-            let textWasDeleted = updatedText.count < textView.text.count
             if textWasDeleted {
                 document.removeLastCharacter()
                 textView.attributedText = document.attributedText
@@ -218,7 +221,6 @@ extension TextViewController: UITextViewDelegate {
 extension TextViewController: UIGestureRecognizerDelegate {
     @objc func textViewTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         
-        print("IS USER INTERACTION ENABLED? \(textView.isUserInteractionEnabled)")
         guard textView.isUserInteractionEnabled == true else { return }
         
         guard editMode == .redactable else {

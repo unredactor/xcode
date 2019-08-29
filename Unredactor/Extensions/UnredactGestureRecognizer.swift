@@ -33,8 +33,6 @@ extension UITapGestureRecognizer {
         let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInTextView.x,
                                                      y: locationOfTouchInTextView.y)
         
-        print("Location of touch in text view: \(locationOfTouchInTextView)")
-        print("height: \(textView.frame.height)")
         guard locationOfTouchInTextView.y > 0 && locationOfTouchInTextView.y < sizeThatFits.height else { return nil } // -5 is to clip off the space where you can tap under a word but it interprets that you have tapped the last word in the sentence
         
         

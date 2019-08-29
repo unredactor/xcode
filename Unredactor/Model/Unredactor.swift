@@ -41,7 +41,6 @@ class Unredactor {
                 
                 redactedWord.unredactorPrediction = unredactedWord
             }
-            print("finished unredacting()")
             
             completion(unredactedText)
         }
@@ -57,7 +56,6 @@ class Unredactor {
         
         if requestType == .get {
             let urlString = "https://unredactor.com/api?text=" + text
-            print("urlString: \(urlString)")
             let baseURL = URL(string: urlString)!
             
             task = URLSession.shared.dataTask(with: baseURL) { (data, response, error) in
@@ -140,7 +138,6 @@ class Unredactor {
                 completion(["getUnredactedWords() failed; couldn't properly parse JSON response."])
             }
         } else {
-            print("didn't work i guess lmao gotem")
             completion(["getUnredactedWords() failed; couldn't get JSON response from server"])
         }
     }

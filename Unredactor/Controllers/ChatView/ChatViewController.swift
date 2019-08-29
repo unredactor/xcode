@@ -64,14 +64,11 @@ class ChatViewController: UIViewController {
 extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        print("Message Number: \(messages.count)")
         return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = messages[indexPath.row]
-        
-        print("Sender: \(message.sender)" )
         
         var identifier: String
         if message.sender == .user { identifier = "userMessage" }
@@ -138,7 +135,6 @@ fileprivate extension ChatViewController {
         let newMessage = Message(withText: messageTextField.text!, fromSender: .user)
         
         messages.append(newMessage)
-        print("NewMessage: \(newMessage)")
         
         let lastIndexPath = IndexPath(row: messages.count - 1, section: 0)
         

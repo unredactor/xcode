@@ -22,7 +22,6 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             rawText.append(" ")
         }
         rawText.removeLast() // Remove the last space that was added
-        print("rawText: \(rawText)")
         
         return rawText
     }
@@ -67,6 +66,10 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         var endIndex = 0 // Place we are at in the sequence currently
         for word in words {
             let wordLength = word.redactionState == .unredacted ? word.unredactorPrediction!.count : word.string.count
+            
+            if let unredactorPrediction = word.unredactorPrediction {
+                print("UNREDACTOR PREDICTION: \(unredactorPrediction)")
+            }
             
             endIndex += wordLength
             startIndex = endIndex - wordLength

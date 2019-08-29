@@ -109,7 +109,6 @@ fileprivate extension SideMenuTableViewController {
         var row = 0
         for section in 1...indexPath.section {
             row += numberOfRows(inSection: section - 1)
-            print("numberofrows: \(numberOfRows(inSection: section - 1))")
         }
         row += indexPath.row
         print("row: \(indexPath.row)")

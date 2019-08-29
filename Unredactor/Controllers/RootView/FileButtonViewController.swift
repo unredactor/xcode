@@ -94,14 +94,12 @@ fileprivate extension FileButtonViewController {
     func animateButtonNormal() {
         UIView.animate(withDuration: 0.1) { [unowned self] in
             self.tintView.backgroundColor = .clear
-            print("Button set to normal")
         }
     }
     
     func animateButtonHighlighted() {
         UIView.animate(withDuration: 0.1) { [unowned self] in
             self.tintView.backgroundColor = UIColor.white.withAlphaComponent(0.3)
-            print("Button highlighted")
         }
     }
 }

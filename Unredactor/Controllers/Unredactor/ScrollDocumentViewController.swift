@@ -61,7 +61,6 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
     // MARK: - Interface (public functinos)
     func dismissKeyboard() {
         textViewController.dismissKeyboard()
-        print("Attempted to resign first responder")
         self.resignFirstResponder()
     }
     
@@ -142,7 +141,6 @@ fileprivate extension ScrollDocumentViewController {
     }
     
     func setupTextView() {
-        print(switchViewController.state)
         textViewController.setTextView(toEditMode: switchViewController.state)
         
         // Make switch view stuck to the top of the text view's keyboard
@@ -188,7 +186,6 @@ fileprivate extension ScrollDocumentViewController {
         UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: { [unowned self] in
             self.switchView.transform = downTransform
             }, completion: { (bool) in
-                print("something")
         })
     }
     
@@ -201,7 +198,6 @@ fileprivate extension ScrollDocumentViewController {
         UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: { [unowned self] in
             self.switchView.transform = identityTransform
             }, completion: { (bool) in
-                print("something")
         })
     }
 }

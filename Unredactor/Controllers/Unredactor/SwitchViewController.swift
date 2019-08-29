@@ -81,7 +81,6 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
 // MARK: - Helper Functions
 fileprivate extension SwitchViewController {
     func updateViews(isAnimated animated: Bool) { // Changes the appearance of the views to reflect
-        print("isAnimated: \(animated)")
         
         if state == .editable {
             removeGlowEffect(from: stateSwitch, isAnimated: animated)
@@ -100,7 +99,6 @@ fileprivate extension SwitchViewController {
     
     func addGlowEffect(to view: UIView, isAnimated animated: Bool) { // Give a label a transparent white shadow, simulating a glow
         let duration: TimeInterval = animated ? animationDuration : 0.0
-        print("GlowLabelDuration: \(duration)")
         
         view.layer.shadowColor = UIColor.white.cgColor
         view.layer.shadowOffset = .zero
@@ -132,7 +130,6 @@ fileprivate extension SwitchViewController {
     
     func removeGlowEffect(from view: UIView, isAnimated animated: Bool) { // Make the shadow completely transparent
         let duration: TimeInterval = animated ? animationDuration : 0.0
-        print("GlowLabelDuration: \(duration)")
         
         view.layer.shadowColor = UIColor.white.cgColor
         view.layer.shadowOffset = .zero
@@ -141,7 +138,6 @@ fileprivate extension SwitchViewController {
         view.layer.rasterizationScale = UIScreen.main.scale
         
         let opacityAnimation = CABasicAnimation(keyPath: "shadowOpacity")
-        print("Opacity: \(view.layer.shadowOpacity)")
         opacityAnimation.fromValue = view.layer.shadowOpacity
         opacityAnimation.toValue = 0.0
         opacityAnimation.duration = duration

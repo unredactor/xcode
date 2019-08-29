@@ -114,8 +114,6 @@ class Document {
             return
         }
         
-        print("unredact() called")
-        
         unredactor.unredact(classifiedText, completion: { [unowned self] (unredactedText: ClassifiedText) -> Void in
             self.classifiedText = unredactedText
             completion()

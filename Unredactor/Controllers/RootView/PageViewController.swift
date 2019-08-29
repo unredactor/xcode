@@ -47,14 +47,11 @@ class PageViewController: UIPageViewController {
     
     // MARK: - Interface (public functions)
     func dismissKeyboardOfCurrentPage() {
-        print("currentIndex: \(currentIndex)")
-        
         if let currentPage = pages[currentIndex] as? DocumentViewController {
             currentPage.dismissKeyboard()
         } else if let currentPage = pages[currentIndex] as? ChatViewController {
             currentPage.dismissKeyboard()
         }
-        //self.resignFirstResponder()
     }
     
     func setCurrentPageFirstResponder() {
