@@ -15,6 +15,8 @@ protocol TextViewControllerDelegate: class {
     
     func textViewDidBecomeEmpty()
     func textViewDidBecomeNotEmpty()
+    func textViewDidBecomeRedacted()
+    func textViewDidBecomeNotRedacted()
 }
 
 
@@ -70,6 +72,7 @@ class TextViewController: UIViewController {
         textView.resignFirstResponder()
     }
     
+    /*
     func switchState(to state: RedactionState, completion: @escaping () -> Void = { }) {
         switch state {
         case .notRedacted:
@@ -93,6 +96,7 @@ class TextViewController: UIViewController {
             completion()
         }
     }
+ */
     
     func configureTextView(withDocument document: Document) {
         self.document = document
@@ -170,8 +174,6 @@ extension TextViewController: UITextViewDelegate {
         
         let textWasDeleted = updatedText.count <= textView.text.count // they are equal in the case that you press backspace and there is no text yet
         
-        print("UPDATED TEXT: |\(updatedText)|")
-        
         // If updated text view will be empty, add the placeholder
         // and set the cursor to the beginning of the text view
         if updatedText.isEmpty {
@@ -221,6 +223,8 @@ extension TextViewController: UITextViewDelegate {
 extension TextViewController: UIGestureRecognizerDelegate {
     @objc func textViewTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         
+        let previousRedactionState = document.redactionState
+        
         guard textView.isUserInteractionEnabled == true else { return }
         
         guard editMode == .redactable else {
@@ -239,6 +243,10 @@ extension TextViewController: UIGestureRecognizerDelegate {
             
             textView.attributedText = document.attributedText
             textView.font = document.font
+            
+            // Notify delegate if there are changes
+            if document.redactionState == .redacted && previousRedactionState != .redacted { delegate?.textViewDidBecomeRedacted() }
+            else if document.redactionState != .redacted && previousRedactionState == .redacted { delegate?.textViewDidBecomeNotRedacted() }
         } else if editMode == .editable {
             textView.becomeFirstResponder()
             

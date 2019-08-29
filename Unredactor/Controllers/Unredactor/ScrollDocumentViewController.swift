@@ -18,9 +18,11 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
     
     @IBOutlet weak private var switchView: UIView!
     @IBOutlet weak private var textView: UIView!
+    /// A label to indicate to the user how to unredact text. Shows up once the user is able to unredact (when there is redacted text)
+    @IBOutlet weak var unredactLabel: UILabel!
     
-    var switchViewController: SwitchViewController!
-    var textViewController: TextViewController!
+    private var switchViewController: SwitchViewController!
+    private var textViewController: TextViewController!
     
     var document: Document!
     
@@ -28,6 +30,19 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         didSet {
             textViewController.setTextViewIsUserInteractionEnabled(to: isTextViewInteractionEnabled)
         }
+    }
+    
+    private let pulseAnimationKey: String = "pulseAnimation"
+    private var pulseAnimation: CABasicAnimation {
+        let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
+        pulseAnimation.duration = 0.8
+        pulseAnimation.fromValue = 0.0
+        pulseAnimation.toValue = 1
+        pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        pulseAnimation.autoreverses = true
+        pulseAnimation.repeatCount = .greatestFiniteMagnitude
+        
+        return pulseAnimation
     }
     
     // From https://stackoverflow.com/questions/10768659/leaving-inputaccessoryview-visible-after-keyboard-is-dismissed
@@ -41,7 +56,6 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         } else {
             return nil
         }
-        
     }
     
     // MARK: - View Life Cycle
@@ -51,6 +65,8 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         setupSwitchView() // also add a shadow to the switch view and dismiss the switch view
         setupTextView() // align text view behavior with switch behavior
         setupRefreshView() // create and add a refresh view to the hierarchy that allows the user to unredact
+        
+        unredactLabel.alpha = 0.0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,6 +120,7 @@ extension ScrollDocumentViewController: SwitchViewControllerDelegate {
 
 // MARK: - TextViewControllerDelegate
 extension ScrollDocumentViewController: TextViewControllerDelegate {
+    
     func keyboardDidShow(_ notification: NSNotification) {
         guard let userInfo = notification.userInfo else { return }
         
@@ -125,10 +142,21 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
     
     func textViewDidBecomeEmpty() {
         dismissSwitchView()
+        //hideRedactLabel()
     }
     
     func textViewDidBecomeNotEmpty() {
         showSwitchView()
+        //showRedactLabel()
+    }
+    
+    func textViewDidBecomeRedacted() {
+        showUnredactLabel()
+        switchViewController.hideInstructionLabel()
+    }
+    
+    func textViewDidBecomeNotRedacted() {
+        hideUnredactLabel()
     }
 }
 
@@ -173,11 +201,12 @@ fileprivate extension ScrollDocumentViewController {
             DispatchQueue.main.async { [unowned self] in
                 self.textViewController.configureTextView(withDocument: self.document)
                 self.scrollView.refreshControl?.endRefreshing()
+                self.hideUnredactLabel()
             }
         }
     }
     
-    private func dismissSwitchView(isAnimated: Bool = true) {
+    func dismissSwitchView(isAnimated: Bool = true) {
         let duration = isAnimated ? 0.3 : 0.0
         
         let downTransform: CGAffineTransform = CGAffineTransform(translationX: 0, y: switchView.frame.height)
@@ -189,7 +218,7 @@ fileprivate extension ScrollDocumentViewController {
         })
     }
     
-    private func showSwitchView(isAnimated: Bool = true) {
+    func showSwitchView(isAnimated: Bool = true) {
         let duration = isAnimated ? 0.3 : 0.0
         
         let identityTransform: CGAffineTransform = .identity
@@ -199,5 +228,23 @@ fileprivate extension ScrollDocumentViewController {
             self.switchView.transform = identityTransform
             }, completion: { (bool) in
         })
+    }
+    
+    func showUnredactLabel() {
+        unredactLabel.layer.add(pulseAnimation, forKey: pulseAnimationKey)
+        
+        UIView.animate(withDuration: 0.5, animations: { [unowned self] in
+            self.unredactLabel.alpha = 1.0
+        }, completion: { [unowned self] (bool) in
+            self.unredactLabel.layer.add(self.pulseAnimation, forKey: self.pulseAnimationKey)
+        })
+    }
+    
+    func hideUnredactLabel() {
+        unredactLabel.layer.removeAllAnimations()
+        
+        UIView.animate(withDuration: 0.5) { [unowned self] in
+            self.unredactLabel.alpha = 0.0
+        }
     }
 }

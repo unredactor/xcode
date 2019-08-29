@@ -135,8 +135,8 @@
 			children = (
 				2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */,
 				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
-				23066B7D2317577B00A9E8B0 /* UnredactorTextView.swift */,
 				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
+				23066B7D2317577B00A9E8B0 /* UnredactorTextView.swift */,
 			);
 			path = Unredactor;
 			sourceTree = "<group>";

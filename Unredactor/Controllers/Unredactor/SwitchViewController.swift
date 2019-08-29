@@ -25,6 +25,8 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     
     @IBOutlet weak var editLabel: UILabel!
     @IBOutlet weak var redactLabel: UILabel!
+    /// A label to indicate to the user how to redact text. Shows up once the user is able to redact (when there is any text)
+    @IBOutlet weak var instructionLabel: UILabel!
     
     var state: EditMode = .editable
     
@@ -32,6 +34,20 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     
     private let animationDuration: TimeInterval = 2.0
     private let shadowRadius: CGFloat = 5
+    
+    private let pulseAnimationKey: String = "pulseAnimation"
+    private var pulseAnimation: CABasicAnimation {
+        let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
+        pulseAnimation.duration = 0.8
+        pulseAnimation.fromValue = instructionLabel.alpha
+        pulseAnimation.toValue = 0
+        pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        pulseAnimation.autoreverses = true
+        pulseAnimation.repeatCount = .greatestFiniteMagnitude
+        
+        return pulseAnimation
+    }
+    
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -46,6 +62,8 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
         
         giveFadeAnimation(toLabel: editLabel)
         giveFadeAnimation(toLabel: redactLabel)
+        
+        instructionLabel.alpha = 0.0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,19 +73,37 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
         updateViews(isAnimated: false)
     }
     
+    func showInstructionLabel() {
+        UIView.animate(withDuration: 0.5, animations: { [unowned self] in
+            self.instructionLabel.alpha = 1.0
+            }, completion: { [unowned self] (bool) in
+                self.instructionLabel.layer.add(self.pulseAnimation, forKey: self.pulseAnimationKey)
+        })
+    }
+    
+    func hideInstructionLabel() {
+        instructionLabel.layer.removeAllAnimations()
+        
+        UIView.animate(withDuration: 0.5) { [unowned self] in
+            self.instructionLabel.alpha = 0.0
+        }
+    }
+    
     // MARK: - IBActions
     @IBAction func editButtonPressed(_ sender: Any) {
         state = .editable
         updateSwitchDirection()
         updateViews(isAnimated: false)
         delegate?.switchWasToggled(to: .editable)
+        hideInstructionLabel()
     }
     
     @IBAction func redactButtonPressed(_ sender: Any) {
         state = .redactable
         updateSwitchDirection()
         updateViews(isAnimated: false)
-        delegate?.switchWasToggled(to: .editable)
+        delegate?.switchWasToggled(to: .redactable)
+        showInstructionLabel()
     }
     
     @IBAction func toggleSwitch(_ sender: UISwitch) {
@@ -75,6 +111,7 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
         updateViews(isAnimated: false)
         
         delegate?.switchWasToggled(to: state)
+        (state == .editable) ? hideInstructionLabel() : showInstructionLabel()
     }
 }
 
