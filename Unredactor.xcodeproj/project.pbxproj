@@ -10,6 +10,7 @@
 		23066B782315F64300A9E8B0 /* TypingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B772315F64300A9E8B0 /* TypingIndicatorViewController.swift */; };
 		23066B7C2316F5B200A9E8B0 /* VerticalPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B7B2316F5B200A9E8B0 /* VerticalPageViewController.swift */; };
 		23066B7E2317577B00A9E8B0 /* UnredactorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B7D2317577B00A9E8B0 /* UnredactorTextView.swift */; };
+		23066B80231841A700A9E8B0 /* ContributorsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B7F231841A700A9E8B0 /* ContributorsTableViewController.swift */; };
 		2309D19B23027A850028C2BA /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D19A23027A850028C2BA /* SideMenuViewController.swift */; };
 		2309D19D230462DB0028C2BA /* CABasicAnimation+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */; };
 		23159A842305C938007D57DE /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A832305C938007D57DE /* SideMenuTableViewController.swift */; };
@@ -28,6 +29,7 @@
 		23E607BF23146DD300E00A27 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E607BE23146DD300E00A27 /* ChatViewController.swift */; };
 		23E607C123146E3000E00A27 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E607C023146E3000E00A27 /* Message.swift */; };
 		23E607C32314764200E00A27 /* Chatbot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E607C22314764200E00A27 /* Chatbot.swift */; };
+		23E708072318948300FA2DF8 /* ContributorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E708062318948300FA2DF8 /* ContributorsViewController.swift */; };
 		2F7C0A5922DCF2FC00AD2828 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */; };
 		2F7C0A5E22DCF2FC00AD2828 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5C22DCF2FC00AD2828 /* Main.storyboard */; };
 		2F7C0A6022DCF2FC00AD2828 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F7C0A5F22DCF2FC00AD2828 /* Assets.xcassets */; };
@@ -65,6 +67,7 @@
 		23066B772315F64300A9E8B0 /* TypingIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorViewController.swift; sourceTree = "<group>"; };
 		23066B7B2316F5B200A9E8B0 /* VerticalPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalPageViewController.swift; sourceTree = "<group>"; };
 		23066B7D2317577B00A9E8B0 /* UnredactorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnredactorTextView.swift; sourceTree = "<group>"; };
+		23066B7F231841A700A9E8B0 /* ContributorsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsTableViewController.swift; sourceTree = "<group>"; };
 		2309D19A23027A850028C2BA /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CABasicAnimation+Helpers.swift"; sourceTree = "<group>"; };
 		23159A832305C938007D57DE /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +86,7 @@
 		23E607BE23146DD300E00A27 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		23E607C023146E3000E00A27 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		23E607C22314764200E00A27 /* Chatbot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chatbot.swift; sourceTree = "<group>"; };
+		23E708062318948300FA2DF8 /* ContributorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsViewController.swift; sourceTree = "<group>"; };
 		2F7C0A5522DCF2FC00AD2828 /* Unredactor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unredactor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7C0A5822DCF2FC00AD2828 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F7C0A5D22DCF2FC00AD2828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -191,6 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				23066B7B2316F5B200A9E8B0 /* VerticalPageViewController.swift */,
+				23E708062318948300FA2DF8 /* ContributorsViewController.swift */,
+				23066B7F231841A700A9E8B0 /* ContributorsTableViewController.swift */,
 			);
 			path = Creators;
 			sourceTree = "<group>";
@@ -441,6 +447,7 @@
 				2F7C0A9522E2D66900AD2828 /* URL+Helpers.swift in Sources */,
 				2F7C0A8722DF863F00AD2828 /* Document.swift in Sources */,
 				2309D19D230462DB0028C2BA /* CABasicAnimation+Helpers.swift in Sources */,
+				23E708072318948300FA2DF8 /* ContributorsViewController.swift in Sources */,
 				2F7C0A8D22E0310400AD2828 /* Unredactor.swift in Sources */,
 				2F7C0A9322E0D8DE00AD2828 /* ClassifiedText.swift in Sources */,
 				23E607C123146E3000E00A27 /* Message.swift in Sources */,
@@ -456,6 +463,7 @@
 				2F7C0A9722E5A34B00AD2828 /* Array+Helpers.swift in Sources */,
 				2309D19B23027A850028C2BA /* SideMenuViewController.swift in Sources */,
 				23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */,
+				23066B80231841A700A9E8B0 /* ContributorsTableViewController.swift in Sources */,
 				2387F78D2308A91A00F918B8 /* FileButtonViewController.swift in Sources */,
 				2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */,
 				23066B7C2316F5B200A9E8B0 /* VerticalPageViewController.swift in Sources */,

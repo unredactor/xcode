@@ -33,14 +33,14 @@ class PageViewController: UIPageViewController {
         let unredactor: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2") as? DocumentViewController // TODO: Update names
         //let chatbot: ChatViewController! = storyboard?.instantiateViewController(withIdentifier: "chatbot") as? ChatViewController
         let about: ScrollViewController! = storyboard?.instantiateViewController(withIdentifier: "About") as? ScrollViewController
-        let creators: ScrollViewController! = storyboard?.instantiateViewController(withIdentifier: "Creators") as? ScrollViewController
+        let contributors: VerticalPageViewController! = storyboard?.instantiateViewController(withIdentifier: "ContributorsPageViewController") as? VerticalPageViewController
         let website: UnredactorWebsiteViewController! = storyboard?.instantiateViewController(withIdentifier: "Website") as? UnredactorWebsiteViewController
         let manceps: MancepsWebsiteViewController! = storyboard?.instantiateViewController(withIdentifier: "Manceps") as? MancepsWebsiteViewController
         
         unredactor.document = documents[0]
         //page2.document = documents[1]
         
-        pages.append(contentsOf: [unredactor, about, creators, website, manceps])
+        pages.append(contentsOf: [unredactor, about, contributors, website, manceps])
         
         setViewControllers([unredactor], direction: .forward, animated: false, completion: nil)
     }
