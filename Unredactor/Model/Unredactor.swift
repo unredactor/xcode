@@ -55,7 +55,7 @@ class Unredactor {
         var task: URLSessionDataTask
         
         if requestType == .get {
-            let urlString = "https://unredactor.com/api?text=" + text
+            let urlString = "https://unredactor.com/api/unredact_bert?text=" + text
             let baseURL = URL(string: urlString)!
             
             task = URLSession.shared.dataTask(with: baseURL) { (data, response, error) in

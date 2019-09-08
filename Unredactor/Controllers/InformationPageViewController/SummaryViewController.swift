@@ -9,27 +9,25 @@
 import UIKit
 
 
-class ContributorsViewController: UIViewController {
+class SummaryViewController: UIViewController {
     
-    weak var delegate: ContributorsTableViewControllerDelegate?
+    weak var delegate: SummaryTableViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("start")
         switch segue.destination {
-        case let contributorsTableViewController as ContributorsTableViewController:
-            print("test2")
-            contributorsTableViewController.delegate = self
+        case let summaryTableViewController as SummaryTableViewController:
+            summaryTableViewController.delegate = self
         default:
             break
         }
     }
 }
 
-extension ContributorsViewController: ContributorsTableViewControllerDelegate {
+extension SummaryViewController: SummaryTableViewControllerDelegate {
     func didSelectRow(_ row: Int) {
         delegate?.didSelectRow(row)
     }

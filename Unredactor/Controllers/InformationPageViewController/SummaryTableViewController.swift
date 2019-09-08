@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol ContributorsTableViewControllerDelegate: class {
+protocol SummaryTableViewControllerDelegate: class {
     func didSelectRow(_ row: Int)
 }
 
-class ContributorsTableViewController: UITableViewController {
+class SummaryTableViewController: UITableViewController {
     
-    weak var delegate: ContributorsTableViewControllerDelegate?
+    weak var delegate: SummaryTableViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ class ContributorsTableViewController: UITableViewController {
     }
 }
 
-fileprivate extension ContributorsTableViewController {
+fileprivate extension SummaryTableViewController {
     private func rowForIndexPath(_ indexPath: IndexPath) -> Int {
         guard indexPath.section != 0 else { return indexPath.row }
         
@@ -43,3 +43,5 @@ fileprivate extension ContributorsTableViewController {
         return row
     }
 }
+
+
