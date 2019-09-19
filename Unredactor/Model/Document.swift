@@ -55,6 +55,7 @@ class Document {
                 
             } // If the string is " ", this means the user typed a space. This is used to separate words of different redaction states when typing. If the space was added, this would produce two spaces when the user typed only one. There should only be one " " word if any, and it should be at the end of the sentence.
             attributedText.append(attributedWord)
+            print("AttributedWord: \(attributedWord.string)")
         }
         
         attributedText.addAttribute(.font, value: font, range: NSMakeRange(0, attributedText.string.count))
@@ -95,6 +96,148 @@ class Document {
         } else {
             classifiedText.words.append(ClassifiedString(character)) // Create the first word
         }
+    }
+    
+    func removeCharacter(atIndex index: Int) -> Int {
+        //let classifiedTextLength = classifiedText.rawText.count
+        
+        guard let classifiedTextIndex = classifiedText.classifiedTextIndex(for: index) else { return index } // Make sure you don't try to delete nothing
+        
+        //let word = classifiedTextIndex.word
+        //let startIndex = classifiedTextIndex.startIndex
+        
+        print("REMOVECHARACTER(at:\(index)")
+        let wordIndex = classifiedTextIndex.wordIndex
+        let deletionIndex = classifiedTextIndex.deletionIndex
+        
+        
+        if classifiedTextIndex.word.string.count <= 1 {
+            
+            let word = classifiedText.words[wordIndex]
+            print("Word: \(word.string)")
+            
+            // Wacky special case, but I just want to get this to work
+            if wordIndex < classifiedText.words.count - 1 {
+                print("STRING: \(classifiedText.words[wordIndex + 1].string)\"")
+                if classifiedText.words[wordIndex + 1].string == " " {
+                    classifiedText.words.remove(at: wordIndex + 1)
+                    return index
+                } else {
+                    print("STRING: \(classifiedText.words[wordIndex + 1].string)\"")
+                }
+            }
+            
+            classifiedText.words.remove(at: wordIndex)
+            
+            if word.string != " " {
+                let space = ClassifiedString(" ")
+                classifiedText.words.insert(space, at: wordIndex)
+            }
+            
+            
+        } else {
+            print("word: \(classifiedTextIndex.word.string), wordIndex: \(wordIndex), length: \(classifiedTextIndex.word.string.count)")
+            print("NUMBER OF WORDS: \(classifiedText.words.count)")
+            // TODO: Cleanup logic and remove redudant classifiedText.words.remove(at:)
+            
+            // Wacky special case, but I just want to get this to work
+            if wordIndex < classifiedText.words.count - 1 {
+                print("STRING: \(classifiedText.words[wordIndex + 1].string)\"")
+                if classifiedText.words[wordIndex + 1].string == " " {
+                    classifiedText.words.remove(at: wordIndex + 1)
+                    return index
+                } else {
+                    print("STRING: \(classifiedText.words[wordIndex + 1].string)\"")
+                }
+            }
+            
+            classifiedText.words[wordIndex].string.remove(at: deletionIndex)
+                
+                /*
+                // If that was the last letter, add a space word
+                if wordLength == 1 {
+                    classifiedText.words.append(ClassifiedString(" "))
+                }
+ */
+        }
+        
+        return index
+    }
+    
+    
+    
+    private func insertCharacter(_ character: Character, atIndex index: Int) {
+        // Find word and then position in word to insert the character
+        
+        guard let classifiedTextIndex = classifiedText.classifiedTextIndex(for: index) else {
+            classifiedText.words.append(ClassifiedString(character))
+            return
+        }
+        
+    
+        //let classifiedTextIndex = classifiedText.classifiedTextIndex(for: index)!
+        let word = classifiedTextIndex.word
+        let wordIndex = classifiedTextIndex.wordIndex
+        
+        if character == " " {
+            
+            // Split the word into two
+            let firstWord = ClassifiedString(String(word.string[..<classifiedTextIndex.insertionIndex]))
+            var secondWordString: String = String(word.string[classifiedTextIndex.insertionIndex...])
+            
+            // If you are adding a space at the END of the LAST word in the text
+            if secondWordString.count == 0 && wordIndex == classifiedText.words.count - 1 {
+                secondWordString = " "
+            }
+            
+            let secondWord = ClassifiedString(secondWordString)
+            
+            // Delete old word
+            classifiedText.words.remove(at: wordIndex)
+            
+            // Insert words - ORDER MATTERS!!!
+            classifiedText.words.insert(secondWord, at: wordIndex)
+            classifiedText.words.insert(firstWord, at: wordIndex)
+            
+        } else if word.string == " " {
+            classifiedText.words[wordIndex].string = String(character)
+        } else {
+            classifiedText.words[wordIndex].string.insert(character, at: classifiedTextIndex.insertionIndex)
+        }
+        
+        // Since a change was made, un-unredact all of the words
+        for word in classifiedText.words {
+            if word.redactionState == .unredacted {
+                word.redactionState = .redacted
+            }
+        }
+    
+    }
+    
+    // Returns the index of the selectedTextRange indicator after making the change
+    func changeText(inRange range: NSRange, replacementText text: String) -> Int {
+        // Make sure it's being inserted at the end; if the length is more than 0, it's trying to replace characters, so those characters must be deleted first
+        var originalSelectedIndex = range.location
+        
+        if range.length > 0 {
+            for _ in 0..<range.length {
+                removeCharacter(atIndex: range.location)
+                originalSelectedIndex -= 1
+            }
+        }
+        
+        // Insert text at a specific point (this can be done with appendCharacterToText, which needs to be modified to insertCharacter(atIndex:)
+        for (characterIndex, character) in text.enumerated() {
+            insertCharacter(character, atIndex: range.location + characterIndex)
+            originalSelectedIndex += 1
+        }
+        
+        if text == " " {
+            return originalSelectedIndex
+        } else {
+            return originalSelectedIndex + text.count
+        }
+        
     }
     
     func removeLastCharacter() {

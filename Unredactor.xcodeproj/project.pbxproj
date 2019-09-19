@@ -21,6 +21,7 @@
 		2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */; };
 		23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23946B7522F2512000A69AF3 /* PageViewController.swift */; };
 		2397332F2301B5A400A378C3 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2397332E2301B5A300A378C3 /* DocumentViewController.swift */; };
+		23A4065A2331E7120001DB1D /* String+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A406592331E7120001DB1D /* String+Helpers.swift */; };
 		23B64005230DA4C4002ED14C /* WebsiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B64004230DA4C4002ED14C /* WebsiteViewController.swift */; };
 		23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B876E122F93633006E7D16 /* FolderViewController.swift */; };
 		23BE4D192302178B005407FF /* README in Resources */ = {isa = PBXBuildFile; fileRef = 23BE4D182302178B005407FF /* README */; };
@@ -78,6 +79,7 @@
 		2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDocumentViewController.swift; sourceTree = "<group>"; };
 		23946B7522F2512000A69AF3 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		2397332E2301B5A300A378C3 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
+		23A406592331E7120001DB1D /* String+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Helpers.swift"; sourceTree = "<group>"; };
 		23B64004230DA4C4002ED14C /* WebsiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteViewController.swift; sourceTree = "<group>"; };
 		23B876E122F93633006E7D16 /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
 		23BE4D182302178B005407FF /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 				2F7C0A9622E5A34B00AD2828 /* Array+Helpers.swift */,
 				2309D19C230462DB0028C2BA /* CABasicAnimation+Helpers.swift */,
 				23159A85230602AE007D57DE /* UIColor+Helpers.swift */,
+				23A406592331E7120001DB1D /* String+Helpers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				23159A842305C938007D57DE /* SideMenuTableViewController.swift in Sources */,
 				23066B7E2317577B00A9E8B0 /* UnredactorTextView.swift in Sources */,
 				2F7C0A9522E2D66900AD2828 /* URL+Helpers.swift in Sources */,
+				23A4065A2331E7120001DB1D /* String+Helpers.swift in Sources */,
 				2F7C0A8722DF863F00AD2828 /* Document.swift in Sources */,
 				2309D19D230462DB0028C2BA /* CABasicAnimation+Helpers.swift in Sources */,
 				23E708072318948300FA2DF8 /* SummaryViewController.swift in Sources */,

@@ -40,7 +40,7 @@ class PageViewController: UIPageViewController {
         unredactor.document = documents[0]
         //page2.document = documents[1]
         
-        pages.append(contentsOf: [unredactor, website, manceps])
+        pages.append(contentsOf: [unredactor, about, contributors, website, manceps])
         
         setViewControllers([unredactor], direction: .forward, animated: false, completion: nil)
     }

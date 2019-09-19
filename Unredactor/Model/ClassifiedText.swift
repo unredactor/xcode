@@ -21,7 +21,7 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             rawText.append(string)
             rawText.append(" ")
         }
-        rawText.removeLast() // Remove the last space that was added
+        if rawText.count > 0 { rawText.removeLast() }// Remove the last space that was added 
         
         return rawText
     }
@@ -172,6 +172,48 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
     init(withClassifiedWords classifiedWords: [ClassifiedString]) {
         self.words = classifiedWords
     }
+    
+    class Index {
+        var wordIndex: Int
+        var indexInWord: Int
+        var word: ClassifiedString
+        var startIndex: String.Index
+        var insertionIndex: String.Index
+        var deletionIndex: String.Index
+        
+        init(wordIndex: Int, indexInWord: Int, word: ClassifiedString) {
+            self.wordIndex = wordIndex
+            self.indexInWord = indexInWord
+            self.word = word
+            self.startIndex = word.string.startIndex
+            self.insertionIndex = word.string.index(startIndex, offsetBy: indexInWord)
+            if word.string.count > 0 { self.deletionIndex = word.string.index(startIndex, offsetBy: indexInWord) } else {
+                self.deletionIndex = self.insertionIndex
+            }
+        }
+    }
+    
+    func classifiedTextIndex(for index: Int) -> ClassifiedText.Index? {
+        var indexInText = 0
+        
+        for (wordIndex, word) in words.enumerated() {
+            print("word: \(word.string)")
+            let wordLength = word.string.count
+            
+            // Keep counting if you haven't counted to the desired word yet
+            if indexInText + wordLength < index {
+                indexInText += wordLength + 1
+            } else {
+                let indexInWord = index - indexInText
+                
+                print("INDEX: \(index), WORDINDEX: \(wordIndex)")
+                
+                return Index(wordIndex: wordIndex, indexInWord: indexInWord, word: word)
+            }
+        }
+        
+        return nil
+    }
 }
 
 // A special string that knows whether or not is has been redacted or not
@@ -200,6 +242,10 @@ class ClassifiedString {
     
     init(_ string: String) {
         self.string = string
+    }
+    
+    init(_ character: Character) {
+        self.string = String(character)
     }
 }
 

@@ -33,6 +33,7 @@ class TextViewController: UIViewController {
     
     var document: Document!
     var editMode: EditMode = .editable
+    private var isTypingSuggestion: Bool = false // This is to prevent multiple delegate calls when the user types one of the three suggestions provided above the iOS keyboard
     
     weak var delegate: TextViewControllerDelegate?
     
@@ -71,32 +72,6 @@ class TextViewController: UIViewController {
     func dismissKeyboard() {
         textView.resignFirstResponder()
     }
-    
-    /*
-    func switchState(to state: RedactionState, completion: @escaping () -> Void = { }) {
-        switch state {
-        case .notRedacted:
-            completion()
-        case .redacted:
-            document.unredact(completion: {
-                DispatchQueue.main.async { [unowned self] in
-                    self.textView.attributedText = self.document.attributedText
-                    completion()
-                }
-            })
-        case .unredacted:
-            for word in document.classifiedText.words {
-                if word.redactionState != .notRedacted {
-                    word.redactionState = word.lastRedactionState ?? .notRedacted
-                }
-            }
-            
-            textView.attributedText = document.attributedText
-            
-            completion()
-        }
-    }
- */
     
     func configureTextView(withDocument document: Document, isAnimated: Bool = false) {
         self.document = document
@@ -166,6 +141,11 @@ extension TextViewController: UITextViewDelegate {
     
     // From: https://stackoverflow.com/questions/27652227/text-view-uitextview-placeholder-swift
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Guarantee that this isn't an extra delegate call from typing a suggestion
+        guard !isTypingSuggestion else { return false }
+        
+        print("Range: \(range)")
+
         // Combine the textView text and the replacement text to
         // Create the updated text string
         
@@ -175,7 +155,9 @@ extension TextViewController: UITextViewDelegate {
         if textView.text.isEmpty {
             currentText = textView.attributedText.string
         } else {
+            isTypingSuggestion = true
             currentText = textView.text
+            isTypingSuggestion = false
         }
         
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
@@ -197,23 +179,34 @@ extension TextViewController: UITextViewDelegate {
             guard !textWasDeleted && !text.isEmpty else { return false }
             
             textView.textColor = .black
-            document.appendCharacterToText(text)
+            document.changeText(inRange: range, replacementText: text)
+            isTypingSuggestion = true
             textView.attributedText = document.attributedText
+            isTypingSuggestion = false
             textView.font = document.font
             delegate?.textViewDidBecomeNotEmpty()
         } else {
             if textWasDeleted {
-                document.removeLastCharacter()
+                
+                let selectedIndex = document.removeCharacter(atIndex: range.location)
+                isTypingSuggestion = true
                 textView.attributedText = document.attributedText
+                isTypingSuggestion = false
                 textView.font = document.font
                 
                 if document.redactionState != .redacted && previousRedactionState == .redacted {
                     delegate?.textViewDidBecomeNotRedacted()
                 }
+                
+                selectTextView(atIndex: selectedIndex)
             } else {
-                document.appendCharacterToText(text)
+                let selectedIndex = document.changeText(inRange: range, replacementText: text)
+                isTypingSuggestion = true
                 textView.attributedText = document.attributedText
+                isTypingSuggestion = false
                 textView.font = document.font
+                
+                selectTextView(atIndex: selectedIndex)
             }
             
             return false
@@ -308,6 +301,11 @@ fileprivate extension TextViewController {
     
     func selectEndOfTextView() {
         textView.selectedTextRange = textView.textRange(from: textView.endOfDocument, to: textView.endOfDocument)
+    }
+    
+    func selectTextView(atIndex index: Int) {
+        guard let selectedPosition = textView.position(from: textView.beginningOfDocument, offset: index) else { return }
+        textView.selectedTextRange = textView.textRange(from: selectedPosition, to: selectedPosition)
     }
     
     func setupTextView() {
