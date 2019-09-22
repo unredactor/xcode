@@ -17,6 +17,7 @@ class Document {
     
     var font = UIFont(name: "Courier", size: 22)!
     
+    /*
     var attributedText: NSAttributedString { // Text that is used by the DocumentCell to display black bars. Needs to remember the length of redacted words (so it looks nicer)
         
         let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: "")//, attributes: attributes)
@@ -68,6 +69,31 @@ class Document {
         
         return attributedText
     }
+ */
+    var attributedText: NSAttributedString { // Text that is used by the DocumentCell to dsiplay black bars.
+        
+        let attributedText: NSMutableAttributedString = NSMutableAttributedString(string :"")
+        
+        for (_, word) in classifiedText.words.enumerated() {
+            let string = word.redactionState == .unredacted ? word.unredactorPrediction! : word.string
+            let attributedWord = NSMutableAttributedString(string: string)
+            
+            if word.redactionState == .redacted {
+               // Add black background
+                attributedWord.addAttribute(.backgroundColor, value: UIColor.black, range: NSRange(location: 0, length: word.string.count))
+                attributedWord.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: word.string.count))
+            } else if redactionState == .unredacted {
+                attributedWord.addAttribute(.backgroundColor, value: UIColor.black, range: NSRange(location: 0, length: word.unredactorPrediction!.count))
+                attributedWord.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: word.unredactorPrediction!.count))
+            }
+            
+            attributedText.append(attributedWord)
+        }
+        
+        attributedText.addAttribute(.font, value: font, range: NSMakeRange(0, attributedText.string.count))
+        
+        return attributedText
+    }
     
     /// Sets the text of the document. Will cause the document to forget the redaction state of words. Do not use if you are modifying the text from a similar state (eg. in a text input view)
     func setText(to text: String) {
@@ -85,11 +111,9 @@ class Document {
             return
         }
         
-        if character == " " {
-            classifiedText.words.append(ClassifiedString(" "))
-        } else if let lastWord = classifiedText.words.last {
+        if let lastWord = classifiedText.words.last {
             if lastWord.string == " " {
-                lastWord.string = character
+                classifiedText.words.append(ClassifiedString(character))
             } else {
                 lastWord.string.append(character)
             }
@@ -116,6 +140,7 @@ class Document {
             let word = classifiedText.words[wordIndex]
             print("Word: \(word.string)")
             
+            /*
             // Wacky special case, but I just want to get this to work
             if wordIndex < classifiedText.words.count - 1 {
                 print("STRING: \(classifiedText.words[wordIndex + 1].string)\"")
@@ -126,13 +151,16 @@ class Document {
                     print("STRING: \(classifiedText.words[wordIndex + 1].string)\"")
                 }
             }
+ */
             
             classifiedText.words.remove(at: wordIndex)
             
+            /*
             if word.string != " " {
                 let space = ClassifiedString(" ")
                 classifiedText.words.insert(space, at: wordIndex)
             }
+ */
             
             
         } else {
@@ -140,6 +168,7 @@ class Document {
             print("NUMBER OF WORDS: \(classifiedText.words.count)")
             // TODO: Cleanup logic and remove redudant classifiedText.words.remove(at:)
             
+            /*
             // Wacky special case, but I just want to get this to work
             if wordIndex < classifiedText.words.count - 1 {
                 print("STRING: \(classifiedText.words[wordIndex + 1].string)\"")
@@ -150,6 +179,7 @@ class Document {
                     print("STRING: \(classifiedText.words[wordIndex + 1].string)\"")
                 }
             }
+ */
             
             classifiedText.words[wordIndex].string.remove(at: deletionIndex)
                 
@@ -183,12 +213,8 @@ class Document {
             
             // Split the word into two
             let firstWord = ClassifiedString(String(word.string[..<classifiedTextIndex.insertionIndex]))
-            var secondWordString: String = String(word.string[classifiedTextIndex.insertionIndex...])
+            let secondWordString: String = String(word.string[classifiedTextIndex.insertionIndex...])
             
-            // If you are adding a space at the END of the LAST word in the text
-            if secondWordString.count == 0 && wordIndex == classifiedText.words.count - 1 {
-                secondWordString = " "
-            }
             
             let secondWord = ClassifiedString(secondWordString)
             
@@ -196,12 +222,15 @@ class Document {
             classifiedText.words.remove(at: wordIndex)
             
             // Insert words - ORDER MATTERS!!!
-            classifiedText.words.insert(secondWord, at: wordIndex)
+            if secondWordString.count > 0 { classifiedText.words.insert(secondWord, at: wordIndex) }
+            classifiedText.words.insert(ClassifiedString(" "), at: wordIndex)
             classifiedText.words.insert(firstWord, at: wordIndex)
             
-        } else if word.string == " " {
+        } /*else if word.string == " " {
             classifiedText.words[wordIndex].string = String(character)
-        } else {
+ 
+        }*/
+ else {
             classifiedText.words[wordIndex].string.insert(character, at: classifiedTextIndex.insertionIndex)
         }
         

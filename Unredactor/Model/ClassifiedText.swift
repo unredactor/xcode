@@ -219,6 +219,7 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
 // A special string that knows whether or not is has been redacted or not
 class ClassifiedString {
     var string: String
+    var type: ClassifiedStringType
     var unredactorPrediction: String?
     var redactionState: RedactionState = .notRedacted
     var lastRedactionState: RedactionState?
@@ -242,10 +243,26 @@ class ClassifiedString {
     
     init(_ string: String) {
         self.string = string
+        
+        if string == " " {
+            type = .space
+        } else {
+            type = .word
+        }
     }
     
     init(_ character: Character) {
         self.string = String(character)
+        
+        if character == " " {
+            type = .space
+        } else {
+            type = .word
+        }
+    }
+    
+    enum ClassifiedStringType {
+        case word, space
     }
 }
 
