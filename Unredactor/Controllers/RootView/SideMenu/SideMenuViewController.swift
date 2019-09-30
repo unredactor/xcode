@@ -84,7 +84,7 @@ class SideMenuViewController: UIViewController {
         case let sideMenuTableViewController as SideMenuTableViewController:
             sideMenuTableViewController.delegate = self
             self.sideMenuTableViewController = sideMenuTableViewController
-        case let fileButtonViewController as FileButtonViewController:
+        case let fileButtonViewController as ButtonViewController:
             fileButtonViewController.delegate = self
         default:
             break
@@ -107,8 +107,8 @@ extension SideMenuViewController: UIGestureRecognizerDelegate {
 }
 
 // MARK: - FileButtonViewControllerDelegate
-extension SideMenuViewController: FileButtonViewControllerDelegate {
-    func fileButtonPressed() {
+extension SideMenuViewController: ButtonViewControllerDelegate {
+    func pressed() {
         delegate?.menuButtonPressed()
     }
     

@@ -78,7 +78,7 @@ class FolderViewController: UIViewController {
         case let sideMenuViewController as SideMenuViewController:
             sideMenuViewController.delegate = self
             self.sideMenuViewController = sideMenuViewController
-        case let fileButtonViewController as FileButtonViewController:
+        case let fileButtonViewController as ButtonViewController:
             fileButtonViewController.delegate = self
         default:
             break
@@ -268,8 +268,8 @@ extension FolderViewController: SideMenuViewControllerDelegate {
 }
 
 // MARK: - FileButtonViewControllerDelegate
-extension FolderViewController: FileButtonViewControllerDelegate {
-    func fileButtonPressed() {
+extension FolderViewController: ButtonViewControllerDelegate {
+    func pressed() {
         menuIsShown.toggle()
         updateSideMenu(isAnimated: true)
     }
@@ -301,7 +301,8 @@ fileprivate extension FolderViewController {
         let color2: UIColor = UIColor.black.withAlphaComponent(1.0)
         let shadowGradient = CAGradientLayer()
         shadowGradient.name = "shadowGradient"
-        shadowGradient.frame = sideMenu.frame
+        let frame = CGRect(x: sideMenu.frame.minX, y: 0, width: sideMenu.frame.width, height: view.frame.height)
+        shadowGradient.frame = frame
         shadowGradient.colors = [color2.cgColor, color1.cgColor]
         shadowGradient.startPoint = CGPoint(x: 0, y: 0.5)
         shadowGradient.endPoint = CGPoint(x: 1, y: 0.5)

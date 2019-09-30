@@ -72,6 +72,13 @@ class SideMenuTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // Select the first cell
+        if indexPath == IndexPath(row: 0, section: 0) {
+            cell.setSelected(true, animated: false)
+        }
+    }
+    
     /// Returns the actual number of rows in each section. In section 0, there is an extra empty row for spacing/drawing purposes. Use the private helper method numberOfRows(inSection:) for internal logic purposes.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
@@ -87,9 +94,26 @@ class SideMenuTableViewController: UITableViewController {
         return 20
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //super.tableView(tableView, didSelectRowAt: indexPath)
-        delegate?.didSelectRow(rowForIndexPath(indexPath))
+    override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        if let selectedIndexPath = tableView.indexPathForSelectedRow, let cell = tableView.cellForRow(at: selectedIndexPath), selectedIndexPath != indexPath {
+            cell.setSelected(false, animated: true)
+        }
+        
+        //tableView.deselectRow(at: tableView.indexPathForSelectedRow ?? IndexPath(row: 0, section: 0), animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        
+        if tableView.indexPathForSelectedRow != indexPath {
+            delegate?.didSelectRow(rowForIndexPath(indexPath))
+        }
+        
+        
+        if let cell = tableView.cellForRow(at: tableView.indexPathForSelectedRow ?? IndexPath(row: 0, section: 0)) {
+            cell.setSelected(false, animated: true)
+        }
+        
+        return indexPath
     }
 }
 

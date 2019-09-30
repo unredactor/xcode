@@ -13,6 +13,7 @@ extension UITapGestureRecognizer {
     func characterIndexTapped(inDocument document: Document) -> Int? {
         let textView = self.view as! UITextView
         let attributedText = document.attributedText
+        print("ATTRIBUTEDTEXT: \(document.attributedText)")
         
         // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
         let layoutManager = NSLayoutManager()

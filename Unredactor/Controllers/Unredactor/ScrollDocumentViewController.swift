@@ -21,6 +21,8 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
     /// A label to indicate to the user how to unredact text. Shows up once the user is able to unredact (when there is redacted text)
     @IBOutlet weak var unredactLabel: UILabel!
     
+    @IBOutlet weak var unredactButton: UIView!
+    
     private var switchViewController: SwitchViewController!
     private var textViewController: TextViewController!
     
@@ -92,6 +94,8 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
             textViewController.delegate = self
             self.textViewController = textViewController
             self.textViewController.document = self.document
+        case let buttonViewController as ButtonViewController:
+            buttonViewController.delegate = self
         default:
             break
         }
@@ -157,6 +161,19 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
     
     func textViewDidBecomeNotRedacted() {
         hideUnredactLabel()
+    }
+    
+    func fadeUnredactButton(toAlpha alpha: CGFloat) {
+        
+    }
+}
+
+// MARK: - ButtonViewControllerDelegate
+extension ScrollDocumentViewController: ButtonViewControllerDelegate {
+    func pressed() {
+        document.unredact {
+            // TODO: Add an error message or a sign of success
+        }
     }
 }
 

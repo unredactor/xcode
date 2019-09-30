@@ -9,22 +9,22 @@
 import UIKit
 
 // MARK: - Delegate
-protocol FileButtonViewControllerDelegate: class {
-    func fileButtonPressed()
+protocol ButtonViewControllerDelegate: class {
+    func pressed()
 }
 
 // MARK: - Class Definition
 /**
  FileButtonViewController manages a file button - it sets the view up visually, handles animations, and has a delegate to convey the important info (when the button is pressed)
 */
-class FileButtonViewController: UIViewController {
+class ButtonViewController: UIViewController {
     
     // MARK: - Properties
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tintView: UIView!
     
-    weak var delegate: FileButtonViewControllerDelegate?
+    weak var delegate: ButtonViewControllerDelegate?
     
     private let backgroundColor = UIColor.white.withAlphaComponent(0.8)
     private let imageViewTintColor = UIColor.white.withAlphaComponent(0.4)
@@ -35,10 +35,14 @@ class FileButtonViewController: UIViewController {
         setup()
     }
     
+    func pressed() {
+        delegate?.pressed()
+    }
+    
     // MARK: - IBActions
     @IBAction func buttonTouchUpInside(_ sender: UIButton) {
         animateButtonNormal()
-        delegate?.fileButtonPressed()
+        pressed()
     }
     
     @IBAction func buttonTouchBegan(_ sender: UIButton) {
@@ -63,7 +67,7 @@ class FileButtonViewController: UIViewController {
 }
 
 // MARK: - Helper Functions
-fileprivate extension FileButtonViewController {
+fileprivate extension ButtonViewController {
     func setup() {
         // Set background (transparent so rounded corners look rounded even when layered with the other views
         view.backgroundColor = .clear
@@ -103,5 +107,3 @@ fileprivate extension FileButtonViewController {
         }
     }
 }
-
-// random change

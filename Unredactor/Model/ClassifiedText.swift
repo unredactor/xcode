@@ -19,9 +19,9 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             let string = word.string
             
             rawText.append(string)
-            rawText.append(" ")
+            //rawText.append(" ")
         }
-        if rawText.count > 0 { rawText.removeLast() }// Remove the last space that was added 
+        //if rawText.count > 0 { rawText.removeLast() }// Remove the last space that was added
         
         return rawText
     }
@@ -50,10 +50,10 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             } else {
                 maskTokenText.append(word.string)
             }
-            maskTokenText.append(" ")
+            //maskTokenText.append(" ")
         }
         
-        maskTokenText.removeLast() // Remove the last space that was added.
+        //maskTokenText.removeLast() // Remove the last space that was added.
         
         return maskTokenText
     }
@@ -86,12 +86,9 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             endIndex += wordLength
             startIndex = endIndex - wordLength
             if characterIndex >= startIndex && characterIndex <= endIndex - 1 {
-                return word
+                if word.type != .space { return word }
+                else { return nil }
             }
-            
-            // Add a space
-            startIndex += 1
-            endIndex += 1
         }
         
         return nil
@@ -151,13 +148,32 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
     
     static func classifiedWordsFromText(_ text: String) -> [ClassifiedString] {
         //let wordSubstrings = text.split(whereSeparator: { ($0 == " " || $0.isNewLine) }) // split by both spaces and line breaks
-        let wordSubstrings = text.split { (separator) -> Bool in
-            return separator == " " || separator.isNewline
-        }
-        let words = wordSubstrings.map { String($0) }
-        let classifiedWords = words.map { ClassifiedString($0) }
+        //let wordSubstrings = text.split { (separator) -> Bool in
+          //  return separator == " " || separator.isNewline
+        //}
         
-        return classifiedWords
+        var words = [ClassifiedString]()
+        
+        
+        //let words = wordSubstrings.map { String($0) }
+        //let classifiedWords = words.map { ClassifiedString($0) }
+        var currentWord: String = ""
+        
+        for character in text {
+            if character == " " {
+                if currentWord.count > 0 { words.append(ClassifiedString(currentWord)) }
+                words.append(ClassifiedString(" "))
+                
+                currentWord = ""
+            } else {
+                currentWord += String(character)
+            }
+        }
+        
+        // The last word would be non added, so add it
+        if currentWord.count > 0 { words.append(ClassifiedString(currentWord)) }
+        
+        return words
     }
     
     init(withWords words: [String]) {
@@ -202,7 +218,7 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             
             // Keep counting if you haven't counted to the desired word yet
             if indexInText + wordLength < index {
-                indexInText += wordLength + 1
+                indexInText += wordLength
             } else {
                 let indexInWord = index - indexInText
                 
@@ -215,6 +231,19 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         return nil
     }
 }
+
+// Make it printable with print()
+extension ClassifiedText: CustomStringConvertible {
+    var description: String {
+        var description: String = ""
+        for (index, word) in words.enumerated() {
+            description += "Word\(index): \(word.string), "
+        }
+        
+        return description
+    }
+}
+
 
 // A special string that knows whether or not is has been redacted or not
 class ClassifiedString {
