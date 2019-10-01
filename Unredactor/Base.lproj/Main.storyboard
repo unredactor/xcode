@@ -879,6 +879,7 @@
                     </view>
                     <connections>
                         <outlet property="backgroundView" destination="WiE-V6-coP" id="jZ6-9b-jIu"/>
+                        <outlet property="button" destination="7MW-7h-okF" id="gGd-v9-ZxT"/>
                         <outlet property="imageView" destination="8Gq-7w-aFR" id="rJq-A5-NTG"/>
                         <outlet property="tintView" destination="bX4-fN-UBY" id="gVE-zx-7dA"/>
                     </connections>
@@ -887,10 +888,10 @@
             </objects>
             <point key="canvasLocation" x="-2539.130434782609" y="-1940.217391304348"/>
         </scene>
-        <!--Button View Controller-->
+        <!--Loading Button View Controller-->
         <scene sceneID="H9n-1Y-1iW">
             <objects>
-                <viewController id="4zI-pB-rQ2" customClass="ButtonViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="4zI-pB-rQ2" customClass="LoadingButtonViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="e5o-j2-jb2">
                         <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -901,6 +902,9 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unredactorIconOutline" translatesAutoresizingMaskIntoConstraints="NO" id="iZx-OF-HHe">
                                         <rect key="frame" x="8" y="10" width="28" height="24"/>
                                     </imageView>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="deO-6B-09b">
+                                        <rect key="frame" x="12" y="12" width="20" height="20"/>
+                                    </activityIndicatorView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fT6-Xv-Y41">
                                         <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -927,6 +931,8 @@
                                     <constraint firstItem="fT6-Xv-Y41" firstAttribute="top" secondItem="TWj-K5-VJS" secondAttribute="top" id="UJm-FT-7GQ"/>
                                     <constraint firstAttribute="bottom" secondItem="iZx-OF-HHe" secondAttribute="bottom" constant="10" id="fk4-OB-N6j"/>
                                     <constraint firstAttribute="bottom" secondItem="fT6-Xv-Y41" secondAttribute="bottom" id="hKL-Oh-XYW"/>
+                                    <constraint firstItem="deO-6B-09b" firstAttribute="centerY" secondItem="TWj-K5-VJS" secondAttribute="centerY" id="htr-wT-6Nw"/>
+                                    <constraint firstItem="deO-6B-09b" firstAttribute="centerX" secondItem="TWj-K5-VJS" secondAttribute="centerX" id="ohf-BY-LEn"/>
                                     <constraint firstAttribute="trailing" secondItem="iZx-OF-HHe" secondAttribute="trailing" constant="8" id="ph6-cz-MMe"/>
                                 </constraints>
                             </view>
@@ -941,9 +947,11 @@
                         <viewLayoutGuide key="safeArea" id="zCH-73-yXY"/>
                     </view>
                     <connections>
-                        <outlet property="backgroundView" destination="TWj-K5-VJS" id="wIH-cB-uVj"/>
-                        <outlet property="imageView" destination="iZx-OF-HHe" id="21U-ea-7k8"/>
-                        <outlet property="tintView" destination="fT6-Xv-Y41" id="OjI-al-gaD"/>
+                        <outlet property="activityIndicator" destination="deO-6B-09b" id="nbL-Wy-ra1"/>
+                        <outlet property="backgroundView" destination="TWj-K5-VJS" id="C2F-Ac-ORe"/>
+                        <outlet property="button" destination="ixg-PE-mG9" id="eYN-AL-7Es"/>
+                        <outlet property="imageView" destination="iZx-OF-HHe" id="8hR-xR-7bg"/>
+                        <outlet property="tintView" destination="fT6-Xv-Y41" id="kOS-L0-pXp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qpf-5a-aHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1056,7 +1064,6 @@
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ohW-J3-V6O">
                                         <rect key="frame" x="163" y="14.5" width="51" height="31"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" red="0.23678590320000001" green="0.23678590320000001" blue="0.23678590320000001" alpha="0.2327244718" colorSpace="calibratedRGB"/>
                                         <color key="onTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
@@ -1153,7 +1160,7 @@
                                         </attributes>
                                     </fragment>
                                 </attributedString>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1206,7 +1213,6 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="2lm-ek-SK5" firstAttribute="top" secondItem="IRp-e7-g5b" secondAttribute="bottom" constant="16" id="1kq-zS-lUd"/>
-                                            <constraint firstAttribute="bottom" secondItem="2lm-ek-SK5" secondAttribute="bottom" constant="16" id="IAc-Mt-4Qa"/>
                                             <constraint firstAttribute="trailing" secondItem="2lm-ek-SK5" secondAttribute="trailing" id="WrL-r7-Bx4"/>
                                             <constraint firstItem="2lm-ek-SK5" firstAttribute="leading" secondItem="FsJ-yd-PdX" secondAttribute="leading" id="xxR-SM-dIA"/>
                                         </constraints>
@@ -2075,6 +2081,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="F8S-Vk-zgR"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sqe-v8-nzn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2089,11 +2096,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="iyg-2b-0bD"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O1C-6A-gf4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4536" y="-388"/>
+            <point key="canvasLocation" x="-5441" y="-364"/>
         </scene>
     </scenes>
     <resources>
@@ -2111,6 +2119,6 @@
         <image name="websiteIcon" width="460.33334350585938" height="460.33334350585938"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qJW-qj-jLf"/>
+        <segue reference="IOh-gk-NiV"/>
     </inferredMetricsTieBreakers>
 </document>

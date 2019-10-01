@@ -108,7 +108,7 @@ extension SideMenuViewController: UIGestureRecognizerDelegate {
 
 // MARK: - FileButtonViewControllerDelegate
 extension SideMenuViewController: ButtonViewControllerDelegate {
-    func pressed() {
+    func pressed(sender: ButtonViewController) {
         delegate?.menuButtonPressed()
     }
     

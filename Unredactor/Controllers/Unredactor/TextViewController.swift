@@ -38,6 +38,12 @@ class TextViewController: UIViewController {
     weak var delegate: TextViewControllerDelegate?
     
     fileprivate let placeholderText = "Enter text here..."
+    fileprivate lazy var placeholderAttributedText: NSAttributedString = {
+        let attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font : document.font, NSAttributedString.Key.foregroundColor : UIColor.lightGray, NSAttributedString.Key.backgroundColor : UIColor.clear]
+        let placeholderAttributedText = NSAttributedString(string: "Enter text here...", attributes: attributes)
+        
+        return placeholderAttributedText
+    }()
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -290,7 +296,7 @@ fileprivate extension TextViewController {
     }
     
     func setTextToPlaceholderText() {
-        textView.text = placeholderText
+        textView.attributedText = placeholderAttributedText
         textView.textColor = .lightGray
         textView.backgroundColor = .clear
     }

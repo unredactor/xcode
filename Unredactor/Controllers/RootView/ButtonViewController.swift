@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Delegate
 protocol ButtonViewControllerDelegate: class {
-    func pressed()
+    func pressed(sender: ButtonViewController)
 }
 
 // MARK: - Class Definition
@@ -23,6 +23,7 @@ class ButtonViewController: UIViewController {
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tintView: UIView!
+    @IBOutlet weak var button: UIButton!
     
     weak var delegate: ButtonViewControllerDelegate?
     
@@ -36,7 +37,7 @@ class ButtonViewController: UIViewController {
     }
     
     func pressed() {
-        delegate?.pressed()
+        delegate?.pressed(sender: self)
     }
     
     // MARK: - IBActions
@@ -104,6 +105,67 @@ fileprivate extension ButtonViewController {
     func animateButtonHighlighted() {
         UIView.animate(withDuration: 0.1) { [unowned self] in
             self.tintView.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+        }
+    }
+}
+
+// LoadingButtonViewController subclass
+// This adds a loading screen and assumes that the button action takes time and requires feedback
+class LoadingButtonViewController: ButtonViewController {
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        activityIndicator.alpha = 0.0
+        imageView.alpha = 1.0
+    }
+    
+    override func pressed() {
+        super.pressed()
+    }
+    
+    func disable() {
+        UIView.animate(withDuration: 0.2) { [ unowned self] in
+            DispatchQueue.main.async { [unowned self] in
+                self.tintView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+            }
+        }
+        
+        button.isEnabled = false
+    }
+    
+    func enable() {
+        UIView.animate(withDuration: 0.2) { [ unowned self] in
+            DispatchQueue.main.async { [unowned self] in
+                self.tintView.backgroundColor = UIColor.white.withAlphaComponent(0.0)
+            }
+        }
+        
+        button.isEnabled = true
+    }
+    
+    func actionBegan() {
+        
+        DispatchQueue.main.async { [unowned self] in
+            // Show activity indicator in center and hide the image view
+            UIView.animate(withDuration: 0.2) { [unowned self] in
+                self.activityIndicator.alpha = 1.0
+                self.imageView.alpha = 0.0
+            }
+               
+            self.activityIndicator.startAnimating()
+        }
+    }
+    
+    func actionFinished() {
+        DispatchQueue.main.async { [unowned self] in
+            UIView.animate(withDuration: 0.2) { [unowned self] in
+                self.activityIndicator.alpha = 0.0
+                self.imageView.alpha = 1.0
+            }
+            
+            self.activityIndicator.stopAnimating()
         }
     }
 }

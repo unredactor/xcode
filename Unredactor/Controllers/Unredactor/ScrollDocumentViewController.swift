@@ -170,9 +170,17 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
 
 // MARK: - ButtonViewControllerDelegate
 extension ScrollDocumentViewController: ButtonViewControllerDelegate {
-    func pressed() {
+    func pressed(sender: ButtonViewController) {
+        guard let loadingButtonViewController = sender as? LoadingButtonViewController else { return }
+        
+        loadingButtonViewController.actionBegan()
+        
         document.unredact {
-            // TODO: Add an error message or a sign of success
+            DispatchQueue.main.async { [unowned self] in
+                self.textViewController.configureTextView(withDocument: self.document, isAnimated: true)
+                loadingButtonViewController.actionFinished()
+                self.hideUnredactLabel()
+            }
         }
     }
 }

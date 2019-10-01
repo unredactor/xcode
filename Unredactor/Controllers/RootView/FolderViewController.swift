@@ -269,7 +269,7 @@ extension FolderViewController: SideMenuViewControllerDelegate {
 
 // MARK: - FileButtonViewControllerDelegate
 extension FolderViewController: ButtonViewControllerDelegate {
-    func pressed() {
+    func pressed(sender: ButtonViewController) {
         menuIsShown.toggle()
         updateSideMenu(isAnimated: true)
     }

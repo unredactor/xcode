@@ -78,11 +78,13 @@ class Document {
             let string = word.redactionState == .unredacted ? word.unredactorPrediction! : word.string
             let attributedWord = NSMutableAttributedString(string: string)
             
+            //print("WORD: \(string), redactionState: \(word.redactionState)")
+            
             if word.redactionState == .redacted {
                // Add black background
                 attributedWord.addAttribute(.backgroundColor, value: UIColor.black, range: NSRange(location: 0, length: word.string.count))
                 attributedWord.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: word.string.count))
-            } else if redactionState == .unredacted {
+            } else if word.redactionState == .unredacted {
                 attributedWord.addAttribute(.backgroundColor, value: UIColor.black, range: NSRange(location: 0, length: word.unredactorPrediction!.count))
                 attributedWord.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: word.unredactorPrediction!.count))
             }
@@ -205,6 +207,15 @@ class Document {
         
         guard let classifiedTextIndex = classifiedText.classifiedTextIndex(for: index) else {
             classifiedText.words.append(ClassifiedString(character))
+            
+            // Since a change was made, un-unredact all of the words (change them back to redacted)
+            // TODO: move this to another function, this function shouldn't know or care about it.
+            for word in classifiedText.words {
+                if word.redactionState == .unredacted {
+                    word.redactionState = .redacted
+                }
+            }
+            
             return
         }
         

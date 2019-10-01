@@ -66,6 +66,12 @@ class PageViewController: UIPageViewController {
         }
     }
     
+    func fadeUnredactButton(toAlpha alpha: CGFloat) {
+        if let currentPage = pages[currentIndex] as? ScrollDocumentViewController {
+            currentPage.fadeUnredactButton(toAlpha: alpha)
+        }
+    }
+    
     func flipToPage(atIndex index: Int) {
         var direction: UIPageViewController.NavigationDirection
         if index > currentIndex {

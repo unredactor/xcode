@@ -36,6 +36,7 @@ class Unredactor {
             for (index, redactedWord) in redactedWords.enumerated() {
                 redactedWord.lastRedactionState = redactedWord.redactionState
                 redactedWord.redactionState = .unredacted
+                print("redactedWord: \(redactedWord.string)")
                 
                 let unredactedWord = unredactedWords[safeIndex: UInt(index)] ?? "Not enough unredacted words were returned from getUnredactedWords()"
                 
@@ -56,6 +57,7 @@ class Unredactor {
         
         if requestType == .get {
             let urlString = "https://unredactor.com/api/unredact_bert?text=" + text
+            print("URLSTRING: \(urlString)")
             let baseURL = URL(string: urlString)!
             
             task = URLSession.shared.dataTask(with: baseURL) { (data, response, error) in
