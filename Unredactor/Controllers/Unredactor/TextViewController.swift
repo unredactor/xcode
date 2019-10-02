@@ -148,10 +148,16 @@ extension TextViewController: UITextViewDelegate {
     // From: https://stackoverflow.com/questions/27652227/text-view-uitextview-placeholder-swift
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Guarantee that this isn't an extra delegate call from typing a suggestion
-        guard !isTypingSuggestion else { return false }
+        guard !isTypingSuggestion else {
+            return false
+        }
         
         print("Range: \(range)")
-
+        
+        if range.length > 0 {
+            print("Maybe autocorrect?")
+        }
+        
         // Combine the textView text and the replacement text to
         // Create the updated text string
         
@@ -185,12 +191,14 @@ extension TextViewController: UITextViewDelegate {
             guard !textWasDeleted && !text.isEmpty else { return false }
             
             textView.textColor = .black
-            document.changeText(inRange: range, replacementText: text)
+            let selectedIndex = document.changeText(inRange: range, replacementText: text)
             isTypingSuggestion = true
             textView.attributedText = document.attributedText
             isTypingSuggestion = false
             textView.font = document.font
             delegate?.textViewDidBecomeNotEmpty()
+            
+            selectTextView(atIndex: selectedIndex)
         } else {
             if textWasDeleted {
                 
@@ -208,11 +216,12 @@ extension TextViewController: UITextViewDelegate {
             } else {
                 let selectedIndex = document.changeText(inRange: range, replacementText: text)
                 isTypingSuggestion = true
+                selectTextView(atIndex: selectedIndex)
                 textView.attributedText = document.attributedText
                 isTypingSuggestion = false
                 textView.font = document.font
                 
-                selectTextView(atIndex: selectedIndex)
+                
             }
             
             return false

@@ -59,7 +59,7 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
         case .redactable:
             redactLabel.textColor = .white
         }
-        
+                
         giveFadeAnimation(toLabel: editLabel)
         giveFadeAnimation(toLabel: redactLabel)
         

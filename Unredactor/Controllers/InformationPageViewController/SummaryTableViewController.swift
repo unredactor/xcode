@@ -24,7 +24,6 @@ class SummaryTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print("test")
         delegate?.didSelectRow(rowForIndexPath(indexPath))
     }
 }

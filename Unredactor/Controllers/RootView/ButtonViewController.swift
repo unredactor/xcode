@@ -128,7 +128,7 @@ class LoadingButtonViewController: ButtonViewController {
     func disable() {
         UIView.animate(withDuration: 0.2) { [ unowned self] in
             DispatchQueue.main.async { [unowned self] in
-                self.tintView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+                self.tintView.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
             }
         }
         

@@ -1064,7 +1064,6 @@
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ohW-J3-V6O">
                                         <rect key="frame" x="163" y="14.5" width="51" height="31"/>
-                                        <color key="tintColor" red="0.23678590320000001" green="0.23678590320000001" blue="0.23678590320000001" alpha="0.2327244718" colorSpace="calibratedRGB"/>
                                         <color key="onTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <action selector="toggleSwitch:" destination="H4q-JR-BWU" eventType="valueChanged" id="qsO-He-dlW"/>
@@ -1083,7 +1082,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.27963615023474175" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="hIB-2x-Wob" secondAttribute="trailing" id="0mW-IT-QjD"/>
                                     <constraint firstItem="8YO-cL-MO7" firstAttribute="top" secondItem="kwJ-9x-Vy7" secondAttribute="top" id="2hJ-RU-ugJ"/>
@@ -1109,6 +1108,11 @@
                                     <constraint firstItem="hIB-2x-Wob" firstAttribute="top" secondItem="kwJ-9x-Vy7" secondAttribute="top" id="wyT-Do-OcH"/>
                                     <constraint firstAttribute="bottom" secondItem="8YO-cL-MO7" secondAttribute="bottom" id="ztW-kQ-Qdt"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="hIB-2x-Wob"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap words to redact them" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gzr-Kp-2vg">
                                 <rect key="frame" x="0.0" y="10" width="375" height="20"/>
@@ -1270,7 +1274,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="qZO-qc-zyn" firstAttribute="top" secondItem="hef-JT-d5g" secondAttribute="bottom" constant="-40" id="0rh-GV-mTl"/>
-                            <constraint firstItem="kk9-k2-IOa" firstAttribute="top" secondItem="9iC-Ko-S6i" secondAttribute="top" constant="16" id="1jL-J9-gI3"/>
+                            <constraint firstItem="kk9-k2-IOa" firstAttribute="top" secondItem="hef-JT-d5g" secondAttribute="top" constant="16" id="1jL-J9-gI3"/>
                             <constraint firstItem="S3h-SM-p5v" firstAttribute="bottom" secondItem="hef-JT-d5g" secondAttribute="bottom" id="6HZ-Wn-pRp"/>
                             <constraint firstAttribute="trailing" secondItem="S3h-SM-p5v" secondAttribute="trailing" id="J2O-ZH-CuD"/>
                             <constraint firstItem="qZO-qc-zyn" firstAttribute="leading" secondItem="hef-JT-d5g" secondAttribute="leading" id="KmG-pS-Rbj"/>

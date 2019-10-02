@@ -214,7 +214,7 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         var indexInText = 0
         
         for (wordIndex, word) in words.enumerated() {
-            print("word: \(word.string)")
+            //print("word: \(word.string)")
             let wordLength = word.string.count
             
             // Keep counting if you haven't counted to the desired word yet
