@@ -131,7 +131,8 @@ fileprivate extension SwitchViewController {
     }
     
     func updateSwitchDirection() { // Change the direction of the switch according to the state
-        stateSwitch.isOn = state == .editable ? false : true
+        let isOn = state == .editable ? false : true
+        stateSwitch.setOn(isOn, animated: true)
     }
     
     func addGlowEffect(to view: UIView, isAnimated animated: Bool) { // Give a label a transparent white shadow, simulating a glow

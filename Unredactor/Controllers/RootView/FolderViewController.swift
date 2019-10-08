@@ -57,6 +57,9 @@ class FolderViewController: UIViewController {
     private var lastShadowGradientOpacity: CGFloat?
     private var lastShadowRadius: CGFloat?
     
+    // For determining which page you are going to (specifically to determine how to animate the fading of the unredactButton appropriately)
+    private var destinationPageIndex = 0
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -127,6 +130,7 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         updateSideMenuShadowOffset(percentageDone: percentageDone)
         updateSideMenuShadowGradient(percentageDone: percentageDone)
         updateSideMenuShadowRadius(percentageDone: percentageDone)
+        updateUnredactButton(percentageDone: percentageDone, duration: 0.01)
         sideMenuViewController.updateDarkLayer(percentageDone: percentageDone, menuIsShown: menuIsShown)
         
         if gestureRecognizer.state == .ended {
@@ -242,15 +246,32 @@ extension FolderViewController: UIGestureRecognizerDelegate {
         
         sideMenu.layer.add(shadowRadiusAnimation, forKey: "shadowRadius")
     }
+    
+    private func updateUnredactButton(percentageDone: CGFloat, duration: TimeInterval) {
+        
+        print("percentageDone: \(percentageDone)")
+        
+        var alpha: CGFloat = 0
+        if menuIsShown {
+            alpha = -1 * 1.3 * percentageDone
+        } else {
+            alpha = 1 - 1.3 * percentageDone
+        }
+        
+        pageViewController.fadeUnredactButton(toAlpha: alpha, duration: duration)
+    }
 }
 
 // MARK: - SideMenuViewControllerDelegate
 extension FolderViewController: SideMenuViewControllerDelegate {
     func didSelectRow(_ row: Int) {
+        destinationPageIndex = row
+        
         let duration = animationDuration / 2
         hideSideMenu(duration: duration)
         DispatchQueue.main.asyncAfter(deadline: .now() + duration - 0.1) { [unowned self] in
             self.pageViewController.flipToPage(atIndex: row)
+            if row == 0 { self.updateUnredactButton(percentageDone: -1.0, duration: 0.9) }
         }
         menuIsShown = false
     }
@@ -365,6 +386,7 @@ fileprivate extension FolderViewController {
         sideMenu.layer.add(blurAnimation, forKey: "showBlurAnimation")
         
         sideMenuViewController.animateDarken(withDuration: duration)
+        updateUnredactButton(percentageDone: 1.0, duration: duration)
         
         sideMenu.isUserInteractionEnabled = true
     }
@@ -388,6 +410,9 @@ fileprivate extension FolderViewController {
         
         // Also darken the side menu
         sideMenuViewController.animateLighten(withDuration: duration)
+        if destinationPageIndex == 0 {
+            updateUnredactButton(percentageDone: -1.0, duration: duration)
+        }
         
         sideMenu.isUserInteractionEnabled = false
     }

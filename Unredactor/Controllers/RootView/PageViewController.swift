@@ -66,9 +66,9 @@ class PageViewController: UIPageViewController {
         }
     }
     
-    func fadeUnredactButton(toAlpha alpha: CGFloat) {
+    func fadeUnredactButton(toAlpha alpha: CGFloat, duration: TimeInterval) {
         if let currentPage = pages[currentIndex] as? ScrollDocumentViewController {
-            currentPage.fadeUnredactButton(toAlpha: alpha)
+            currentPage.fadeUnredactButton(toAlpha: alpha, duration: duration)
         }
     }
     

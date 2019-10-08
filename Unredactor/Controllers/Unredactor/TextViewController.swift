@@ -193,31 +193,49 @@ extension TextViewController: UITextViewDelegate {
             textView.textColor = .black
             let selectedIndex = document.changeText(inRange: range, replacementText: text)
             isTypingSuggestion = true
+            selectTextView(atIndex: selectedIndex)
             textView.attributedText = document.attributedText
             isTypingSuggestion = false
             textView.font = document.font
             delegate?.textViewDidBecomeNotEmpty()
-            
-            selectTextView(atIndex: selectedIndex)
         } else {
             if textWasDeleted {
                 
+                // Experimental code
+                var deletionIndex: Int
+                if range.location == currentText.count - 1 { deletionIndex = range.location }
+                else { deletionIndex = range.location + 1}
+                // -------
+                
                 let selectedIndex = document.removeCharacter(atIndex: range.location)
+                
+                
                 isTypingSuggestion = true
-                textView.attributedText = document.attributedText
+                if range.length <= 1 {
+                    textView.attributedText = document.attributedText
+                    selectTextView(atIndex: selectedIndex)
+                } else if range.length > 1 {
+                    selectTextView(atIndex: selectedIndex)
+                    textView.attributedText = document.attributedText
+                }
                 isTypingSuggestion = false
                 textView.font = document.font
                 
                 if document.redactionState != .redacted && previousRedactionState == .redacted {
                     delegate?.textViewDidBecomeNotRedacted()
                 }
-                
-                selectTextView(atIndex: selectedIndex)
             } else {
                 let selectedIndex = document.changeText(inRange: range, replacementText: text)
                 isTypingSuggestion = true
-                selectTextView(atIndex: selectedIndex)
-                textView.attributedText = document.attributedText
+                
+                if range.length <= 1 {
+                    textView.attributedText = document.attributedText
+                    selectTextView(atIndex: selectedIndex)
+                } else if range.length > 1 {
+                    selectTextView(atIndex: selectedIndex)
+                    textView.attributedText = document.attributedText
+                }
+                
                 isTypingSuggestion = false
                 textView.font = document.font
                 

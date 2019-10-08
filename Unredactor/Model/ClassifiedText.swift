@@ -225,6 +225,13 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
                 
                 print("INDEX: \(index), WORDINDEX: \(wordIndex)")
                 
+                // Unused
+                var truncatedWordIndex = wordIndex
+                if wordIndex + 1 < words.count {
+                    truncatedWordIndex += 1
+                }
+                // --------
+                
                 return Index(wordIndex: wordIndex, indexInWord: indexInWord, word: word)
             }
         }
@@ -238,7 +245,7 @@ extension ClassifiedText: CustomStringConvertible {
     var description: String {
         var description: String = ""
         for (index, word) in words.enumerated() {
-            description += "Word\(index): \(word.string), "
+            description += "|\(word.string)"
         }
         
         return description

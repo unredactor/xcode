@@ -25,6 +25,7 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
     
     private var switchViewController: SwitchViewController!
     private var textViewController: TextViewController!
+    private var loadingButtonViewController: LoadingButtonViewController!
     
     var document: Document!
     
@@ -68,6 +69,8 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         setupTextView() // align text view behavior with switch behavior
         setupRefreshView() // create and add a refresh view to the hierarchy that allows the user to unredact
         
+        loadingButtonViewController.disable()
+        
         unredactLabel.alpha = 0.0
     }
     
@@ -82,6 +85,10 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         self.resignFirstResponder()
     }
     
+    func fadeUnredactButton(toAlpha alpha: CGFloat, duration: TimeInterval) {
+        loadingButtonViewController.animateAlpha(to: alpha, duration: duration)
+    }
+    
     // MARK: - Navigation
     // Nice technique for using switch let statements from https://medium.com/@superpeteblaze/ios-swift-tip-getting-references-to-container-child-view-controllers-653fe58e6f5e
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -94,8 +101,9 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
             textViewController.delegate = self
             self.textViewController = textViewController
             self.textViewController.document = self.document
-        case let buttonViewController as ButtonViewController:
-            buttonViewController.delegate = self
+        case let loadingButtonViewController as LoadingButtonViewController:
+            loadingButtonViewController.delegate = self
+            self.loadingButtonViewController = loadingButtonViewController
         default:
             break
         }
@@ -146,6 +154,7 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
     
     func textViewDidBecomeEmpty() {
         dismissSwitchView()
+        loadingButtonViewController.disable()
         //hideRedactLabel()
     }
     
@@ -156,15 +165,13 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
     
     func textViewDidBecomeRedacted() {
         showUnredactLabel()
+        loadingButtonViewController.enable()
         switchViewController.hideInstructionLabel()
     }
     
     func textViewDidBecomeNotRedacted() {
         hideUnredactLabel()
-    }
-    
-    func fadeUnredactButton(toAlpha alpha: CGFloat) {
-        
+        loadingButtonViewController.disable()
     }
 }
 

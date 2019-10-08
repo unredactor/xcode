@@ -126,20 +126,16 @@ class LoadingButtonViewController: ButtonViewController {
     }
     
     func disable() {
-        UIView.animate(withDuration: 0.2) { [ unowned self] in
-            DispatchQueue.main.async { [unowned self] in
-                self.tintView.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
-            }
+        UIView.animate(withDuration: 0.15) { [ unowned self] in
+                self.tintView.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         }
         
         button.isEnabled = false
     }
     
     func enable() {
-        UIView.animate(withDuration: 0.2) { [ unowned self] in
-            DispatchQueue.main.async { [unowned self] in
+        UIView.animate(withDuration: 0.15) { [ unowned self] in
                 self.tintView.backgroundColor = UIColor.white.withAlphaComponent(0.0)
-            }
         }
         
         button.isEnabled = true
@@ -166,6 +162,12 @@ class LoadingButtonViewController: ButtonViewController {
             }
             
             self.activityIndicator.stopAnimating()
+        }
+    }
+    
+    func animateAlpha(to alpha: CGFloat, duration: TimeInterval) {
+        UIView.animate(withDuration: duration) { [unowned self] in
+            self.view.alpha = alpha
         }
     }
 }
