@@ -1082,13 +1082,13 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8YO-cL-MO7">
                                         <rect key="frame" x="0.0" y="0.0" width="166.66666666666666" height="60"/>
                                         <connections>
-                                            <action selector="redactButtonPressed:" destination="H4q-JR-BWU" eventType="touchUpInside" id="PE3-1t-1Df"/>
+                                            <action selector="editButtonPressed:" destination="H4q-JR-BWU" eventType="touchUpInside" id="aqb-J5-HmQ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OCO-Kk-6qY">
                                         <rect key="frame" x="247.66666666666663" y="0.0" width="166.33333333333337" height="60"/>
                                         <connections>
-                                            <action selector="editButtonPressed:" destination="H4q-JR-BWU" eventType="touchUpInside" id="PLR-hO-e0G"/>
+                                            <action selector="redactButtonPressed:" destination="H4q-JR-BWU" eventType="touchUpInside" id="QG9-pX-E8H"/>
                                         </connections>
                                     </button>
                                 </subviews>

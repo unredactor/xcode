@@ -191,20 +191,25 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
     }
     
     class Index {
-        var wordIndex: Int
+        // When wordBeforeIndex and wordAfterIndex are the same, then you are inside of a single word. When they are different, you are on the edge between two words.
+        var wordBeforeIndex: Int
+        var wordAfterIndex: Int
         var indexInWord: Int
-        var word: ClassifiedString
+        var wordBefore: ClassifiedString
+        var wordAfter: ClassifiedString
         var startIndex: String.Index
         var insertionIndex: String.Index
         var deletionIndex: String.Index
         
-        init(wordIndex: Int, indexInWord: Int, word: ClassifiedString) {
-            self.wordIndex = wordIndex
+        init(wordBeforeIndex: Int, wordAfterIndex: Int, wordBefore: ClassifiedString, wordAfter: ClassifiedString, indexInWord: Int) {
+            self.wordBeforeIndex = wordBeforeIndex
+            self.wordAfterIndex = wordAfterIndex
             self.indexInWord = indexInWord
-            self.word = word
-            self.startIndex = word.string.startIndex
-            self.insertionIndex = word.string.index(startIndex, offsetBy: indexInWord)
-            if word.string.count > 0 { self.deletionIndex = word.string.index(startIndex, offsetBy: indexInWord) } else {
+            self.wordBefore = wordBefore
+            self.wordAfter = wordAfter
+            self.startIndex = wordAfter.string.startIndex
+            self.insertionIndex = wordAfter.string.index(startIndex, offsetBy: indexInWord)
+            if wordAfter.string.count > 0 { self.deletionIndex = wordAfter.string.index(startIndex, offsetBy: indexInWord) } else {
                 self.deletionIndex = self.insertionIndex
             }
         }
@@ -221,18 +226,30 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             if indexInText + wordLength < index {
                 indexInText += wordLength
             } else {
-                let indexInWord = index - indexInText
+                var indexInWord = index - indexInText
                 
                 print("INDEX: \(index), WORDINDEX: \(wordIndex)")
                 
-                // Unused
-                var truncatedWordIndex = wordIndex
+                // The afterWord is always the next word after what we ended with,
+                var wordAfterIndex = wordIndex
                 if wordIndex + 1 < words.count {
-                    truncatedWordIndex += 1
+                    wordAfterIndex += 1
+                    
+                    // If we can add 1 to the wordIndex, we missed a word while counting in the for loop... add that word now
+                    let wordBeforeLength = words[wordIndex].string.count
+                    if indexInWord >= wordBeforeLength { indexInWord -= wordBeforeLength }
+                    // But we might have already counted the word (hence the if statement
                 }
-                // --------
                 
-                return Index(wordIndex: wordIndex, indexInWord: indexInWord, word: word)
+                let wordBeforeIndex = wordIndex
+                let wordBefore = words[wordBeforeIndex]
+                let wordAfter = words[wordAfterIndex]
+                
+                // Completely make sure indexInWord is in the word
+                if indexInWord < 0 { indexInWord = 0 }
+                if indexInWord >= words[wordAfterIndex].string.count { indexInWord = words[wordAfterIndex].string.count }
+                
+                return Index(wordBeforeIndex: wordBeforeIndex, wordAfterIndex: wordAfterIndex, wordBefore: wordBefore, wordAfter: wordAfter, indexInWord: indexInWord)
             }
         }
         

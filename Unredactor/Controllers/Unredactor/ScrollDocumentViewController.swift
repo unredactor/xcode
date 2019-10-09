@@ -155,6 +155,7 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
     func textViewDidBecomeEmpty() {
         dismissSwitchView()
         loadingButtonViewController.disable()
+        hideUnredactLabel()
         //hideRedactLabel()
     }
     

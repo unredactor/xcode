@@ -91,7 +91,9 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     
     // MARK: - IBActions
     @IBAction func editButtonPressed(_ sender: Any) {
-        state = .redactable
+        guard state != .editable else { return }
+        
+        state = .editable
         updateSwitchDirection()
         updateViews(isAnimated: false)
         delegate?.switchWasToggled(to: .editable)
@@ -99,7 +101,9 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     }
     
     @IBAction func redactButtonPressed(_ sender: Any) {
-        state = .editable
+        guard state != .redactable else { return }
+        
+        state = .redactable
         updateSwitchDirection()
         updateViews(isAnimated: false)
         delegate?.switchWasToggled(to: .redactable)
