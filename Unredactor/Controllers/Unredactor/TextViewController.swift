@@ -152,10 +152,10 @@ extension TextViewController: UITextViewDelegate {
             return false
         }
         
-        print("Range: \(range)")
+        //print("Range: \(range)")
         
         if range.length > 0 {
-            print("Maybe autocorrect?")
+            //print("Maybe autocorrect?")
         }
         
         // Combine the textView text and the replacement text to

@@ -134,23 +134,25 @@ class Document {
         //let word = classifiedTextIndex.word
         //let startIndex = classifiedTextIndex.startIndex
         
-        print("REMOVECHARACTER(at:\(index)")
+        //print("REMOVECHARACTER(at:\(index)")
         /*
         let wordIndex = classifiedTextIndex.wordIndex
         let deletionIndex = classifiedTextIndex.deletionIndex
  */
         
-        print("WORD: \(classifiedTextIndex.wordBefore.string)")
+        //print("WORD: \(classifiedTextIndex.wordBefore.string)")
         
         var deletedWord: ClassifiedString
         
-        if classifiedTextIndex.wordBefore.string.count <= 1 { // If there is only one letter
+        if classifiedTextIndex.wordAfter.string.count <= 1 { // If there is only one letter
             
             //let word = classifiedText.words[wordIndex]
             print("ClassifiedText: \(classifiedText)")
             //print("DeletedWord: \(word.string)")
             
-            deletedWord = classifiedText.words.remove(at: classifiedTextIndex.wordBeforeIndex)
+            
+            
+            deletedWord = classifiedText.words.remove(at: classifiedTextIndex.wordAfterIndex)
             
             /*
             // Wacky special case, but I just want to get this to work
@@ -169,12 +171,15 @@ class Document {
                     
                     let spaceIndex = classifiedTextIndex.wordBeforeIndex
                     
-                    let wordBeforeSpace = classifiedText.words[spaceIndex - 1]
+                    let wordBeforeSpace = classifiedText.words[spaceIndex]
                     let wordAfterSpace = classifiedText.words[spaceIndex + 1]
+                    
+                    print("WORDBEFORESPACE: \(wordBeforeSpace)")
+                    print("WORDAFTERSPACE: \(wordAfterSpace)")
                     
                     if wordBeforeSpace.type != .space && wordAfterSpace.type != .space {
                         let wordAfterString = wordAfterSpace.string
-                        classifiedText.words[spaceIndex - 1].string += wordAfterString // Fuse the words
+                        classifiedText.words[spaceIndex].string += wordAfterString // Fuse the words
                         classifiedText.words.remove(at: spaceIndex + 1) // Remove the wordAfter
                     }
                 }
@@ -184,17 +189,22 @@ class Document {
             print("ClassifiedText: \(classifiedText)")
             // TODO: Cleanup logic and remove redudant classifiedText.words.remove(at:)
             
-            
+            /* USED TO BE USED
             if wordIndex < classifiedText.words.count && classifiedText.words[wordIndex].string.count <= 1 {
                 print("STRING: \(classifiedText.words[wordIndex].string)\"")
-                deletedWord = classifiedText.words.remove(at: wordIndex)
+                deletedWord = classifiedText.words.remove(at: classifiedTextIndex.wordBeforeIndex)
             } else {
                 print("TESTING WORD: \(classifiedText.words[wordIndex].string)")
                 classifiedText.words[wordIndex].string.remove(at: deletionIndex)
                 deletedWord = ClassifiedString("") // Didn't delete any word
             }
+ */
+            classifiedText.words[classifiedTextIndex.wordAfterIndex].string.remove(at: classifiedTextIndex.deletionIndex)
+            
+            
             //print("DeletedWord: \(classifiedText.words[wordIndex].string)")
             
+            /* USED TO BE USED
             // Fuse words if you deleted a space
             if deletedWord.type == .space {
                 // Make sure it has a word before and after
@@ -213,6 +223,7 @@ class Document {
                     }
                 }
             }
+ */
             
             /*
             if wordIndex < classifiedText.words.count - 1 {
@@ -233,6 +244,7 @@ class Document {
  */
         }
             
+        /* USES TO BE USED
         if deletedWord.string != " " {
             for word in classifiedText.words {
                 if word.redactionState == .unredacted {
@@ -240,6 +252,7 @@ class Document {
                 }
             }
         }
+*/
         
         return index
     }
@@ -268,50 +281,45 @@ class Document {
         
     
         //let classifiedTextIndex = classifiedText.classifiedTextIndex(for: index)!
-        let word = classifiedTextIndex.word
-        let wordIndex = classifiedTextIndex.wordIndex
+        //let word = classifiedTextIndex.word
+        //let wordIndex = classifiedTextIndex.wordIndex
         
         // TODO: Clean-up logic
         
-        if word.type == .space {
-            if wordIndex + 1 < classifiedText.words.count { // If the next word exists
+        if classifiedTextIndex.wordBefore.type == .space { // If you are inserting a character after a space
+            if classifiedTextIndex.wordAfterIndex > classifiedTextIndex.wordBeforeIndex && classifiedTextIndex.wordAfter.type == .word { // If the next word exists
                 //let nextWord = classifiedText.words[wordIndex + 1]
-                classifiedText.words.insert(ClassifiedString(character), at: wordIndex)
-                /*
-                if nextWord.type == .word {
-                    classifiedText.words[wordIndex + 1].string.insert(character, at: classifiedTextIndex.startIndex)
-                } else if nextWord.type == .space {
-                    classifiedText.words.insert(ClassifiedString(character), at: wordIndex + 1)
-                }
- */
+                classifiedText.words[classifiedTextIndex.wordAfterIndex].string.insert(character, at: classifiedTextIndex.startIndex)
             } else { // If it doesn't exist
-                classifiedText.words.insert(ClassifiedString(character), at: wordIndex + 1)
+                print("WordBeforeIndex: \(classifiedTextIndex.wordBeforeIndex)")
+                print("WordAfterIndex: \(classifiedTextIndex.wordAfterIndex)")
+                classifiedText.words.insert(ClassifiedString(character), at: classifiedTextIndex.wordAfterIndex + 1)
             }
         }
         
-        else if character == " " {
+        else if character == " " { // If you are inserting a space
             
             // Split the word into two
-            let firstWordString: String = String(word.string[..<classifiedTextIndex.insertionIndex])
+            let firstWordString: String = String(classifiedTextIndex.wordBefore.string[..<classifiedTextIndex.insertionIndex])
             
             guard !firstWordString.isEmpty else {
-                classifiedText.words.insert(ClassifiedString(" "), at: wordIndex)
+                classifiedText.words.insert(ClassifiedString(" "), at: classifiedTextIndex.wordBeforeIndex)
                 return
             }
             
             let firstWord = ClassifiedString(firstWordString)
-            let secondWordString: String = String(word.string[classifiedTextIndex.insertionIndex...])
+            let secondWordString: String = String(classifiedTextIndex.wordBefore.string[classifiedTextIndex.insertionIndex...])
             
             
             let secondWord = ClassifiedString(secondWordString)
             
             // Delete old word
-            classifiedText.words.remove(at: wordIndex)
+            classifiedText.words.remove(at: classifiedTextIndex.wordBeforeIndex)
             
             // Insert words - ORDER MATTERS!!!
-            if secondWordString.count > 0 { classifiedText.words.insert(secondWord, at: wordIndex) }
-            classifiedText.words.insert(ClassifiedString(" "), at: wordIndex)
-            classifiedText.words.insert(firstWord, at: wordIndex)
+            if secondWordString.count > 0 { classifiedText.words.insert(secondWord, at: classifiedTextIndex.wordBeforeIndex) }
+            classifiedText.words.insert(ClassifiedString(" "), at: classifiedTextIndex.wordBeforeIndex)
+            classifiedText.words.insert(firstWord, at: classifiedTextIndex.wordBeforeIndex)
             
             print("NUMBER OF WORDS: \(classifiedText.words.count)")
         } /*else if word.string == " " {
@@ -319,7 +327,8 @@ class Document {
  
         }*/
  else {
-            classifiedText.words[wordIndex].string.insert(character, at: classifiedTextIndex.insertionIndex)
+            //print("INSERTION INDEX: \(classifiedTextIndex.insertionIndex)")
+            classifiedText.words[classifiedTextIndex.wordBeforeIndex].string.insert(character, at: classifiedTextIndex.insertionIndex)
         }
         
         // Since a change was made, un-unredact all of the words (change them back to redacted)
@@ -331,6 +340,8 @@ class Document {
                 }
             }
         }
+        
+        print("ClassifiedText: \(classifiedText)")
     
     }
     
@@ -338,6 +349,7 @@ class Document {
     func changeText(inRange range: NSRange, replacementText text: String) -> Int {
         // Make sure it's being inserted at the end; if the length is more than 0, it's trying to replace characters, so those characters must be deleted first
         var originalSelectedIndex = range.location
+        
         
         if range.length > 0 {
             for _ in 0...range.length {
@@ -360,6 +372,7 @@ class Document {
         
     }
     
+    /*
     func removeLastCharacter() {
         guard let lastWord = classifiedText.words.last else { return }
         
@@ -373,6 +386,7 @@ class Document {
             //if lastWord.string != " " { classifiedText.words.append(ClassifiedString(" ")) }
         }
     }
+ */
     
     // Just making basic boolean more accesible without having to dig through properties
     var isNotRedacted: Bool { return classifiedText.isNotRedacted }
