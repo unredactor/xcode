@@ -259,6 +259,7 @@ class Document {
     
     
     private func insertCharacter(_ character: Character, atIndex index: Int) {
+        
         // Find word and then position in word to insert the character
         
         //print("INDEX: \(index)")

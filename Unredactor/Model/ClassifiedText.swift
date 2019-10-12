@@ -194,7 +194,8 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         // When wordBeforeIndex and wordAfterIndex are the same, then it means that you are at the end of the text (there is no wordAfter but I just make it the wordBefore so that the app doens't crash)
         var wordBeforeIndex: Int
         var wordAfterIndex: Int
-        var indexInWord: Int
+        var indexInWordBefore: Int
+        var indexInWordAfter: Int
         var wordBefore: ClassifiedString
         var wordAfter: ClassifiedString
         var startIndex: String.Index
@@ -204,7 +205,8 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         init(wordBeforeIndex: Int, wordAfterIndex: Int, wordBefore: ClassifiedString, wordAfter: ClassifiedString, indexInWord: Int) {
             self.wordBeforeIndex = wordBeforeIndex
             self.wordAfterIndex = wordAfterIndex
-            self.indexInWord = indexInWord
+            self.indexInWordBefore = indexInWordBefore
+            self.indexInWordAfter = indexInWordAfter
             self.wordBefore = wordBefore
             self.wordAfter = wordAfter
             self.startIndex = wordAfter.string.startIndex
@@ -240,19 +242,26 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             //print("INDEX: \(index), WORDINDEX: \(wordIndex), WORD: \(word.string)")
             
             // Keep counting if you haven't counted to the desired word yet
-            if indexInText + wordLength <= index && wordIndex + 1 < words.count {
+            if indexInText + wordLength < index && wordIndex + 1 < words.count {
                 indexInText += wordLength
             } else {
                 var indexInWord = index - indexInText
                 print("INDEX IN WORD: \(indexInWord)")
                 print("INDEX IN TEXT: \(indexInText)")
+                print("WORD INDEX: \(wordIndex)")
                 
+                // Word After will be different from word before only when we are at the end of a word (which also includes the start of another word)
+                var isIndexAtEndOfWord: Bool = false
+                if indexInWord == words[wordIndex].string.count || indexInWord == 0 { isIndexAtEndOfWord = true }
                 
-                // The afterWord is always the next word after what we ended with
+                //print("IS INDEX AT END OF WORD: \(isIndexAtEndOfWord)")
+                
                 var wordAfterIndex = wordIndex
-                if wordIndex + 1 < words.count && indexInWord >= word.string.count {
+                if wordIndex + 1 < words.count && isIndexAtEndOfWord {
                     wordAfterIndex += 1
                 }
+                
+                //if wordBeforeIndex < 0 { wordBeforeIndex = 0 }
                 
                 let wordBeforeIndex = wordIndex
                 let wordBefore = words[wordBeforeIndex]
