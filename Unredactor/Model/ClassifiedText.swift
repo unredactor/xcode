@@ -22,7 +22,6 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             rawText.append(string)
             //rawText.append(" ")
         }
-        //if rawText.count > 0 { rawText.removeLast() }// Remove the last space that was added
         
         return rawText
     }
@@ -31,14 +30,12 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         var urlText: String = ""
         for word in self.words {
             var string = word.string
-            if word.redactionState == .redacted { string = "unk" }
+            if word.redactionState != .notRedacted { string = "unk" }
             
             // space for urls
             if word.type == .space { urlText.append("%20") }
             else { urlText.append(string) }
         }
-        
-        //for _ in 0..<3 { urlText.removeLast() } // Remove the "%20" at the end
         
         return urlText
     }
@@ -52,11 +49,7 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             } else {
                 maskTokenText.append(word.string)
             }
-            //maskTokenText.append(" ")
         }
-        
-        //maskTokenText.removeLast() // Remove the last space that was added.
-        
         return maskTokenText
     }
     
@@ -149,16 +142,9 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
  
     
     static func classifiedWordsFromText(_ text: String) -> [ClassifiedString] {
-        //let wordSubstrings = text.split(whereSeparator: { ($0 == " " || $0.isNewLine) }) // split by both spaces and line breaks
-        //let wordSubstrings = text.split { (separator) -> Bool in
-          //  return separator == " " || separator.isNewline
-        //}
         
         var words = [ClassifiedString]()
         
-        
-        //let words = wordSubstrings.map { String($0) }
-        //let classifiedWords = words.map { ClassifiedString($0) }
         var currentWord: String = ""
         
         for character in text {
@@ -213,27 +199,6 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             self.startIndex = wordAfter.string.startIndex
             self.stringIndexInWordBefore = wordBefore.displayedString.index(startIndex, offsetBy: indexInWordBefore)
             self.stringIndexInWordAfter = wordAfter.displayedString.index(startIndex, offsetBy: indexInWordAfter)
-            //print("WORDBEFORE: \(wordBefore), WORDAFTER: \(wordAfter), INDEX IN WORD: \(indexInWord)")
-            
-            /*
-            var deletionIndexInWord = indexInWord
-            if deletionIndexInWord < 0 {
-                deletionIndexInWord = 0
-            }
-            if deletionIndexInWord > wordAfter.string.count {
-                deletionIndexInWord = wordAfter.string.count - 1
-            }
-            */
-            //print("DELETION INDEX IN WORD: \(deletionIndexInWord)")
-            //self.deletionIndex = wordBefore.string.index(startIndex, offsetBy: deletionIndexInWord)
-            
-            /*
-            if wordAfter.string.count > 0 {
-                self.deletionIndex = wordAfter.string.index(startIndex, offsetBy: deletionIndexInWord)
-            } else {
-                self.deletionIndex = self.insertionIndex
-            }
- */
         }
     }
     
@@ -241,10 +206,7 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         var indexInText = 0
         
         for (wordIndex, word) in words.enumerated() {
-            //print("word: \(word.string)")
             let wordLength = word.displayedString.count
-            
-            //print("INDEX: \(index), WORDINDEX: \(wordIndex), WORD: \(word.string)")
             
             // Keep counting if you haven't counted to the desired word yet
             if indexInText + wordLength < index && wordIndex + 1 < words.count {
@@ -266,15 +228,6 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
                     indexInWordAfter = 0
                     if wordIndex + 1 < words.count { wordAfterIndex += 1 }
                 }
-                //print("IS INDEX AT END OF WORD: \(isIndexAtEndOfWord)")
-                
-                /*
-                if wordIndex + 1 < words.count && isIndexAtEndOfWord {
-                    wordAfterIndex += 1
-                }
- */
-                
-                //if wordBeforeIndex < 0 { wordBeforeIndex = 0 }
                 
                 let wordBeforeIndex = wordIndex
                 let wordBefore = words[wordBeforeIndex]

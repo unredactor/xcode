@@ -207,7 +207,7 @@ extension TextViewController: UITextViewDelegate {
                 else { deletionIndex = range.location + 1}
                 // -------
                 
-                let selectedIndex = document.removeCharacter(atIndex: range.location)
+                let selectedIndex = document.changeText(inRange: range, replacementText: text)
                 
                 
                 isTypingSuggestion = true

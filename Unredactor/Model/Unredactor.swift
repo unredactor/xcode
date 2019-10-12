@@ -23,10 +23,9 @@ class Unredactor {
         // Create a copy of redactedText
         let unredactedText: ClassifiedText = redactedText.copy() as! ClassifiedText
         
-        let redactedWords = unredactedText.words.filter { $0.redactionState == .redacted }
+        let redactedWords = unredactedText.words.filter { $0.redactionState != .notRedacted }
         
         // Placeholder definition of unredactedWords - get from API
-        //unredactedWords = Array(repeating: "prediction", count: redactedWords.count)// TODO: Replace with accessing the API and stuff]
         
         getUnredactedWords(fromText: unredactedText.urlText, withRequestType: .get) { (words) in
             
@@ -34,11 +33,11 @@ class Unredactor {
             
             // Unredact all the redacted words
             for (index, redactedWord) in redactedWords.enumerated() {
-                redactedWord.lastRedactionState = redactedWord.redactionState
+                redactedWord.lastRedactionState = redactedWord.redactionState // This probably has a problem
                 redactedWord.redactionState = .unredacted
                 print("redactedWord: \(redactedWord.string)")
                 
-                let unredactedWord = unredactedWords[safeIndex: UInt(index)] ?? "Not enough unredacted words were returned from getUnredactedWords()"
+                let unredactedWord = unredactedWords[safeIndex: UInt(index)] ?? "Not enough unredacted words were returned from getUnredactedWords()" // Replace this with an actual error message
                 
                 redactedWord.unredactorPrediction = unredactedWord
             }
