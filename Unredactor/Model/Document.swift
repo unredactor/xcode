@@ -72,23 +72,27 @@ class Document {
  */
     var attributedText: NSAttributedString { // Text that is used by the DocumentCell to dsiplay black bars.
         
-        let attributedText: NSMutableAttributedString = NSMutableAttributedString(string :"")
+        let attributedText: NSMutableAttributedString = NSMutableAttributedString(string : "")
         
-        for (_, word) in classifiedText.words.enumerated() {
+        for (wordIndex, word) in classifiedText.words.enumerated() {
             let string = word.redactionState == .unredacted ? word.unredactorPrediction! : word.string
             let attributedWord = NSMutableAttributedString(string: string)
             
             //print("WORD: \(string), redactionState: \(word.redactionState)")
-            
-            if word.redactionState == .redacted {
-               // Add black background
-                attributedWord.addAttribute(.backgroundColor, value: UIColor.black, range: NSRange(location: 0, length: word.string.count))
-                attributedWord.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: word.string.count))
-            } else if word.redactionState == .unredacted {
-                attributedWord.addAttribute(.backgroundColor, value: UIColor.black, range: NSRange(location: 0, length: word.unredactorPrediction!.count))
-                attributedWord.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: word.unredactorPrediction!.count))
+            if word.type == .word {
+                setAttributedString(attributedWord, toState: word.redactionState)
+            } else if word.type == .space {
+                // Make it .redacted if both surrounding words are .redacted
+                if wordIndex > 0 && wordIndex + 1 < classifiedText.words.count { // Make sure the previous and next words exist
+                    let wordBefore = classifiedText.words[wordIndex - 1]
+                    let wordAfter = classifiedText.words[wordIndex + 1]
+                    
+                    if wordBefore.redactionState == .redacted && wordAfter.redactionState == .redacted {
+                        setAttributedString(attributedWord, toState: .redacted) // otherwise keep it .notRedacted
+                    }
+                    
+                }
             }
-            
             attributedText.append(attributedWord)
         }
         
@@ -127,6 +131,8 @@ class Document {
     }
     
     func removeCharacter(atIndex index: Int) -> Int {
+        // IMPORTANT NOTE: The index denotes the vertical line, which is actually BEFORE the character being deleted, not after
+        
         //let classifiedTextLength = classifiedText.rawText.count
         
         guard let classifiedTextIndex = classifiedText.classifiedTextIndex(for: index) else { return index } // Make sure you don't try to delete nothing
@@ -199,7 +205,14 @@ class Document {
                 deletedWord = ClassifiedString("") // Didn't delete any word
             }
  */
-            classifiedText.words[classifiedTextIndex.wordAfterIndex].string.remove(at: classifiedTextIndex.deletionIndex)
+            print("INDEX: \(index)")
+            let deletedWordIndex = classifiedTextIndex.wordAfterIndex // The index of the word being deleted (to make it more readable)
+            deletedWord = classifiedText.words[deletedWordIndex]
+            if deletedWord.redactionState == .unredacted {
+                classifiedText.words.remove(at: deletedWordIndex)
+            } else {
+                classifiedText.words[deletedWordIndex].string.remove(at: classifiedTextIndex.stringIndexInWordAfter)
+            }
             
             
             //print("DeletedWord: \(classifiedText.words[wordIndex].string)")
@@ -243,16 +256,14 @@ class Document {
                 }
  */
         }
-            
-        /* USES TO BE USED
+
         if deletedWord.string != " " {
             for word in classifiedText.words {
-                if word.redactionState == .unredacted {
-                    word.redactionState = .redacted
+                if word.lastRedactionState == .unredacted {
+                    word.lastRedactionState = .notRedacted
                 }
             }
         }
-*/
         
         return index
     }
@@ -271,8 +282,8 @@ class Document {
             // TODO: move this to another function, this function shouldn't know or care about it.
             if character != " " {
                 for word in classifiedText.words {
-                    if word.redactionState == .unredacted {
-                        word.redactionState = .redacted
+                    if word.lastRedactionState == .unredacted {
+                        word.lastRedactionState = .notRedacted
                     }
                 }
             }
@@ -301,7 +312,7 @@ class Document {
         else if character == " " { // If you are inserting a space
             
             // Split the word into two
-            let firstWordString: String = String(classifiedTextIndex.wordBefore.string[..<classifiedTextIndex.insertionIndex])
+            let firstWordString: String = String(classifiedTextIndex.wordBefore.string[..<classifiedTextIndex.stringIndexInWordBefore])
             
             guard !firstWordString.isEmpty else {
                 classifiedText.words.insert(ClassifiedString(" "), at: classifiedTextIndex.wordBeforeIndex)
@@ -309,7 +320,7 @@ class Document {
             }
             
             let firstWord = ClassifiedString(firstWordString)
-            let secondWordString: String = String(classifiedTextIndex.wordBefore.string[classifiedTextIndex.insertionIndex...])
+            let secondWordString: String = String(classifiedTextIndex.wordBefore.string[classifiedTextIndex.stringIndexInWordBefore...])
             
             
             let secondWord = ClassifiedString(secondWordString)
@@ -329,15 +340,16 @@ class Document {
         }*/
  else {
             //print("INSERTION INDEX: \(classifiedTextIndex.insertionIndex)")
-            classifiedText.words[classifiedTextIndex.wordBeforeIndex].string.insert(character, at: classifiedTextIndex.insertionIndex)
+           
+        classifiedText.words[classifiedTextIndex.wordBeforeIndex].displayedString.insert(character, at: classifiedTextIndex.stringIndexInWordBefore)
         }
         
         // Since a change was made, un-unredact all of the words (change them back to redacted)
         // TODO: move this to another function, this function shouldn't know or care about it.
         if character != " " {
             for word in classifiedText.words {
-                if word.redactionState == .unredacted {
-                    word.redactionState = .redacted
+                if word.lastRedactionState == .unredacted {
+                    word.lastRedactionState = .notRedacted
                 }
             }
         }
@@ -353,8 +365,8 @@ class Document {
         
         
         if range.length > 0 {
-            for _ in 0...range.length {
-                removeCharacter(atIndex: range.location + 1)
+            for _ in 0..<range.length {
+                removeCharacter(atIndex: range.location)
                 originalSelectedIndex -= 1
             }
         }
@@ -432,6 +444,19 @@ class Document {
     }
 }
 
-
-
+// MARK: - Helper Functions
+fileprivate extension Document {
+    func setAttributedString(_ attributedString: NSMutableAttributedString, toState state: RedactionState) {
+        switch state {
+        case .notRedacted:
+            break
+        case .redacted:
+            attributedString.addAttribute(.backgroundColor, value: UIColor.black, range: NSRange(location: 0, length: attributedString.string.count))
+            attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: attributedString.string.count))
+        case .unredacted:
+            attributedString.addAttribute(.backgroundColor, value: UIColor.black, range: NSRange(location: 0, length: attributedString.string.count))
+            attributedString.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: attributedString.string.count))
+        }
+    }
+}
 

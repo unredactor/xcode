@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// MARK: - ClassifiedText
 class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
     var words: [ClassifiedString]
     
@@ -37,7 +38,7 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             else { urlText.append(string) }
         }
         
-        for _ in 0..<3 { urlText.removeLast() } // Remove the "%20" at the end
+        //for _ in 0..<3 { urlText.removeLast() } // Remove the "%20" at the end
         
         return urlText
     }
@@ -199,10 +200,10 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         var wordBefore: ClassifiedString
         var wordAfter: ClassifiedString
         var startIndex: String.Index
-        var insertionIndex: String.Index
-        var deletionIndex: String.Index
+        var stringIndexInWordBefore: String.Index
+        var stringIndexInWordAfter: String.Index
         
-        init(wordBeforeIndex: Int, wordAfterIndex: Int, wordBefore: ClassifiedString, wordAfter: ClassifiedString, indexInWord: Int) {
+        init(wordBeforeIndex: Int, wordAfterIndex: Int, wordBefore: ClassifiedString, wordAfter: ClassifiedString, indexInWordBefore: Int, indexInWordAfter: Int) {
             self.wordBeforeIndex = wordBeforeIndex
             self.wordAfterIndex = wordAfterIndex
             self.indexInWordBefore = indexInWordBefore
@@ -210,9 +211,11 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             self.wordBefore = wordBefore
             self.wordAfter = wordAfter
             self.startIndex = wordAfter.string.startIndex
-            self.insertionIndex = wordBefore.string.index(startIndex, offsetBy: indexInWord)
+            self.stringIndexInWordBefore = wordBefore.displayedString.index(startIndex, offsetBy: indexInWordBefore)
+            self.stringIndexInWordAfter = wordAfter.displayedString.index(startIndex, offsetBy: indexInWordAfter)
             //print("WORDBEFORE: \(wordBefore), WORDAFTER: \(wordAfter), INDEX IN WORD: \(indexInWord)")
             
+            /*
             var deletionIndexInWord = indexInWord
             if deletionIndexInWord < 0 {
                 deletionIndexInWord = 0
@@ -220,15 +223,17 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             if deletionIndexInWord > wordAfter.string.count {
                 deletionIndexInWord = wordAfter.string.count - 1
             }
-            
+            */
             //print("DELETION INDEX IN WORD: \(deletionIndexInWord)")
             //self.deletionIndex = wordBefore.string.index(startIndex, offsetBy: deletionIndexInWord)
             
+            /*
             if wordAfter.string.count > 0 {
                 self.deletionIndex = wordAfter.string.index(startIndex, offsetBy: deletionIndexInWord)
             } else {
                 self.deletionIndex = self.insertionIndex
             }
+ */
         }
     }
     
@@ -237,7 +242,7 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         
         for (wordIndex, word) in words.enumerated() {
             //print("word: \(word.string)")
-            let wordLength = word.string.count
+            let wordLength = word.displayedString.count
             
             //print("INDEX: \(index), WORDINDEX: \(wordIndex), WORD: \(word.string)")
             
@@ -245,21 +250,29 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             if indexInText + wordLength < index && wordIndex + 1 < words.count {
                 indexInText += wordLength
             } else {
-                var indexInWord = index - indexInText
-                print("INDEX IN WORD: \(indexInWord)")
+                var indexInWordBefore = index - indexInText
+                //print("INDEX IN WORD: \(indexInWord)")
                 print("INDEX IN TEXT: \(indexInText)")
                 print("WORD INDEX: \(wordIndex)")
                 
                 // Word After will be different from word before only when we are at the end of a word (which also includes the start of another word)
                 var isIndexAtEndOfWord: Bool = false
-                if indexInWord == words[wordIndex].string.count || indexInWord == 0 { isIndexAtEndOfWord = true }
-                
-                //print("IS INDEX AT END OF WORD: \(isIndexAtEndOfWord)")
+                if indexInWordBefore == words[wordIndex].displayedString.count || indexInWordBefore == 0 { isIndexAtEndOfWord = true }
+                // THIS IS BROKEN ^^^ (possibly due to deleting spaces)
                 
                 var wordAfterIndex = wordIndex
+                var indexInWordAfter = indexInWordBefore
+                if isIndexAtEndOfWord {
+                    indexInWordAfter = 0
+                    if wordIndex + 1 < words.count { wordAfterIndex += 1 }
+                }
+                //print("IS INDEX AT END OF WORD: \(isIndexAtEndOfWord)")
+                
+                /*
                 if wordIndex + 1 < words.count && isIndexAtEndOfWord {
                     wordAfterIndex += 1
                 }
+ */
                 
                 //if wordBeforeIndex < 0 { wordBeforeIndex = 0 }
                 
@@ -268,16 +281,16 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
                 let wordAfter = words[wordAfterIndex]
                 
                 // Completely make sure indexInWord is in the word
-                if indexInWord < 0 { indexInWord = 0 }
-                if indexInWord > words[wordBeforeIndex].string.count {
-                    indexInWord -= words[wordBeforeIndex].string.count
+                if indexInWordBefore < 0 { indexInWordBefore = 0 }
+                if indexInWordBefore > words[wordBeforeIndex].displayedString.count {
+                    indexInWordBefore -= words[wordBeforeIndex].displayedString.count
                 }
                 
                 //print("INDEX IN WORD: \(indexInWord)")
                 print("WORD BEFORE: \(wordBefore)")
                 print("WORD AFTER: \(wordAfter)")
                 
-                return Index(wordBeforeIndex: wordBeforeIndex, wordAfterIndex: wordAfterIndex, wordBefore: wordBefore, wordAfter: wordAfter, indexInWord: indexInWord)
+                return Index(wordBeforeIndex: wordBeforeIndex, wordAfterIndex: wordAfterIndex, wordBefore: wordBefore, wordAfter: wordAfter, indexInWordBefore: indexInWordBefore, indexInWordAfter: indexInWordAfter)
             }
         }
         
@@ -297,7 +310,7 @@ extension ClassifiedText: CustomStringConvertible {
     }
 }
 
-
+// MARK: - ClassifiedString
 // A special string that knows whether or not is has been redacted or not
 class ClassifiedString: CustomStringConvertible {
     var string: String
@@ -305,6 +318,23 @@ class ClassifiedString: CustomStringConvertible {
     var unredactorPrediction: String?
     var redactionState: RedactionState = .notRedacted
     var lastRedactionState: RedactionState?
+    var displayedString: String { // The string that is actually used/displayed (it is just the unredactorPrediction when the ClassifiedString.redactionState == .unredacted)
+        get {
+            if let unredactorPrediction = unredactorPrediction, redactionState == .unredacted {
+                return unredactorPrediction
+            } else {
+                return string
+            }
+        }
+        
+        set {
+            if var unredactorPrediction = unredactorPrediction, redactionState == .unredacted {
+                unredactorPrediction = newValue
+            } else {
+                string = newValue
+            }
+        }
+    }
     
     func toggleRedactionState() {
         print("Toggling word: \(string)")

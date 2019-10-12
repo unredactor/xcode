@@ -228,10 +228,10 @@ extension TextViewController: UITextViewDelegate {
                 let selectedIndex = document.changeText(inRange: range, replacementText: text)
                 isTypingSuggestion = true
                 
-                if range.length <= 1 {
+                if range.length <= 0 {
                     textView.attributedText = document.attributedText
                     selectTextView(atIndex: selectedIndex)
-                } else if range.length > 1 {
+                } else if range.length > 0 {
                     selectTextView(atIndex: selectedIndex)
                     textView.attributedText = document.attributedText
                 }
