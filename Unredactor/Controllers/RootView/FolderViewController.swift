@@ -271,7 +271,9 @@ extension FolderViewController: SideMenuViewControllerDelegate {
         hideSideMenu(duration: duration)
         DispatchQueue.main.asyncAfter(deadline: .now() + duration - 0.1) { [unowned self] in
             self.pageViewController.flipToPage(atIndex: row)
-            if row == 0 { self.updateUnredactButton(percentageDone: -1.0, duration: 0.9) }
+            if row == 0 {
+                self.updateUnredactButton(percentageDone: -1.0, duration: 0.9)
+            }
         }
         menuIsShown = false
     }

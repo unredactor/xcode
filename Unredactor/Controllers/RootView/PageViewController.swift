@@ -57,6 +57,7 @@ class PageViewController: UIPageViewController {
     func setCurrentPageFirstResponder() {
         if let currentPage = pages[currentIndex] as? ScrollDocumentViewController {
             currentPage.becomeFirstResponder()
+            currentPage.updateTextViewEditMode()
         }
     }
     

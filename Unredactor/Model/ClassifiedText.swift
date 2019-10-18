@@ -219,15 +219,18 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
                 
                 // Word After will be different from word before only when we are at the end of a word (which also includes the start of another word)
                 var isIndexAtEndOfWord: Bool = false
-                if indexInWordBefore == words[wordIndex].displayedString.count || indexInWordBefore == 0 { isIndexAtEndOfWord = true }
+                if (indexInWordBefore == words[wordIndex].displayedString.count || indexInWordBefore == 0) { isIndexAtEndOfWord = true }
                 // THIS IS BROKEN ^^^ (possibly due to deleting spaces)
                 
+                // FIX WORD AFTER INDEX - it's 5 instead of 0 for some reason...? (when typing this unk)
                 var wordAfterIndex = wordIndex
                 var indexInWordAfter = indexInWordBefore
                 if isIndexAtEndOfWord {
                     indexInWordAfter = 0
-                    if wordIndex + 1 < words.count { wordAfterIndex += 1 }
+                    
+                    if wordIndex + 1 < words.count && index != 0 { wordAfterIndex += 1 }
                 }
+                print("INDEX IN WORD AFTER \(indexInWordAfter)")
                 
                 let wordBeforeIndex = wordIndex
                 let wordBefore = words[wordBeforeIndex]
@@ -239,9 +242,10 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
                     indexInWordBefore -= words[wordBeforeIndex].displayedString.count
                 }
                 
-                //print("INDEX IN WORD: \(indexInWord)")
-                print("WORD BEFORE: \(wordBefore)")
-                print("WORD AFTER: \(wordAfter)")
+                // Double check that they are within the upper bound
+                if indexInWordBefore > wordBefore.string.count { indexInWordBefore = wordBefore.string.count }
+                if indexInWordAfter > wordAfter.string.count {
+                    indexInWordAfter = wordAfter.string.count }
                 
                 return Index(wordBeforeIndex: wordBeforeIndex, wordAfterIndex: wordAfterIndex, wordBefore: wordBefore, wordAfter: wordAfter, indexInWordBefore: indexInWordBefore, indexInWordAfter: indexInWordAfter)
             }

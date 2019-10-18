@@ -40,7 +40,7 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
         pulseAnimation.duration = 0.8
         pulseAnimation.fromValue = unredactLabel.alpha
-        pulseAnimation.toValue = 0
+        pulseAnimation.toValue = 0.0
         pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         pulseAnimation.autoreverses = true
         pulseAnimation.repeatCount = .greatestFiniteMagnitude
@@ -76,7 +76,7 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setTextViewEditable()
+        setTextView(toEditMode: .editable)
     }
     
     // MARK: - Interface (public functinos)
@@ -112,21 +112,25 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
 
 // MARK: - SwitchViewControllerDelegate
 extension ScrollDocumentViewController: SwitchViewControllerDelegate {
-    func switchWasToggled(to state: EditMode) {
-        switch state {
-        case .editable:
-            setTextViewEditable()
-        case .redactable:
-            setTextViewRedactable()
-        }
+    func switchWasToggled(to editMode: EditMode) {
+        setTextView(toEditMode: editMode)
     }
     
-    private func setTextViewEditable() {
-        textViewController.setTextViewEditable()
+    func setSubviews(toEditMode editMode: EditMode) {
+        setTextView(toEditMode: editMode)
+        setSwitchView(toEditMode: editMode)
     }
     
-    private func setTextViewRedactable() {
-        textViewController.setTextViewRedactable()
+    func setTextView(toEditMode editMode: EditMode) {
+        textViewController.setTextView(toEditMode: editMode)
+    }
+    
+    func updateTextViewEditMode() {
+        textViewController.setTextView(toEditMode: textViewController.editMode)
+    }
+    
+    func setSwitchView(toEditMode editMode: EditMode) {
+        switchViewController.setSwitch(to: editMode)
     }
 }
 
@@ -183,11 +187,16 @@ extension ScrollDocumentViewController: ButtonViewControllerDelegate {
         
         loadingButtonViewController.actionBegan()
         
-        document.unredact {
+        document.unredact { (errorMessage) in
             DispatchQueue.main.async { [unowned self] in
-                self.textViewController.configureTextView(withDocument: self.document, isAnimated: true)
+                self.textViewController.configureTextView(withDocument: self.document, selectedIndex: nil, isAnimated: true)
                 loadingButtonViewController.actionFinished()
                 self.hideUnredactLabel()
+                self.setSubviews(toEditMode: .editable)
+                
+                if let errorMessage = errorMessage {
+                    self.showErrorMessage(errorMessage)
+                }
             }
         }
     }
@@ -230,11 +239,18 @@ fileprivate extension ScrollDocumentViewController {
     }
     
     @objc func unredact(_ sender: Any) {
-        document.unredact {
+        // THIS CODE SNIPPET MAY BE REPETITIVE - in refactoring, look into putting this in a function
+        
+        document.unredact { (errorMessage) in
             DispatchQueue.main.async { [unowned self] in
-                self.textViewController.configureTextView(withDocument: self.document, isAnimated: true)
+                self.textViewController.configureTextView(withDocument: self.document, selectedIndex: nil, isAnimated: true)
                 self.scrollView.refreshControl?.endRefreshing()
                 self.hideUnredactLabel()
+                self.setSubviews(toEditMode: .editable)
+                
+                if let errorMessage = errorMessage {
+                    self.showErrorMessage(errorMessage)
+                }
             }
         }
     }
@@ -278,5 +294,11 @@ fileprivate extension ScrollDocumentViewController {
         UIView.animate(withDuration: 0.5) { [unowned self] in
             self.unredactLabel.alpha = 0.0
         }
+    }
+    
+    func showErrorMessage(_ errorMessage: String) {
+        let alert = UIAlertController(title: "Oops! Something went wrong. 😕", message: errorMessage, preferredStyle: .alert)
+        
+        self.present(alert, animated: true)
     }
 }

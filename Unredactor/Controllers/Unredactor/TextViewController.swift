@@ -49,7 +49,7 @@ class TextViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureTextView(withDocument: document)
+        configureTextView(withDocument: document, selectedIndex: 0)
         
         if textView.text.isEmpty {
             setTextToPlaceholderText()
@@ -79,7 +79,7 @@ class TextViewController: UIViewController {
         textView.resignFirstResponder()
     }
     
-    func configureTextView(withDocument document: Document, isAnimated: Bool = false) {
+    func configureTextView(withDocument document: Document, selectedIndex: Int?, isAnimated: Bool = false) {
         self.document = document
         textView.font = document.font
         
@@ -88,10 +88,25 @@ class TextViewController: UIViewController {
         if isAnimated {
             UIView.transition(with: textView, duration: 0.5, options: .transitionCrossDissolve, animations: { [unowned self] in
                 self.textView.attributedText = self.document.attributedText
+                }, completion: { [unowned self] (_) in
+                    if let selectedIndex = selectedIndex {
+                        self.selectTextView(atIndex: selectedIndex)
+                    } else {
+                        print("SELECTED RANGE: \(self.textView.selectedRange)")
+                        self.selectTextView(atIndex: self.textView.selectedRange.location)
+                    }
             })
         } else {
             textView.attributedText = document.attributedText
+            
+            if let selectedIndex = selectedIndex {
+                selectTextView(atIndex: selectedIndex)
+            } else {
+                selectTextView(atIndex: textView.selectedRange.location)
+            }
         }
+        
+        
     }
     
     func setTextView(toEditMode editMode: EditMode) {
@@ -121,13 +136,13 @@ class TextViewController: UIViewController {
         textView.isUserInteractionEnabled = isUserInteractionEnabled
     }
     
-    func setTextViewEditable() {
+    private func setTextViewEditable() {
         textView.isEditable = true
         editMode = .editable
         textView.becomeFirstResponder()
     }
     
-    func setTextViewRedactable() {
+    private func setTextViewRedactable() {
         textView.isEditable = false
         editMode = .redactable
     }
@@ -234,6 +249,7 @@ extension TextViewController: UITextViewDelegate {
                 } else if range.length > 0 {
                     selectTextView(atIndex: selectedIndex)
                     textView.attributedText = document.attributedText
+                    selectTextView(atIndex: selectedIndex)
                 }
                 
                 isTypingSuggestion = false
@@ -265,14 +281,17 @@ extension TextViewController: UIGestureRecognizerDelegate {
         
         guard textView.isUserInteractionEnabled == true else { return }
         
+        guard let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document) else { return }
+        
         guard editMode == .redactable else {
             // EditMode must be edit, so let's start editing
             textView.becomeFirstResponder()
             
+            // MAKE IT SELECT WHERE YOU TAP
+            selectTextView(atIndex: characterIndexTapped)
+            
             return
         }
-        
-        guard let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document) else { return }
         
         if editMode == .redactable {
             

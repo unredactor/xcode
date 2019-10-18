@@ -14,7 +14,7 @@ import JavaScriptCore
 class Unredactor {
     static var maskToken: String = "unk"
     
-    func unredact(_ redactedText: ClassifiedText, completion: @escaping (ClassifiedText) -> Void) {
+    func unredact(_ redactedText: ClassifiedText, completion: @escaping (ClassifiedText, String?) -> Void) {
         // Implement by accessing the website API
         
         // Get array of words that are unredacted back:
@@ -27,7 +27,9 @@ class Unredactor {
         
         // Placeholder definition of unredactedWords - get from API
         
-        getUnredactedWords(fromText: unredactedText.urlText, withRequestType: .get) { (words) in
+        getUnredactedWords(fromText: unredactedText.urlText, withRequestType: .get) { (words, errorMessage) in
+            
+            guard words != [""] else { return } // An error occurred
             
             unredactedWords = words
             
@@ -37,12 +39,14 @@ class Unredactor {
                 redactedWord.redactionState = .unredacted
                 print("redactedWord: \(redactedWord.string)")
                 
-                let unredactedWord = unredactedWords[safeIndex: UInt(index)] ?? "Not enough unredacted words were returned from getUnredactedWords()" // Replace this with an actual error message
-                
-                redactedWord.unredactorPrediction = unredactedWord
+                if let unredactedWord = unredactedWords[safeIndex: UInt(index)] {
+                    redactedWord.unredactorPrediction = unredactedWord
+                } else {
+                    completion(ClassifiedText(withWords: words), "Something is wrong with the server response.") // Do nothing and display the error
+                }
             }
             
-            completion(unredactedText)
+            completion(unredactedText, errorMessage)
         }
     }
     
@@ -50,9 +54,11 @@ class Unredactor {
         case get, post
     }
     
-    private func getUnredactedWords(fromText text: String, withRequestType requestType: RequestType, completion: @escaping (([String]) -> Void)) {
+    private func getUnredactedWords(fromText text: String, withRequestType requestType: RequestType, completion: @escaping (([String], String?) -> Void)) {
         
         var task: URLSessionDataTask
+        
+        print("REQUEST TYPE: \(requestType)")
         
         if requestType == .get {
             let urlString = "https://unredactor.com/api/unredact_bert?text=" + text
@@ -60,8 +66,8 @@ class Unredactor {
             let baseURL = URL(string: urlString)!
             
             task = URLSession.shared.dataTask(with: baseURL) { (data, response, error) in
-                self.handleServerResponse(data: data, response: response, error: error, completion: { (unredactedWords) in
-                    completion(unredactedWords)
+                self.handleServerResponse(data: data, response: response, error: error, completion: { (unredactedWords, errorMessage) in
+                    completion(unredactedWords, errorMessage)
                 })
             }
         } else { // requestType = .post
@@ -119,7 +125,8 @@ class Unredactor {
         }
     }
     
-    private func handleServerResponse(data: Data?, response: URLResponse?, error: Error?, completion: @escaping ([String]) -> Void) {
+    // Takes a completion of (words: [String], errorMessage: String?)
+    private func handleServerResponse(data: Data?, response: URLResponse?, error: Error?, completion: @escaping ([String], String?) -> Void) {
         let jsonDecoder = JSONDecoder()
         
         if let response = response {
@@ -128,18 +135,19 @@ class Unredactor {
         
         if let error = error {
             print("ERROR: \(error)")
+            completion([""], "Couldn't get a response from the server. The server might be down or you might have a bad connection.")
         }
         
         if let data = data {
             if let unredactorInfo = try? jsonDecoder.decode(UnredactorInfo.self, from:data) {
                 
-                completion(unredactorInfo.unredacted_words)
+                completion(unredactorInfo.unredacted_words, nil)
                 print(String(data: data, encoding: .utf8)!)
             } else {
-                completion(["getUnredactedWords() failed; couldn't properly parse JSON response."])
+                completion([""], "The app couldn't understand the server response. Contact the developer or leave a review telling us how this happened.")
             }
         } else {
-            completion(["getUnredactedWords() failed; couldn't get JSON response from server"])
+            completion([""], "Couldn't get a response from the server. The server might be down or you might have a bad connection.")
         }
     }
 }

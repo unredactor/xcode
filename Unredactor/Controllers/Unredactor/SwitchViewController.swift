@@ -89,25 +89,24 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
         }
     }
     
+    func setSwitch(to state: EditMode) {
+        switch state {
+        case .editable: setSwitchEditable()
+        case .redactable: setSwitchRedactable()
+        }
+    }
+    
     // MARK: - IBActions
     @IBAction func editButtonPressed(_ sender: Any) {
         guard state != .editable else { return }
         
-        state = .editable
-        updateSwitchDirection()
-        updateViews(isAnimated: false)
-        delegate?.switchWasToggled(to: .editable)
-        hideInstructionLabel()
+        setSwitchEditable()
     }
     
     @IBAction func redactButtonPressed(_ sender: Any) {
         guard state != .redactable else { return }
         
-        state = .redactable
-        updateSwitchDirection()
-        updateViews(isAnimated: false)
-        delegate?.switchWasToggled(to: .redactable)
-        showInstructionLabel()
+        setSwitchRedactable()
     }
     
     @IBAction func toggleSwitch(_ sender: UISwitch) {
@@ -132,6 +131,22 @@ fileprivate extension SwitchViewController {
             addGlowEffect(to: redactLabel, isAnimated: animated)
             removeGlowEffect(from: editLabel, isAnimated: animated)
         }
+    }
+    
+    func setSwitchEditable() {
+        state = .editable
+        updateSwitchDirection()
+        updateViews(isAnimated: false)
+        delegate?.switchWasToggled(to: .editable)
+        hideInstructionLabel()
+    }
+    
+    func setSwitchRedactable() {
+        state = .redactable
+        updateSwitchDirection()
+        updateViews(isAnimated: false)
+        delegate?.switchWasToggled(to: .redactable)
+        showInstructionLabel()
     }
     
     func updateSwitchDirection() { // Change the direction of the switch according to the state
