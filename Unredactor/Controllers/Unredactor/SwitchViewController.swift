@@ -21,12 +21,14 @@ protocol SwitchViewControllerDelegate: class {
 class SwitchViewController: UIViewController, CAAnimationDelegate {
     
     // MARK: - Properties
-    @IBOutlet weak var stateSwitch: UISwitch!
     
+    @IBOutlet weak var stateSwitch: UISwitch!
     @IBOutlet weak var editLabel: UILabel!
     @IBOutlet weak var redactLabel: UILabel!
+    
     /// A label to indicate to the user how to redact text. Shows up once the user is able to redact (when there is any text)
     @IBOutlet weak var instructionLabel: UILabel!
+    
     
     var state: EditMode = .editable
     
@@ -34,13 +36,15 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     
     private let animationDuration: TimeInterval = 2.0
     private let shadowRadius: CGFloat = 5
+    private let editModeText = "Enter Redaction Mode"
+    private let redactModeText = "Enter Edit Mode"
     
     private let pulseAnimationKey: String = "pulseAnimation"
     private var pulseAnimation: CABasicAnimation {
         let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
         pulseAnimation.duration = 0.8
         pulseAnimation.fromValue = instructionLabel.alpha
-        pulseAnimation.toValue = 0
+        pulseAnimation.toValue = 0.4
         pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         pulseAnimation.autoreverses = true
         pulseAnimation.repeatCount = .greatestFiniteMagnitude
@@ -53,17 +57,13 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        switch state {
-        case .editable:
-            editLabel.textColor = .white
-        case .redactable:
-            redactLabel.textColor = .white
-        }
+        updateViews(isAnimated: true)
                 
         giveFadeAnimation(toLabel: editLabel)
         giveFadeAnimation(toLabel: redactLabel)
         
         instructionLabel.alpha = 0.0
+        instructionLabel.text = "Tap words to redact them"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,6 +97,7 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     }
     
     // MARK: - IBActions
+    
     @IBAction func editButtonPressed(_ sender: Any) {
         guard state != .editable else { return }
         
@@ -109,7 +110,7 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
         setSwitchRedactable()
     }
     
-    @IBAction func toggleSwitch(_ sender: UISwitch) {
+    @IBAction func toggle(_ sender: UISwitch) {
         state = state.toggled()
         updateViews(isAnimated: false)
         
@@ -126,28 +127,31 @@ fileprivate extension SwitchViewController {
             removeGlowEffect(from: stateSwitch, isAnimated: animated)
             addGlowEffect(to: editLabel, isAnimated: animated)
             removeGlowEffect(from: redactLabel, isAnimated: animated)
+            instructionLabel.text = "Switch to redact mode to redact words"
         } else {
             addGlowEffect(to: stateSwitch, isAnimated: animated)
             addGlowEffect(to: redactLabel, isAnimated: animated)
             removeGlowEffect(from: editLabel, isAnimated: animated)
+            instructionLabel.text = "Tap words to redact them"
         }
     }
     
     func setSwitchEditable() {
         state = .editable
-        updateSwitchDirection()
+        //updateSwitchDirection()
         updateViews(isAnimated: false)
         delegate?.switchWasToggled(to: .editable)
-        hideInstructionLabel()
+        //hideInstructionLabel()
     }
     
     func setSwitchRedactable() {
         state = .redactable
-        updateSwitchDirection()
+        //updateSwitchDirection()
         updateViews(isAnimated: false)
         delegate?.switchWasToggled(to: .redactable)
-        showInstructionLabel()
+        //showInstructionLabel()
     }
+    
     
     func updateSwitchDirection() { // Change the direction of the switch according to the state
         let isOn = state == .editable ? false : true

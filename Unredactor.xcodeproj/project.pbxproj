@@ -206,6 +206,7 @@
 		237C08A022FB95C800DE3379 /* Old Stuff (Unused) */ = {
 			isa = PBXGroup;
 			children = (
+				23066B742315F5D600A9E8B0 /* ChatView */,
 				2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */,
 			);
 			path = "Old Stuff (Unused)";
@@ -218,7 +219,6 @@
 				23066B722315F55D00A9E8B0 /* RootView */,
 				23066B702315F50F00A9E8B0 /* Unredactor */,
 				23066B7A2316F59700A9E8B0 /* InformationPageViewController */,
-				23066B742315F5D600A9E8B0 /* ChatView */,
 				23B64004230DA4C4002ED14C /* WebsiteViewController.swift */,
 			);
 			path = Controllers;

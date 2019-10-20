@@ -10,6 +10,11 @@ import UIKit
 
 class UnredactorTextView: UITextView {
     
-    // Disable selection because it interferes with redaction; can be confusing
-    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        print(sender)
+        
+        return super.canPerformAction(action, withSender: sender)
+        
+        var canPerformAction = super.canPerformAction(action, withSender: sender)
+    }
 }

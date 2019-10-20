@@ -34,6 +34,7 @@ class TextViewController: UIViewController {
     var document: Document!
     var editMode: EditMode = .editable
     private var isTypingSuggestion: Bool = false // This is to prevent multiple delegate calls when the user types one of the three suggestions provided above the iOS keyboard
+    private var isTextViewUserInteractionEnabled: Bool = true
     
     weak var delegate: TextViewControllerDelegate?
     
@@ -56,12 +57,15 @@ class TextViewController: UIViewController {
         }
         
         textView.delegate = self
+        textView.textDragInteraction?.isEnabled = false
+        textView.isExclusiveTouch = false
+        //textView.isUserInteractionEnabled = false
         
         addObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setupTapGestureRecognizer()
+        setupTapGestureRecognizers()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -123,7 +127,7 @@ class TextViewController: UIViewController {
             setTextViewEditable()
         case .redactable:
             setTextViewRedactable()
-            textView.resignFirstResponder()
+            //textView.resignFirstResponder()
         }
     }
     
@@ -133,7 +137,7 @@ class TextViewController: UIViewController {
     }
     
     func setTextViewIsUserInteractionEnabled(to isUserInteractionEnabled: Bool) {
-        textView.isUserInteractionEnabled = isUserInteractionEnabled
+        isTextViewUserInteractionEnabled = isUserInteractionEnabled
     }
     
     private func setTextViewEditable() {
@@ -195,9 +199,9 @@ extension TextViewController: UITextViewDelegate {
         // and set the cursor to the beginning of the text view
         if updatedText.isEmpty {
             setTextToPlaceholderText()
-            selectBeginningOfTextView()
             document.setText(to: "")
             delegate?.textViewDidBecomeEmpty()
+            selectBeginningOfTextView()
         }
             // Else if the text view's placeholder is showing
             // and the length of the replacement string is greater than 0,
@@ -265,12 +269,6 @@ extension TextViewController: UITextViewDelegate {
         // already been made
         return false
     }
-    
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        if view.window != nil && textView.textColor == .lightGray {
-            selectBeginningOfTextView()
-        }
-    }
 }
 
 // MARK: - UIGestureRecognizerDelegate
@@ -279,11 +277,11 @@ extension TextViewController: UIGestureRecognizerDelegate {
         
         let previousRedactionState = document.redactionState
         
-        guard textView.isUserInteractionEnabled == true else { return }
+        guard isTextViewUserInteractionEnabled == true else { return }
         
         guard let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document) else { return }
         
-        guard editMode == .redactable else {
+        guard editMode == .redactable || gestureRecognizer.numberOfTapsRequired == 2 else {
             // EditMode must be edit, so let's start editing
             textView.becomeFirstResponder()
             
@@ -293,7 +291,7 @@ extension TextViewController: UIGestureRecognizerDelegate {
             return
         }
         
-        if editMode == .redactable {
+        if editMode == .redactable || gestureRecognizer.numberOfTapsRequired == 2 {
             
             // Make the tapped word toggle between redacted and unredacted
             document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState()
@@ -305,11 +303,13 @@ extension TextViewController: UIGestureRecognizerDelegate {
             // Notify delegate if there are changes
             if document.redactionState == .redacted && previousRedactionState != .redacted { delegate?.textViewDidBecomeRedacted() }
             else if document.redactionState != .redacted && previousRedactionState == .redacted { delegate?.textViewDidBecomeNotRedacted() }
+            
+            selectTextView(atIndex: characterIndexTapped, shouldSelectAtEndOfWord: true)
+            setTextView(toEditMode: .redactable)
         } else if editMode == .editable {
             textView.becomeFirstResponder()
             
-            let selectedPosition = textView.position(from: textView.beginningOfDocument, offset: characterIndexTapped) ?? textView.endOfDocument
-            textView.selectedTextRange = textView.textRange(from: selectedPosition, to: selectedPosition)
+            selectTextView(atIndex: characterIndexTapped)
         }
     }
     
@@ -335,10 +335,19 @@ fileprivate extension TextViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
-    func setupTapGestureRecognizer() {
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TextViewController.textViewTapped(_:)))
-        gestureRecognizer.delegate = self
-        textView.addGestureRecognizer(gestureRecognizer)
+    func setupTapGestureRecognizers() {
+        textView.gestureRecognizers = nil
+        
+        // Single tap recognizer
+        let singleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(TextViewController.textViewTapped(_:)))
+        singleTapRecognizer.delegate = self
+        textView.addGestureRecognizer(singleTapRecognizer)
+        
+        // Double tap recognizer
+        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(TextViewController.textViewTapped(_:)))
+        doubleTapRecognizer.delegate = self
+        doubleTapRecognizer.numberOfTapsRequired = 2
+        textView.addGestureRecognizer(doubleTapRecognizer)
     }
     
     func setTextToPlaceholderText() {
@@ -355,8 +364,16 @@ fileprivate extension TextViewController {
         textView.selectedTextRange = textView.textRange(from: textView.endOfDocument, to: textView.endOfDocument)
     }
     
-    func selectTextView(atIndex index: Int) {
-        guard let selectedPosition = textView.position(from: textView.beginningOfDocument, offset: index) else { return }
+    func selectTextView(atIndex index: Int, shouldSelectAtEndOfWord: Bool = false) {
+        var selectedIndex = index
+        if shouldSelectAtEndOfWord {
+            let classifiedTextIndex = document.classifiedText.classifiedTextIndex(for: index)!
+            
+            let indexDifferenceToEndOfWord = classifiedTextIndex.wordAfter.string.count - classifiedTextIndex.indexInWordAfter
+            selectedIndex += indexDifferenceToEndOfWord
+        }
+        
+        guard let selectedPosition = textView.position(from: textView.beginningOfDocument, offset: selectedIndex) else { return }
         textView.selectedTextRange = textView.textRange(from: selectedPosition, to: selectedPosition)
     }
     

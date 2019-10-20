@@ -67,7 +67,7 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         
         setupSwitchView() // also add a shadow to the switch view and dismiss the switch view
         setupTextView() // align text view behavior with switch behavior
-        setupRefreshView() // create and add a refresh view to the hierarchy that allows the user to unredact
+        //setupRefreshView() // create and add a refresh view to the hierarchy that allows the user to unredact
         
         loadingButtonViewController.disable()
         
@@ -123,6 +123,7 @@ extension ScrollDocumentViewController: SwitchViewControllerDelegate {
     
     func setTextView(toEditMode editMode: EditMode) {
         textViewController.setTextView(toEditMode: editMode)
+        //switchViewController.setSwitch(to: editMode)
     }
     
     func updateTextViewEditMode() {
@@ -160,12 +161,12 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         dismissSwitchView()
         loadingButtonViewController.disable()
         hideUnredactLabel()
-        //hideRedactLabel()
+        switchViewController.hideInstructionLabel()
     }
     
     func textViewDidBecomeNotEmpty() {
         showSwitchView()
-        //showRedactLabel()
+        switchViewController.showInstructionLabel()
     }
     
     func textViewDidBecomeRedacted() {

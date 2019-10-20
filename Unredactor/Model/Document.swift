@@ -116,17 +116,16 @@ class Document {
     // MARK: - Functions
     
     // Set the current text to be unredacted based on the model
-    func unredact(completion: @escaping (String?) -> ()) {
+    func unredact(completion: @escaping () -> ()) {
         guard !classifiedText.isNotRedacted else {
             print("Text not redacted (or unredacted), so unredact() did nothing")
-            completion(nil) // No error, just have the redaction not do anything
+            completion()
             return
         }
         
-        unredactor.unredact(classifiedText, completion: { [unowned self] (unredactedText: ClassifiedText, errorMessage: String?) -> Void in
-            
+        unredactor.unredact(classifiedText, completion: { [unowned self] (unredactedText: ClassifiedText) -> Void in
             self.classifiedText = unredactedText
-            completion(errorMessage)
+            completion()
         })
     }
     
@@ -169,7 +168,7 @@ fileprivate extension Document {
              } else if classifiedTextIndex.wordBefore.type == .word {
                  firstWord.string.insert(character, at: classifiedTextIndex.startIndex)
              }
-         } else if classifiedTextIndex.wordBefore.type == .space || classifiedTextIndex.wordBefore.redactionState != .notRedacted { // If you are inserting a character after a space
+         } else if classifiedTextIndex.wordBefore.type == .space { // If you are inserting a character after a space
              if classifiedTextIndex.wordAfterIndex > classifiedTextIndex.wordBeforeIndex { // If the next word exists
                  let nextWord = classifiedTextIndex.wordAfter
                 
