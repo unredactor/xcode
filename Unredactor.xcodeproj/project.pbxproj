@@ -16,6 +16,7 @@
 		23159A842305C938007D57DE /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A832305C938007D57DE /* SideMenuTableViewController.swift */; };
 		23159A86230602AE007D57DE /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A85230602AE007D57DE /* UIColor+Helpers.swift */; };
 		23159A882307138A007D57DE /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A872307138A007D57DE /* ScrollViewController.swift */; };
+		237460C3235CDFAC00747EF2 /* InstructionLabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237460C2235CDFAC00747EF2 /* InstructionLabelViewController.swift */; };
 		2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2377E07C22FA01370021C277 /* SwitchViewController.swift */; };
 		2387F78D2308A91A00F918B8 /* ButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387F78C2308A91A00F918B8 /* ButtonViewController.swift */; };
 		2394271C22F8AF1E0026660F /* ScrollDocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */; };
@@ -74,6 +75,7 @@
 		23159A832305C938007D57DE /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		23159A85230602AE007D57DE /* UIColor+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
 		23159A872307138A007D57DE /* ScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewController.swift; sourceTree = "<group>"; };
+		237460C2235CDFAC00747EF2 /* InstructionLabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionLabelViewController.swift; sourceTree = "<group>"; };
 		2377E07C22FA01370021C277 /* SwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchViewController.swift; sourceTree = "<group>"; };
 		2387F78C2308A91A00F918B8 /* ButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewController.swift; sourceTree = "<group>"; };
 		2394271B22F8AF1E0026660F /* ScrollDocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDocumentViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				23DCA83522FB4D3800AAAE4B /* TextViewController.swift */,
 				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
 				23066B7D2317577B00A9E8B0 /* UnredactorTextView.swift */,
+				237460C2235CDFAC00747EF2 /* InstructionLabelViewController.swift */,
 			);
 			path = Unredactor;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				23159A882307138A007D57DE /* ScrollViewController.swift in Sources */,
 				23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */,
 				23159A86230602AE007D57DE /* UIColor+Helpers.swift in Sources */,
+				237460C3235CDFAC00747EF2 /* InstructionLabelViewController.swift in Sources */,
 				2F7C0A9722E5A34B00AD2828 /* Array+Helpers.swift in Sources */,
 				2309D19B23027A850028C2BA /* SideMenuViewController.swift in Sources */,
 				23946B7622F2512000A69AF3 /* PageViewController.swift in Sources */,

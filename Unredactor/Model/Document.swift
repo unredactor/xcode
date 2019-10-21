@@ -79,12 +79,17 @@ class Document {
                 
                 // This is to handle an autocorrect special case. Autocorrect adds an extra space after the word, but if there was already a space after the autocorrected word, we don't want a double space, so we should remove the extra space
                 if let classifiedTextIndex = classifiedText.classifiedTextIndex(for: originalSelectedIndex) {
-                    if classifiedTextIndex.wordAfterIndex > classifiedTextIndex.wordBeforeIndex && classifiedTextIndex.wordAfter.type == .space {
-                        removeCharacter(atIndex: originalSelectedIndex)
+                    let extraSpaceAdded = classifiedTextIndex.wordAfterIndex > classifiedTextIndex.wordBeforeIndex && classifiedTextIndex.wordAfter.type == .space
+                    let wasAutocompleted = text.count > 0 && !text.contains(" ")
+                    
+                    if extraSpaceAdded && wasAutocompleted {
+                        _ = removeCharacter(atIndex: originalSelectedIndex)
                     }
                 }
             }
         }
+        
+        print("ClassifiedText: \(classifiedText)")
         
         if text == " " {
             return originalSelectedIndex
@@ -116,16 +121,16 @@ class Document {
     // MARK: - Functions
     
     // Set the current text to be unredacted based on the model
-    func unredact(completion: @escaping () -> ()) {
+    func unredact(completion: @escaping (String?) -> ()) {
         guard !classifiedText.isNotRedacted else {
             print("Text not redacted (or unredacted), so unredact() did nothing")
-            completion()
+            completion("Text not redacted (or unredacted), so unredact() did nothing")
             return
         }
         
-        unredactor.unredact(classifiedText, completion: { [unowned self] (unredactedText: ClassifiedText) -> Void in
+        unredactor.unredact(classifiedText, completion: { [unowned self] (unredactedText: ClassifiedText, errorMessage: String?) -> Void in
             self.classifiedText = unredactedText
-            completion()
+            completion(errorMessage)
         })
     }
     
@@ -172,13 +177,13 @@ fileprivate extension Document {
              if classifiedTextIndex.wordAfterIndex > classifiedTextIndex.wordBeforeIndex { // If the next word exists
                  let nextWord = classifiedTextIndex.wordAfter
                 
-                 if nextWord.type == .word {
+                 if nextWord.type == .word && character != " "  {
                     if nextWord.redactionState == .notRedacted { nextWord.displayedString.insert(character, at: classifiedTextIndex.startIndex)
                     } else {
                         classifiedText.words.insert(ClassifiedString(" "), at: classifiedTextIndex.wordAfterIndex)
                         classifiedText.words.insert(ClassifiedString(character), at: classifiedTextIndex.wordAfterIndex)
                     }
-                 } else if nextWord.type == .space {
+                 } else {
                      classifiedText.words.insert(ClassifiedString(character), at: classifiedTextIndex.wordAfterIndex)
                  }
              } else { // If it doesn't exist
@@ -209,7 +214,7 @@ fileprivate extension Document {
             classifiedText.words.insert(ClassifiedString(" "), at: classifiedTextIndex.wordBeforeIndex)
             classifiedText.words.insert(firstWord, at: classifiedTextIndex.wordBeforeIndex)
             
-            print("NUMBER OF WORDS: \(classifiedText.words.count)")
+            //print("NUMBER OF WORDS: \(classifiedText.words.count)")
         } else {
         classifiedText.words[classifiedTextIndex.wordBeforeIndex].displayedString.insert(character, at: classifiedTextIndex.stringIndexInWordBefore)
         }
@@ -224,7 +229,7 @@ fileprivate extension Document {
             }
         }
         
-        print("ClassifiedText: \(classifiedText)")
+        //print("ClassifiedText: \(classifiedText)")
     
     }
     
@@ -237,7 +242,7 @@ fileprivate extension Document {
            
            if classifiedTextIndex.wordAfter.displayedString.count <= 1 { // If there is only one letter
     
-               print("ClassifiedText: \(classifiedText)")
+               //print("ClassifiedText: \(classifiedText)")
                
                
                
@@ -246,7 +251,7 @@ fileprivate extension Document {
                // Fuse words if you deleted a space
                if deletedWord.type == .space {
                    // Make sure it has a word before and after
-                   if classifiedTextIndex.wordBeforeIndex < classifiedText.words.count - 1 && classifiedTextIndex.wordBeforeIndex > 0 {
+                   if classifiedTextIndex.wordAfterIndex < classifiedText.words.count - 1 && classifiedTextIndex.wordBeforeIndex > 0 {
                        
                        let spaceIndex = classifiedTextIndex.wordBeforeIndex
                        
@@ -265,8 +270,8 @@ fileprivate extension Document {
                }
                
            } else { // If there is more than one letter in the word left
-               print("ClassifiedText: \(classifiedText)")
-               print("INDEX: \(index)")
+               //print("ClassifiedText: \(classifiedText)")
+               //print("INDEX: \(index)")
                let deletedWordIndex = classifiedTextIndex.wordAfterIndex // The index of the word being deleted
                deletedWord = classifiedText.words[deletedWordIndex]
                if deletedWord.redactionState != .notRedacted && deletesRedactedWords {

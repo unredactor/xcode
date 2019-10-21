@@ -19,13 +19,13 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
     @IBOutlet weak private var switchView: UIView!
     @IBOutlet weak private var textView: UIView!
     /// A label to indicate to the user how to unredact text. Shows up once the user is able to unredact (when there is redacted text)
-    @IBOutlet weak var unredactLabel: UILabel!
     
     @IBOutlet weak var unredactButton: UIView!
     
     private var switchViewController: SwitchViewController!
     private var textViewController: TextViewController!
     private var loadingButtonViewController: LoadingButtonViewController!
+    private var instructionLabelViewController: InstructionLabelViewController!
     
     var document: Document!
     
@@ -35,6 +35,7 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         }
     }
     
+    /*
     private let pulseAnimationKey: String = "pulseAnimation"
     private var pulseAnimation: CABasicAnimation {
         let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
@@ -47,6 +48,7 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         
         return pulseAnimation
     }
+ */
     
     // From https://stackoverflow.com/questions/10768659/leaving-inputaccessoryview-visible-after-keyboard-is-dismissed
     // Allows accessory view to be constantly visible
@@ -61,6 +63,10 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         }
     }
     
+    override func becomeFirstResponder() -> Bool {
+        super.becomeFirstResponder()
+    }
+    
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,8 +76,7 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         //setupRefreshView() // create and add a refresh view to the hierarchy that allows the user to unredact
         
         loadingButtonViewController.disable()
-        
-        unredactLabel.alpha = 0.0
+        instructionLabelViewController.setInstructionText(to: "Tap icon to unredact ➡️")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,6 +109,8 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         case let loadingButtonViewController as LoadingButtonViewController:
             loadingButtonViewController.delegate = self
             self.loadingButtonViewController = loadingButtonViewController
+        case let instructionLabelViewController as InstructionLabelViewController:
+            self.instructionLabelViewController = instructionLabelViewController
         default:
             break
         }
@@ -114,6 +121,20 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
 extension ScrollDocumentViewController: SwitchViewControllerDelegate {
     func switchWasToggled(to editMode: EditMode) {
         setTextView(toEditMode: editMode)
+    }
+    
+    func clearText() {
+        /*
+        let alert = UIAlertController(title: "Are you sure you want to clear all of the text you've typed?", message: "This action is unreversable.", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Delete Text", style: .destructive, handler: { [unowned self] action in
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true)
+ */
+        self.textViewController.clearText()
     }
     
     func setSubviews(toEditMode editMode: EditMode) {
@@ -281,20 +302,11 @@ fileprivate extension ScrollDocumentViewController {
     }
     
     func showUnredactLabel() {
-        
-        UIView.animate(withDuration: 0.5, animations: { [unowned self] in
-            self.unredactLabel.alpha = 1.0
-        }, completion: { [unowned self] (bool) in
-            self.unredactLabel.layer.add(self.pulseAnimation, forKey: self.pulseAnimationKey)
-        })
+        instructionLabelViewController.show()
     }
     
     func hideUnredactLabel() {
-        unredactLabel.layer.removeAllAnimations()
-        
-        UIView.animate(withDuration: 0.5) { [unowned self] in
-            self.unredactLabel.alpha = 0.0
-        }
+        instructionLabelViewController.hide()
     }
     
     func showErrorMessage(_ errorMessage: String) {

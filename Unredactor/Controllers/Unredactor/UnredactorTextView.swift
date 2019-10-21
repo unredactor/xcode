@@ -11,10 +11,10 @@ import UIKit
 class UnredactorTextView: UITextView {
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        print(sender)
+        //print(sender)
         
         return super.canPerformAction(action, withSender: sender)
         
-        var canPerformAction = super.canPerformAction(action, withSender: sender)
+        //var canPerformAction = super.canPerformAction(action, withSender: sender)
     }
 }

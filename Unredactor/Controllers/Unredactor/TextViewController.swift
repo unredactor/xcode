@@ -58,7 +58,9 @@ class TextViewController: UIViewController {
         
         textView.delegate = self
         textView.textDragInteraction?.isEnabled = false
-        textView.isExclusiveTouch = false
+        textView.tintColor = .darkGray
+        
+        
         //textView.isUserInteractionEnabled = false
         
         addObservers()
@@ -81,6 +83,13 @@ class TextViewController: UIViewController {
     // MARK: - Interface (public functions)
     func dismissKeyboard() {
         textView.resignFirstResponder()
+    }
+    
+    func clearText() {
+        setTextToPlaceholderText()
+        document.setText(to: "")
+        delegate?.textViewDidBecomeEmpty()
+        selectBeginningOfTextView()
     }
     
     func configureTextView(withDocument document: Document, selectedIndex: Int?, isAnimated: Bool = false) {
@@ -155,7 +164,7 @@ class TextViewController: UIViewController {
 // MARK: - UITextViewDelegate
 extension TextViewController: UITextViewDelegate {
     func textViewDidEndEditing() {
-        textView.resignFirstResponder()
+        //textView.resignFirstResponder()
         
         document.setText(to: textView.text)
     }
@@ -170,6 +179,8 @@ extension TextViewController: UITextViewDelegate {
         guard !isTypingSuggestion else {
             return false
         }
+        
+        //print("ReplacementText: \(text)")
         
         //print("Range: \(range)")
         
@@ -198,10 +209,7 @@ extension TextViewController: UITextViewDelegate {
         // If updated text view will be empty, add the placeholder
         // and set the cursor to the beginning of the text view
         if updatedText.isEmpty {
-            setTextToPlaceholderText()
-            document.setText(to: "")
-            delegate?.textViewDidBecomeEmpty()
-            selectBeginningOfTextView()
+            clearText()
         }
             // Else if the text view's placeholder is showing
             // and the length of the replacement string is greater than 0,
@@ -212,8 +220,14 @@ extension TextViewController: UITextViewDelegate {
             textView.textColor = .black
             let selectedIndex = document.changeText(inRange: range, replacementText: text)
             isTypingSuggestion = true
-            selectTextView(atIndex: selectedIndex)
-            textView.attributedText = document.attributedText
+            if range.length <= 0 {
+                textView.attributedText = document.attributedText
+                selectTextView(atIndex: selectedIndex)
+            } else if range.length > 0 {
+                selectTextView(atIndex: selectedIndex)
+                textView.attributedText = document.attributedText
+                selectTextView(atIndex: selectedIndex)
+            }
             isTypingSuggestion = false
             textView.font = document.font
             delegate?.textViewDidBecomeNotEmpty()
@@ -269,6 +283,12 @@ extension TextViewController: UITextViewDelegate {
         // already been made
         return false
     }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if document.classifiedText.rawText.count == 0 {
+            selectBeginningOfTextView()
+        }
+    }
 }
 
 // MARK: - UIGestureRecognizerDelegate
@@ -279,7 +299,9 @@ extension TextViewController: UIGestureRecognizerDelegate {
         
         guard isTextViewUserInteractionEnabled == true else { return }
         
-        guard let characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document) else { return }
+        guard var characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document) else { return }
+        
+        if document.classifiedText.rawText.count == 0 { characterIndexTapped = 0 }
         
         guard editMode == .redactable || gestureRecognizer.numberOfTapsRequired == 2 else {
             // EditMode must be edit, so let's start editing
@@ -347,7 +369,7 @@ fileprivate extension TextViewController {
         let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(TextViewController.textViewTapped(_:)))
         doubleTapRecognizer.delegate = self
         doubleTapRecognizer.numberOfTapsRequired = 2
-        textView.addGestureRecognizer(doubleTapRecognizer)
+        //textView.addGestureRecognizer(doubleTapRecognizer) // Turned off for now due to behavior issues
     }
     
     func setTextToPlaceholderText() {

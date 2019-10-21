@@ -214,8 +214,8 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             } else {
                 var indexInWordBefore = index - indexInText
                 //print("INDEX IN WORD: \(indexInWord)")
-                print("INDEX IN TEXT: \(indexInText)")
-                print("WORD INDEX: \(wordIndex)")
+                //print("INDEX IN TEXT: \(indexInText)")
+                //print("WORD INDEX: \(wordIndex)")
                 
                 // Word After will be different from word before only when we are at the end of a word (which also includes the start of another word)
                 var isIndexAtEndOfWord: Bool = false
@@ -230,7 +230,7 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
                     
                     if wordIndex + 1 < words.count && index != 0 { wordAfterIndex += 1 }
                 }
-                print("INDEX IN WORD AFTER \(indexInWordAfter)")
+                //print("INDEX IN WORD AFTER \(indexInWordAfter)")
                 
                 let wordBeforeIndex = wordIndex
                 let wordBefore = words[wordBeforeIndex]

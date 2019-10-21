@@ -11,6 +11,7 @@ import UIKit
 // MARK: - Delegate
 protocol SwitchViewControllerDelegate: class {
     func switchWasToggled(to state: EditMode)
+    func clearText()
 }
 
 // MARK: - Class Definition
@@ -25,20 +26,20 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     @IBOutlet weak var stateSwitch: UISwitch!
     @IBOutlet weak var editLabel: UILabel!
     @IBOutlet weak var redactLabel: UILabel!
-    
-    /// A label to indicate to the user how to redact text. Shows up once the user is able to redact (when there is any text)
-    @IBOutlet weak var instructionLabel: UILabel!
+    @IBOutlet weak var clearTextButton: UIButton!
     
     
     var state: EditMode = .editable
     
     weak var delegate: SwitchViewControllerDelegate?
+    private var instructionLabelViewController: InstructionLabelViewController!
     
     private let animationDuration: TimeInterval = 2.0
     private let shadowRadius: CGFloat = 5
     private let editModeText = "Enter Redaction Mode"
     private let redactModeText = "Enter Edit Mode"
     
+    /*
     private let pulseAnimationKey: String = "pulseAnimation"
     private var pulseAnimation: CABasicAnimation {
         let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
@@ -51,6 +52,7 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
         
         return pulseAnimation
     }
+ */
     
     
     // MARK: - View Life Cycle
@@ -62,8 +64,10 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
         giveFadeAnimation(toLabel: editLabel)
         giveFadeAnimation(toLabel: redactLabel)
         
-        instructionLabel.alpha = 0.0
-        instructionLabel.text = "Tap words to redact them"
+        instructionLabelViewController.setInstructionText(to: "Tap words to redact them")
+        
+        clearTextButton.titleLabel?.numberOfLines = 0 // Infinite lines so that it stacks
+        clearTextButton.titleLabel?.textAlignment = .center
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,19 +78,11 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     }
     
     func showInstructionLabel() {
-        UIView.animate(withDuration: 0.5, animations: { [unowned self] in
-            self.instructionLabel.alpha = 1.0
-            }, completion: { [unowned self] (bool) in
-                self.instructionLabel.layer.add(self.pulseAnimation, forKey: self.pulseAnimationKey)
-        })
+        instructionLabelViewController.show()
     }
     
     func hideInstructionLabel() {
-        instructionLabel.layer.removeAllAnimations()
-        
-        UIView.animate(withDuration: 0.5) { [unowned self] in
-            self.instructionLabel.alpha = 0.0
-        }
+        instructionLabelViewController.hide()
     }
     
     func setSwitch(to state: EditMode) {
@@ -110,12 +106,25 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
         setSwitchRedactable()
     }
     
+    @IBAction func clearTextButtonPressed(_ sender: Any) {
+        delegate?.clearText()
+    }
+    
     @IBAction func toggle(_ sender: UISwitch) {
         state = state.toggled()
         updateViews(isAnimated: false)
         
         delegate?.switchWasToggled(to: state)
         (state == .editable) ? hideInstructionLabel() : showInstructionLabel()
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.destination {
+        case let instructionLabelViewController as InstructionLabelViewController:
+            self.instructionLabelViewController = instructionLabelViewController
+        default: break
+        }
     }
 }
 
@@ -127,18 +136,18 @@ fileprivate extension SwitchViewController {
             removeGlowEffect(from: stateSwitch, isAnimated: animated)
             addGlowEffect(to: editLabel, isAnimated: animated)
             removeGlowEffect(from: redactLabel, isAnimated: animated)
-            instructionLabel.text = "Switch to redact mode to redact words"
+            instructionLabelViewController.setInstructionText(to: "Switch to redact mode to redact words")
         } else {
             addGlowEffect(to: stateSwitch, isAnimated: animated)
             addGlowEffect(to: redactLabel, isAnimated: animated)
             removeGlowEffect(from: editLabel, isAnimated: animated)
-            instructionLabel.text = "Tap words to redact them"
+            instructionLabelViewController.setInstructionText(to: "Tap words to redact them")
         }
     }
     
     func setSwitchEditable() {
         state = .editable
-        //updateSwitchDirection()
+        updateSwitchDirection()
         updateViews(isAnimated: false)
         delegate?.switchWasToggled(to: .editable)
         //hideInstructionLabel()
@@ -146,7 +155,7 @@ fileprivate extension SwitchViewController {
     
     func setSwitchRedactable() {
         state = .redactable
-        //updateSwitchDirection()
+        updateSwitchDirection()
         updateViews(isAnimated: false)
         delegate?.switchWasToggled(to: .redactable)
         //showInstructionLabel()
