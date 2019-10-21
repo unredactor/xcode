@@ -28,7 +28,7 @@ class ButtonViewController: UIViewController {
     weak var delegate: ButtonViewControllerDelegate?
     
     private let backgroundColor = UIColor.white.withAlphaComponent(0.8)
-    private let imageViewTintColor = UIColor.white.withAlphaComponent(0.4)
+    private let imageViewTintColor = UIColor.white.withAlphaComponent(0.6)
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {

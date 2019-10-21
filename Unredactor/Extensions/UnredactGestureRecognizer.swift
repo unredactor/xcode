@@ -33,11 +33,12 @@ extension UITapGestureRecognizer {
         let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInTextView.x,
                                                      y: locationOfTouchInTextView.y)
         
-        guard locationOfTouchInTextView.y > 0 else { return nil } // -5 is to clip off the space where you can tap under a word but it interprets that you have tapped the last word in the sentence
+        guard locationOfTouchInTextView.y > 0 else { return nil }
         
         
         let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         print("Index of character tapped: \(indexOfCharacter)")
+        print("text: \(attributedText.string)")
         
         return indexOfCharacter
     }

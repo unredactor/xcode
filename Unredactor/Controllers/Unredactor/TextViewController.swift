@@ -242,7 +242,6 @@ extension TextViewController: UITextViewDelegate {
                 
                 let selectedIndex = document.changeText(inRange: range, replacementText: text)
                 
-                
                 isTypingSuggestion = true
                 if range.length <= 1 {
                     textView.attributedText = document.attributedText
@@ -256,6 +255,10 @@ extension TextViewController: UITextViewDelegate {
                 
                 if document.redactionState != .redacted && previousRedactionState == .redacted {
                     delegate?.textViewDidBecomeNotRedacted()
+                }
+                
+                if document.classifiedText.rawText.count == 0 {
+                    clearText()
                 }
             } else {
                 let selectedIndex = document.changeText(inRange: range, replacementText: text)
@@ -285,7 +288,7 @@ extension TextViewController: UITextViewDelegate {
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        if document.classifiedText.rawText.count == 0 {
+        if textView.textColor == .lightGray {
             selectBeginningOfTextView()
         }
     }
@@ -300,6 +303,7 @@ extension TextViewController: UIGestureRecognizerDelegate {
         guard isTextViewUserInteractionEnabled == true else { return }
         
         guard var characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document) else { return }
+        print("CharacterIndexTapped: \(characterIndexTapped)")
         
         if document.classifiedText.rawText.count == 0 { characterIndexTapped = 0 }
         
@@ -392,6 +396,7 @@ fileprivate extension TextViewController {
             let classifiedTextIndex = document.classifiedText.classifiedTextIndex(for: index)!
             
             let indexDifferenceToEndOfWord = classifiedTextIndex.wordAfter.string.count - classifiedTextIndex.indexInWordAfter
+            print("indexDifferenceToEndOfWord: \(indexDifferenceToEndOfWord)")
             selectedIndex += indexDifferenceToEndOfWord
         }
         

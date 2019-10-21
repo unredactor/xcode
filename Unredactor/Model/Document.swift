@@ -266,6 +266,8 @@ fileprivate extension Document {
                            classifiedText.words[spaceIndex].displayedString += wordAfterString // Fuse the words
                            classifiedText.words.remove(at: spaceIndex + 1) // Remove the wordAfter
                        }
+                    
+                    
                    }
                }
                
