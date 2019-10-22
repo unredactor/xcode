@@ -26,14 +26,19 @@ extension UITapGestureRecognizer {
         let width = textView.frame.size.width
         let sizeThatFits = textView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
         textContainer.size = CGSize(width: width, height: sizeThatFits.height)
+        textContainer.lineFragmentPadding = 0
         
         // Find the tapped character location and compare it to the specified range
         let locationOfTouchInTextView = self.location(in: textView) // Location within UIView (from 0,0 at bottom left)
+        print("LOACTION OF TOUCH IN TEXT VIEW: \(locationOfTouchInTextView)")
         
         let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInTextView.x,
                                                      y: locationOfTouchInTextView.y)
         
-        guard locationOfTouchInTextView.y > 0 else { return nil }
+        guard locationOfTouchInTextView.y > 0 else {
+            print("TAPPED TOO HIGH")
+            return nil
+        }
         
         
         let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)

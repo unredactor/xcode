@@ -74,9 +74,10 @@ class Document {
         // Insert text at a specific point (this can be done with appendCharacterToText, which needs to be modified to insertCharacter(atIndex:)
         for (characterIndex, character) in text.enumerated() {
             insertCharacter(character, atIndex: range.location + characterIndex)
+            
+            
             if character == " " {
                 originalSelectedIndex += 1
-                
                 // This is to handle an autocorrect special case. Autocorrect adds an extra space after the word, but if there was already a space after the autocorrected word, we don't want a double space, so we should remove the extra space
                 if let classifiedTextIndex = classifiedText.classifiedTextIndex(for: originalSelectedIndex) {
                     let extraSpaceAdded = classifiedTextIndex.wordAfterIndex > classifiedTextIndex.wordBeforeIndex && classifiedTextIndex.wordAfter.type == .space

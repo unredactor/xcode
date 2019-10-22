@@ -86,10 +86,10 @@ class TextViewController: UIViewController {
     }
     
     func clearText() {
+        selectBeginningOfTextView()
         setTextToPlaceholderText()
         document.setText(to: "")
         delegate?.textViewDidBecomeEmpty()
-        selectBeginningOfTextView()
     }
     
     func configureTextView(withDocument document: Document, selectedIndex: Int?, isAnimated: Bool = false) {
@@ -253,7 +253,7 @@ extension TextViewController: UITextViewDelegate {
                 isTypingSuggestion = false
                 textView.font = document.font
                 
-                if document.redactionState != .redacted && previousRedactionState == .redacted {
+                if document.redactionState == .notRedacted && previousRedactionState != .notRedacted {
                     delegate?.textViewDidBecomeNotRedacted()
                 }
                 
@@ -288,6 +288,8 @@ extension TextViewController: UITextViewDelegate {
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
+        print("Selection: \(textView.selectedRange)")
+        
         if textView.textColor == .lightGray {
             selectBeginningOfTextView()
         }
@@ -304,6 +306,13 @@ extension TextViewController: UIGestureRecognizerDelegate {
         
         guard var characterIndexTapped = gestureRecognizer.characterIndexTapped(inDocument: document) else { return }
         print("CharacterIndexTapped: \(characterIndexTapped)")
+        
+        
+        let numberOfCharacters = document.attributedText.string.count
+        
+        // Hacky solution to minor problem:
+        if characterIndexTapped == numberOfCharacters - 1 { characterIndexTapped = numberOfCharacters }
+        //----
         
         if document.classifiedText.rawText.count == 0 { characterIndexTapped = 0 }
         
@@ -391,7 +400,12 @@ fileprivate extension TextViewController {
     }
     
     func selectTextView(atIndex index: Int, shouldSelectAtEndOfWord: Bool = false) {
+        
         var selectedIndex = index
+        
+        let maxIndex = document.attributedText.string.count
+        if selectedIndex >= maxIndex { selectedIndex = maxIndex }
+        
         if shouldSelectAtEndOfWord {
             let classifiedTextIndex = document.classifiedText.classifiedTextIndex(for: index)!
             

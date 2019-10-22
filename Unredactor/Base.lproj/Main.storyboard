@@ -1051,17 +1051,17 @@
             <objects>
                 <viewController id="H4q-JR-BWU" customClass="SwitchViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="a8f-gZ-aKo">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kwJ-9x-Vy7">
-                                <rect key="frame" x="0.0" y="40" width="334" height="60"/>
+                                <rect key="frame" x="0.0" y="60" width="334" height="60"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="metallicTexture" translatesAutoresizingMaskIntoConstraints="NO" id="hIB-2x-Wob">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                     </imageView>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2xR-QF-4rv">
-                                        <rect key="frame" x="127.33333333333331" y="14.666666666666664" width="51" height="31"/>
+                                        <rect key="frame" x="127.33333333333331" y="14.666666666666671" width="51" height="31"/>
                                         <color key="onTintColor" white="0.95892935739436624" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="thumbTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
@@ -1122,13 +1122,13 @@
                                 </variation>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uo2-6A-Luk">
-                                <rect key="frame" x="20" y="4" width="374" height="32"/>
+                                <rect key="frame" x="20" y="4" width="374" height="52"/>
                                 <connections>
                                     <segue destination="nan-sc-mlC" kind="embed" id="ELe-KL-Kqa"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kh4-0f-kqv">
-                                <rect key="frame" x="334" y="40" width="80" height="60"/>
+                                <rect key="frame" x="334" y="60" width="80" height="60"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oit-R7-rEx">
                                         <rect key="frame" x="0.0" y="8" width="0.66666666666666663" height="44"/>
@@ -1299,18 +1299,18 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qZO-qc-zyn">
-                                <rect key="frame" x="0.0" y="856" width="414" height="100"/>
+                                <rect key="frame" x="0.0" y="856" width="414" height="120"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="E1f-MJ-8gC"/>
+                                    <constraint firstAttribute="height" constant="120" id="E1f-MJ-8gC"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="H4q-JR-BWU" kind="embed" id="9BN-yq-VWY"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="20g-6r-pyH">
-                                <rect key="frame" x="80" y="48" width="254" height="24"/>
+                                <rect key="frame" x="80" y="48" width="254" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="sUj-N8-uXu"/>
+                                    <constraint firstAttribute="height" constant="40" id="sUj-N8-uXu"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="nan-sc-mlC" kind="embed" id="rlw-rh-hUd"/>
@@ -1427,13 +1427,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Tyler Gee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MrB-de-YP6">
-                                                    <rect key="frame" x="16" y="13.666666666666664" width="122" height="17"/>
+                                                    <rect key="frame" x="20" y="13.666666666666664" width="208" height="17"/>
                                                     <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iOS App (this)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sCg-Aa-UsW">
-                                                    <rect key="frame" x="154" y="15" width="118" height="14"/>
+                                                    <rect key="frame" x="244" y="15" width="118" height="14"/>
                                                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1456,13 +1456,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Julian Mcomie" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kit-0I-KFq">
-                                                    <rect key="frame" x="16" y="13.666666666666664" width="130" height="17"/>
+                                                    <rect key="frame" x="20" y="13.666666666666664" width="216" height="17"/>
                                                     <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Flask App/API" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Nr-LM-qqs">
-                                                    <rect key="frame" x="162" y="15" width="110" height="14"/>
+                                                    <rect key="frame" x="252" y="15" width="110" height="14"/>
                                                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1485,13 +1485,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Hope Yim" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1A-ji-lr8">
-                                                    <rect key="frame" x="16" y="13.666666666666664" width="139" height="17"/>
+                                                    <rect key="frame" x="20" y="13.666666666666664" width="225" height="17"/>
                                                     <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Website HTML" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfZ-dF-UhD">
-                                                    <rect key="frame" x="171" y="15" width="101" height="14"/>
+                                                    <rect key="frame" x="261" y="15" width="101" height="14"/>
                                                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1514,13 +1514,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Alex Kari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="evQ-ca-AyK">
-                                                    <rect key="frame" x="16" y="13.666666666666664" width="122" height="17"/>
+                                                    <rect key="frame" x="20" y="13.666666666666664" width="208" height="17"/>
                                                     <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publishing App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7N-CU-9BA">
-                                                    <rect key="frame" x="154" y="15" width="118" height="14"/>
+                                                    <rect key="frame" x="244" y="15" width="118" height="14"/>
                                                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1547,13 +1547,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Alex Kari" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oL-kz-Hr8">
-                                                    <rect key="frame" x="8" y="13.666666666666664" width="138" height="17"/>
+                                                    <rect key="frame" x="20" y="13.666666666666664" width="208" height="17"/>
                                                     <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publishing App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlj-C2-ME1">
-                                                    <rect key="frame" x="162" y="15" width="118" height="14"/>
+                                                    <rect key="frame" x="244" y="15" width="118" height="14"/>
                                                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1823,13 +1823,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Unredactor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lzZ-TC-usK">
-                                                    <rect key="frame" x="16" y="13.666666666666664" width="122" height="17"/>
+                                                    <rect key="frame" x="20" y="13.666666666666664" width="208" height="17"/>
                                                     <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iOS App (this)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vB8-65-SmB">
-                                                    <rect key="frame" x="154" y="15" width="118" height="14"/>
+                                                    <rect key="frame" x="244" y="15" width="118" height="14"/>
                                                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1852,13 +1852,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="iOS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9a-71-Y5Y">
-                                                    <rect key="frame" x="16" y="13.666666666666664" width="130" height="17"/>
+                                                    <rect key="frame" x="20" y="13.666666666666664" width="216" height="17"/>
                                                     <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Flask App/API" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9P-ej-0wK">
-                                                    <rect key="frame" x="162" y="15" width="110" height="14"/>
+                                                    <rect key="frame" x="252" y="15" width="110" height="14"/>
                                                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1881,13 +1881,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Flask" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbd-qE-9IQ">
-                                                    <rect key="frame" x="16" y="13.666666666666664" width="139" height="17"/>
+                                                    <rect key="frame" x="20" y="13.666666666666664" width="225" height="17"/>
                                                     <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Website HTML" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kyN-Uf-m90">
-                                                    <rect key="frame" x="171" y="15" width="101" height="14"/>
+                                                    <rect key="frame" x="261" y="15" width="101" height="14"/>
                                                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1910,13 +1910,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Website" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mBs-H8-ERY">
-                                                    <rect key="frame" x="16" y="13.666666666666664" width="122" height="17"/>
+                                                    <rect key="frame" x="20" y="13.666666666666664" width="208" height="17"/>
                                                     <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publishing App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4vi-bk-idb">
-                                                    <rect key="frame" x="154" y="15" width="118" height="14"/>
+                                                    <rect key="frame" x="244" y="15" width="118" height="14"/>
                                                     <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2159,12 +2159,12 @@
             <objects>
                 <viewController id="nan-sc-mlC" customClass="InstructionLabelViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iyX-qE-xHl">
-                        <rect key="frame" x="0.0" y="0.0" width="238" height="24"/>
+                        <rect key="frame" x="0.0" y="0.0" width="254" height="24"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instructional text" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="KXa-C5-tEA">
-                                <rect key="frame" x="20" y="8" width="198" height="8"/>
-                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instructional text" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="KXa-C5-tEA">
+                                <rect key="frame" x="20" y="8" width="214" height="8"/>
+                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="20"/>
                                 <color key="textColor" white="0.95892935739999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
