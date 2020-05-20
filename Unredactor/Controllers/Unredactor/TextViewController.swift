@@ -373,7 +373,7 @@ extension TextViewController: UITextViewDelegate {
 
 // MARK: - UIGestureRecognizerDelegate
 extension TextViewController: UIGestureRecognizerDelegate {
-    /*
+    
     @objc func textViewTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         
         let previousRedactionState = document.redactionState
@@ -427,7 +427,7 @@ extension TextViewController: UIGestureRecognizerDelegate {
             selectTextView(atIndex: characterIndexTapped)
         }
     }
- */
+    /*
     // Link method
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in
         characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
@@ -486,6 +486,7 @@ extension TextViewController: UIGestureRecognizerDelegate {
         
         return false
     }
+ */
     
     @objc func keyboardDidShow(_ notification: NSNotification) {
         delegate?.keyboardDidShow(notification)
@@ -512,7 +513,7 @@ fileprivate extension TextViewController {
     func setupTapGestureRecognizers() {
         textView.gestureRecognizers = nil
         
-        /*
+        
         // Single tap recognizer
         let singleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(TextViewController.textViewTapped(_:)))
         singleTapRecognizer.delegate = self
@@ -523,7 +524,6 @@ fileprivate extension TextViewController {
         doubleTapRecognizer.delegate = self
         doubleTapRecognizer.numberOfTapsRequired = 2
         //textView.addGestureRecognizer(doubleTapRecognizer) // Turned off for now due to behavior issues
- */
     }
     
     func setTextToPlaceholderText() {

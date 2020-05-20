@@ -42,7 +42,16 @@ class Document {
             attributedText.append(attributedWord)
         }
         
-        attributedText.addAttribute(.font, value: font, range: NSMakeRange(0, attributedText.string.count))
+        // Range that covers all of the attributedText, so I can apply attributes to the whole text
+        let attributedTextRange = NSMakeRange(0, attributedText.string.count)
+        
+        // Apply the font
+        attributedText.addAttribute(.font, value: font, range: attributedTextRange)
+        
+        // Make it wrap by character
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = .byCharWrapping
+        attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: attributedTextRange)
         
         return attributedText
     }
