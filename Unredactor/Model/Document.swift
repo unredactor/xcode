@@ -53,6 +53,10 @@ class Document {
         self.classifiedText.words = ClassifiedText.classifiedWordsFromText(text)
     }
     
+    func setText(to text: ClassifiedText) {
+        self.classifiedText = text
+    }
+    
     
     
     // Returns the index of the selectedTextRange indicator after making the change
@@ -252,7 +256,7 @@ fileprivate extension Document {
                // Fuse words if you deleted a space
                if deletedWord.type == .space {
                    // Make sure it has a word before and after
-                   if classifiedTextIndex.wordAfterIndex < classifiedText.words.count - 1 && classifiedTextIndex.wordBeforeIndex > 0 {
+                   if classifiedTextIndex.wordAfterIndex < classifiedText.words.count && classifiedTextIndex.wordBeforeIndex > 0 {
                        
                        let spaceIndex = classifiedTextIndex.wordBeforeIndex
                        

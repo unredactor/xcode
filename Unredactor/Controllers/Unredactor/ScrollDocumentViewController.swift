@@ -58,7 +58,7 @@ class ScrollDocumentViewController: ScrollViewController, DocumentViewController
         if !textView.isFirstResponder {
             // ??? Should I do this ???
             return switchView
-        } else {
+        } else { 
             return nil
         }
     }
@@ -134,7 +134,12 @@ extension ScrollDocumentViewController: SwitchViewControllerDelegate {
         
         present(alert, animated: true)
  */
+        setSubviews(toEditMode: .editable)
         self.textViewController.clearText()
+    }
+    
+    func undo() { // Reset text to latest thing
+        self.textViewController.undo() // Can only be called after clearText was just called
     }
     
     func setSubviews(toEditMode editMode: EditMode) {
@@ -165,17 +170,20 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         // get the size of the keboard
         let keyboardRect = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         let keyboardSize = keyboardRect.size
+        print("KEYBOARD SIZE: \(keyboardRect.size)")
         
         // Scroll the scrollView so the selected content is visible
         let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
+        if keyboardSize.height > 120 { scrollView.contentInset = contentInsets }
+        print("CONTENT INSETS: \(contentInsets)")
+        //scrollView.scrollIndicatorInsets = contentInsets
     }
     
     func keyboardWillHide(_ notification: NSNotification) {
         // Scroll back to what it was previously
         scrollView.contentInset = .zero
-        scrollView.scrollIndicatorInsets = .zero
+        print("CONTENT INSETS: \(scrollView.contentInset)")
+        //scrollView.scrollIndicatorInsets = .zero
     }
     
     func textViewDidBecomeEmpty() {
@@ -188,6 +196,7 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
     func textViewDidBecomeNotEmpty() {
         showSwitchView()
         switchViewController.showInstructionLabel()
+        switchViewController.resetClearTextButton()
     }
     
     func textViewDidBecomeRedacted() {

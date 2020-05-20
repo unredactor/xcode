@@ -71,7 +71,7 @@ fileprivate extension WebsiteViewController {
 // MARK: - Subclasses
 class UnredactorWebsiteViewController: WebsiteViewController {
     override func setupWebView() {
-        urlString = "https://unredactor.com"
+        urlString = "https://www.manceps.com/projects/unredactor"
         super.setupWebView()
     }
 }

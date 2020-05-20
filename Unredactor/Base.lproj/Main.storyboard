@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TpE-Ht-se4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TpE-Ht-se4">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -537,7 +537,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5tS-S4-8Va" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5197.6000000000004" y="-722.66009852216757"/>
+            <point key="canvasLocation" x="-5887" y="-1077"/>
         </scene>
         <!--Side Menu Table View Controller-->
         <scene sceneID="5Cf-PO-bgT">
@@ -1162,20 +1162,37 @@
                                     <constraint firstAttribute="bottom" secondItem="YDJ-B2-eTV" secondAttribute="bottom" id="vGG-Kx-HG2"/>
                                 </constraints>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ry1-j8-742">
+                                <rect key="frame" x="107" y="4" width="200" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Uui-M7-UBs"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="oeN-np-ioR" kind="embed" id="db8-mi-QHS"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Uo2-6A-Luk" firstAttribute="top" secondItem="a8f-gZ-aKo" secondAttribute="top" constant="4" id="41b-WA-ZFO"/>
                             <constraint firstAttribute="bottom" secondItem="kwJ-9x-Vy7" secondAttribute="bottom" id="LGh-Gp-j45"/>
                             <constraint firstItem="Kh4-0f-kqv" firstAttribute="top" secondItem="Uo2-6A-Luk" secondAttribute="bottom" constant="4" id="NGq-4M-fW2"/>
+                            <constraint firstItem="ry1-j8-742" firstAttribute="top" secondItem="a8f-gZ-aKo" secondAttribute="top" constant="4" id="Yuv-8p-6F3"/>
                             <constraint firstItem="Kh4-0f-kqv" firstAttribute="leading" secondItem="kwJ-9x-Vy7" secondAttribute="trailing" id="eer-nd-cWy"/>
                             <constraint firstItem="Kh4-0f-kqv" firstAttribute="trailing" secondItem="X9T-Uo-6h2" secondAttribute="trailing" id="h5a-Tb-eDn"/>
                             <constraint firstItem="Uo2-6A-Luk" firstAttribute="leading" secondItem="a8f-gZ-aKo" secondAttribute="leading" constant="20" id="ie4-Vk-Rds"/>
                             <constraint firstAttribute="trailing" secondItem="Uo2-6A-Luk" secondAttribute="trailing" constant="20" id="ndC-ks-ycS"/>
                             <constraint firstItem="kwJ-9x-Vy7" firstAttribute="leading" secondItem="a8f-gZ-aKo" secondAttribute="leading" id="qn0-lH-dbQ"/>
+                            <constraint firstItem="kwJ-9x-Vy7" firstAttribute="top" secondItem="ry1-j8-742" secondAttribute="bottom" constant="4" id="sFK-bx-YbH"/>
+                            <constraint firstItem="ry1-j8-742" firstAttribute="centerX" secondItem="a8f-gZ-aKo" secondAttribute="centerX" id="sVD-Nk-Y6d"/>
                             <constraint firstItem="kwJ-9x-Vy7" firstAttribute="top" secondItem="Uo2-6A-Luk" secondAttribute="bottom" constant="4" id="xV1-sx-T2N"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="X9T-Uo-6h2"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="ry1-j8-742"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="clearTextButton" destination="YDJ-B2-eTV" id="YTf-gV-WSc"/>
@@ -2159,11 +2176,11 @@
             <objects>
                 <viewController id="nan-sc-mlC" customClass="InstructionLabelViewController" customModule="Unredactor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iyX-qE-xHl">
-                        <rect key="frame" x="0.0" y="0.0" width="254" height="24"/>
+                        <rect key="frame" x="0.0" y="0.0" width="374" height="52"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instructional text" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="KXa-C5-tEA">
-                                <rect key="frame" x="20" y="8" width="214" height="8"/>
+                                <rect key="frame" x="20" y="8" width="334" height="36"/>
                                 <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="20"/>
                                 <color key="textColor" white="0.95892935739999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -2184,7 +2201,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NCQ-Jn-X3Q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3387" y="-125"/>
+            <point key="canvasLocation" x="-3971" y="191"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="SU5-U5-k1D">
@@ -2201,7 +2218,26 @@
             </objects>
             <point key="canvasLocation" x="-4512" y="-411"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="gem-6f-wud">
+            <objects>
+                <viewController id="oeN-np-ioR" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aLC-ww-fJW">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="52"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="WAc-C5-PTY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="N1P-Dc-gQU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2558" y="-8"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ELe-KL-Kqa"/>
+        <segue reference="qJW-qj-jLf"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="documentIcon" width="134.33332824707031" height="170.66667175292969"/>
         <image name="fileIcon" width="381.33334350585938" height="353.66665649414062"/>
@@ -2216,8 +2252,4 @@
         <image name="unredactorIconOutline" width="512" height="631"/>
         <image name="websiteIcon" width="460.33334350585938" height="460.33334350585938"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="rlw-rh-hUd"/>
-        <segue reference="qJW-qj-jLf"/>
-    </inferredMetricsTieBreakers>
 </document>

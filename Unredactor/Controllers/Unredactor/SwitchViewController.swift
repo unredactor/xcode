@@ -12,6 +12,7 @@ import UIKit
 protocol SwitchViewControllerDelegate: class {
     func switchWasToggled(to state: EditMode)
     func clearText()
+    func undo()
 }
 
 // MARK: - Class Definition
@@ -38,6 +39,13 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
     private let shadowRadius: CGFloat = 5
     private let editModeText = "Enter Redaction Mode"
     private let redactModeText = "Enter Edit Mode"
+    
+    // ClearText Button state properties
+    private var clearTextButtonState: ClearTextButtonState = .clearText
+    enum ClearTextButtonState {
+        case clearText, undo
+    }
+    
     
     /*
     private let pulseAnimationKey: String = "pulseAnimation"
@@ -92,6 +100,10 @@ class SwitchViewController: UIViewController, CAAnimationDelegate {
         }
     }
     
+    func resetClearTextButton() { // Stops clearText button from displaying undo (eg. if the user inserts another letter and undo would no longer make sense)
+        clearTextButtonState = .clearText
+    }
+    
     // MARK: - IBActions
     
     @IBAction func editButtonPressed(_ sender: Any) {
@@ -143,6 +155,20 @@ fileprivate extension SwitchViewController {
             removeGlowEffect(from: editLabel, isAnimated: animated)
             instructionLabelViewController.setInstructionText(to: "Tap words to redact them")
         }
+        
+        // Also update the clearTextButton
+        updateClearTextButton()
+    }
+    
+    func updateClearTextButton() {
+        switch clearTextButtonState {
+        case .clearText: setClearTextButtonText(to: "Clear Text")
+        case .undo: setClearTextButtonText(to: "Undo")
+        }
+    }
+    
+    func setClearTextButtonText(to text: String) {
+        clearTextButton.setTitle(text, for: .normal)
     }
     
     func setSwitchEditable() {

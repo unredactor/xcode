@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03B17FEBCD86FFF976193534 /* Pods_Unredactor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11D38F32394ED42223C4F70A /* Pods_Unredactor.framework */; };
 		23066B782315F64300A9E8B0 /* TypingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B772315F64300A9E8B0 /* TypingIndicatorViewController.swift */; };
 		23066B7C2316F5B200A9E8B0 /* InformationPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B7B2316F5B200A9E8B0 /* InformationPageViewController.swift */; };
 		23066B7E2317577B00A9E8B0 /* UnredactorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23066B7D2317577B00A9E8B0 /* UnredactorTextView.swift */; };
@@ -16,6 +17,7 @@
 		23159A842305C938007D57DE /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A832305C938007D57DE /* SideMenuTableViewController.swift */; };
 		23159A86230602AE007D57DE /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A85230602AE007D57DE /* UIColor+Helpers.swift */; };
 		23159A882307138A007D57DE /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23159A872307138A007D57DE /* ScrollViewController.swift */; };
+		234E29E824042E14009A615C /* UndoButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234E29E724042E14009A615C /* UndoButtonViewController.swift */; };
 		237460C3235CDFAC00747EF2 /* InstructionLabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237460C2235CDFAC00747EF2 /* InstructionLabelViewController.swift */; };
 		2377E07D22FA01370021C277 /* SwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2377E07C22FA01370021C277 /* SwitchViewController.swift */; };
 		2387F78D2308A91A00F918B8 /* ButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387F78C2308A91A00F918B8 /* ButtonViewController.swift */; };
@@ -46,6 +48,8 @@
 		2F7C0A9522E2D66900AD2828 /* URL+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A9422E2D66900AD2828 /* URL+Helpers.swift */; };
 		2F7C0A9722E5A34B00AD2828 /* Array+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A9622E5A34B00AD2828 /* Array+Helpers.swift */; };
 		2F7C0A9B22E6069600AD2828 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */; };
+		57D9B0A482CD1839F7FEC441 /* Pods_Unredactor_UnredactorUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A277AEA6F64A09067A5421AF /* Pods_Unredactor_UnredactorUITests.framework */; };
+		AF408DE0110483C0F1D7D467 /* Pods_UnredactorTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4533FA804DD90C491EE7AB0F /* Pods_UnredactorTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +70,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11D38F32394ED42223C4F70A /* Pods_Unredactor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unredactor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B1FB787C3F2522FAEBBDE3E /* Pods-Unredactor-UnredactorUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unredactor-UnredactorUITests.debug.xcconfig"; path = "Target Support Files/Pods-Unredactor-UnredactorUITests/Pods-Unredactor-UnredactorUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		1D3D0ED1703A69F85DFF481D /* Pods-UnredactorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnredactorTests.debug.xcconfig"; path = "Target Support Files/Pods-UnredactorTests/Pods-UnredactorTests.debug.xcconfig"; sourceTree = "<group>"; };
 		23066B772315F64300A9E8B0 /* TypingIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorViewController.swift; sourceTree = "<group>"; };
 		23066B7B2316F5B200A9E8B0 /* InformationPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationPageViewController.swift; sourceTree = "<group>"; };
 		23066B7D2317577B00A9E8B0 /* UnredactorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnredactorTextView.swift; sourceTree = "<group>"; };
@@ -75,6 +82,7 @@
 		23159A832305C938007D57DE /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		23159A85230602AE007D57DE /* UIColor+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
 		23159A872307138A007D57DE /* ScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewController.swift; sourceTree = "<group>"; };
+		234E29E724042E14009A615C /* UndoButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoButtonViewController.swift; sourceTree = "<group>"; };
 		237460C2235CDFAC00747EF2 /* InstructionLabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionLabelViewController.swift; sourceTree = "<group>"; };
 		2377E07C22FA01370021C277 /* SwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchViewController.swift; sourceTree = "<group>"; };
 		2387F78C2308A91A00F918B8 /* ButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +119,12 @@
 		2F7C0A9422E2D66900AD2828 /* URL+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Helpers.swift"; sourceTree = "<group>"; };
 		2F7C0A9622E5A34B00AD2828 /* Array+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Helpers.swift"; sourceTree = "<group>"; };
 		2F7C0A9A22E6069600AD2828 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = ../SettingsTableViewController.swift; sourceTree = "<group>"; };
+		4533FA804DD90C491EE7AB0F /* Pods_UnredactorTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnredactorTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51CD2596C94BFBA5DA2EBC5B /* Pods-Unredactor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unredactor.release.xcconfig"; path = "Target Support Files/Pods-Unredactor/Pods-Unredactor.release.xcconfig"; sourceTree = "<group>"; };
+		81C67200185FF63360BF1AA0 /* Pods-Unredactor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unredactor.debug.xcconfig"; path = "Target Support Files/Pods-Unredactor/Pods-Unredactor.debug.xcconfig"; sourceTree = "<group>"; };
+		A277AEA6F64A09067A5421AF /* Pods_Unredactor_UnredactorUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unredactor_UnredactorUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B73330B94CB5C3CB92BAB983 /* Pods-Unredactor-UnredactorUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unredactor-UnredactorUITests.release.xcconfig"; path = "Target Support Files/Pods-Unredactor-UnredactorUITests/Pods-Unredactor-UnredactorUITests.release.xcconfig"; sourceTree = "<group>"; };
+		C2DCE3D486DB97DF32F4CCAC /* Pods-UnredactorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnredactorTests.release.xcconfig"; path = "Target Support Files/Pods-UnredactorTests/Pods-UnredactorTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03B17FEBCD86FFF976193534 /* Pods_Unredactor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF408DE0110483C0F1D7D467 /* Pods_UnredactorTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57D9B0A482CD1839F7FEC441 /* Pods_Unredactor_UnredactorUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +163,7 @@
 				2377E07C22FA01370021C277 /* SwitchViewController.swift */,
 				23066B7D2317577B00A9E8B0 /* UnredactorTextView.swift */,
 				237460C2235CDFAC00747EF2 /* InstructionLabelViewController.swift */,
+				234E29E724042E14009A615C /* UndoButtonViewController.swift */,
 			);
 			path = Unredactor;
 			sourceTree = "<group>";
@@ -261,6 +279,8 @@
 				2F7C0A6C22DCF2FC00AD2828 /* UnredactorTests */,
 				2F7C0A7722DCF2FD00AD2828 /* UnredactorUITests */,
 				2F7C0A5622DCF2FC00AD2828 /* Products */,
+				D256B9F28E4325BE35FF4C6B /* Pods */,
+				BC71B125C481A3659BF22B97 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -309,6 +329,30 @@
 			path = UnredactorUITests;
 			sourceTree = "<group>";
 		};
+		BC71B125C481A3659BF22B97 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				11D38F32394ED42223C4F70A /* Pods_Unredactor.framework */,
+				A277AEA6F64A09067A5421AF /* Pods_Unredactor_UnredactorUITests.framework */,
+				4533FA804DD90C491EE7AB0F /* Pods_UnredactorTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D256B9F28E4325BE35FF4C6B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				81C67200185FF63360BF1AA0 /* Pods-Unredactor.debug.xcconfig */,
+				51CD2596C94BFBA5DA2EBC5B /* Pods-Unredactor.release.xcconfig */,
+				1B1FB787C3F2522FAEBBDE3E /* Pods-Unredactor-UnredactorUITests.debug.xcconfig */,
+				B73330B94CB5C3CB92BAB983 /* Pods-Unredactor-UnredactorUITests.release.xcconfig */,
+				1D3D0ED1703A69F85DFF481D /* Pods-UnredactorTests.debug.xcconfig */,
+				C2DCE3D486DB97DF32F4CCAC /* Pods-UnredactorTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -316,9 +360,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F7C0A7D22DCF2FD00AD2828 /* Build configuration list for PBXNativeTarget "Unredactor" */;
 			buildPhases = (
+				2C6D1062468EC8295BFB2030 /* [CP] Check Pods Manifest.lock */,
 				2F7C0A5122DCF2FC00AD2828 /* Sources */,
 				2F7C0A5222DCF2FC00AD2828 /* Frameworks */,
 				2F7C0A5322DCF2FC00AD2828 /* Resources */,
+				4A6B9B989278ECB2B8FDEC77 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -333,6 +379,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F7C0A8022DCF2FD00AD2828 /* Build configuration list for PBXNativeTarget "UnredactorTests" */;
 			buildPhases = (
+				FF53C1994D6E1DC23017E284 /* [CP] Check Pods Manifest.lock */,
 				2F7C0A6522DCF2FC00AD2828 /* Sources */,
 				2F7C0A6622DCF2FC00AD2828 /* Frameworks */,
 				2F7C0A6722DCF2FC00AD2828 /* Resources */,
@@ -351,9 +398,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F7C0A8322DCF2FD00AD2828 /* Build configuration list for PBXNativeTarget "UnredactorUITests" */;
 			buildPhases = (
+				FD3E09C3CD6DD2D2F97533FF /* [CP] Check Pods Manifest.lock */,
 				2F7C0A7022DCF2FC00AD2828 /* Sources */,
 				2F7C0A7122DCF2FC00AD2828 /* Frameworks */,
 				2F7C0A7222DCF2FC00AD2828 /* Resources */,
+				4FFE2319AE90CE4B7BB24A6C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -442,6 +491,111 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2C6D1062468EC8295BFB2030 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Unredactor-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4A6B9B989278ECB2B8FDEC77 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Unredactor/Pods-Unredactor-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Unredactor/Pods-Unredactor-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4FFE2319AE90CE4B7BB24A6C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Unredactor-UnredactorUITests/Pods-Unredactor-UnredactorUITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Unredactor-UnredactorUITests/Pods-Unredactor-UnredactorUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD3E09C3CD6DD2D2F97533FF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Unredactor-UnredactorUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF53C1994D6E1DC23017E284 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-UnredactorTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2F7C0A5122DCF2FC00AD2828 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -475,6 +629,7 @@
 				2387F78D2308A91A00F918B8 /* ButtonViewController.swift in Sources */,
 				2F7C0A9122E0D0FF00AD2828 /* Bool+Helpers.swift in Sources */,
 				23066B7C2316F5B200A9E8B0 /* InformationPageViewController.swift in Sources */,
+				234E29E824042E14009A615C /* UndoButtonViewController.swift in Sources */,
 				23E607C32314764200E00A27 /* Chatbot.swift in Sources */,
 				23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */,
 				2397332F2301B5A400A378C3 /* DocumentViewController.swift in Sources */,
@@ -647,6 +802,7 @@
 		};
 		2F7C0A7E22DCF2FD00AD2828 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81C67200185FF63360BF1AA0 /* Pods-Unredactor.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -654,16 +810,17 @@
 				INFOPLIST_FILE = Unredactor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.05;
+				MARKETING_VERSION = 1.07;
 				PRODUCT_BUNDLE_IDENTIFIER = manceps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		2F7C0A7F22DCF2FD00AD2828 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 51CD2596C94BFBA5DA2EBC5B /* Pods-Unredactor.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -671,16 +828,17 @@
 				INFOPLIST_FILE = Unredactor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.05;
+				MARKETING_VERSION = 1.07;
 				PRODUCT_BUNDLE_IDENTIFIER = manceps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		2F7C0A8122DCF2FD00AD2828 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D3D0ED1703A69F85DFF481D /* Pods-UnredactorTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -698,6 +856,7 @@
 		};
 		2F7C0A8222DCF2FD00AD2828 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C2DCE3D486DB97DF32F4CCAC /* Pods-UnredactorTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -715,6 +874,7 @@
 		};
 		2F7C0A8422DCF2FD00AD2828 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1B1FB787C3F2522FAEBBDE3E /* Pods-Unredactor-UnredactorUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -731,6 +891,7 @@
 		};
 		2F7C0A8522DCF2FD00AD2828 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B73330B94CB5C3CB92BAB983 /* Pods-Unredactor-UnredactorUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

@@ -33,6 +33,7 @@ class TextViewController: UIViewController {
     
     var document: Document!
     var editMode: EditMode = .editable
+    var textLastInputted: ClassifiedText? // For undoing "clear text"
     private var isTypingSuggestion: Bool = false // This is to prevent multiple delegate calls when the user types one of the three suggestions provided above the iOS keyboard
     private var isTextViewUserInteractionEnabled: Bool = true
     
@@ -86,10 +87,18 @@ class TextViewController: UIViewController {
     }
     
     func clearText() {
+        textLastInputted = document.classifiedText
         selectBeginningOfTextView()
         setTextToPlaceholderText()
         document.setText(to: "")
         delegate?.textViewDidBecomeEmpty()
+    }
+    
+    func undo() {
+        guard let textLastInputted = textLastInputted else { return }
+        document.setText(to: textLastInputted)
+        selectEndOfTextView()
+        delegate?.textViewDidBecomeNotEmpty()
     }
     
     func configureTextView(withDocument document: Document, selectedIndex: Int?, isAnimated: Bool = false) {
@@ -310,15 +319,15 @@ extension TextViewController: UIGestureRecognizerDelegate {
         
         let numberOfCharacters = document.attributedText.string.count
         
-        // Hacky solution to minor problem:
-        if characterIndexTapped == numberOfCharacters - 1 { characterIndexTapped = numberOfCharacters }
-        //----
-        
         if document.classifiedText.rawText.count == 0 { characterIndexTapped = 0 }
         
         guard editMode == .redactable || gestureRecognizer.numberOfTapsRequired == 2 else {
             // EditMode must be edit, so let's start editing
             textView.becomeFirstResponder()
+            
+            // Hacky solution to minor problem:
+            if characterIndexTapped == numberOfCharacters - 1 { characterIndexTapped = numberOfCharacters }
+            //----
             
             // MAKE IT SELECT WHERE YOU TAP
             selectTextView(atIndex: characterIndexTapped)
@@ -343,6 +352,10 @@ extension TextViewController: UIGestureRecognizerDelegate {
             setTextView(toEditMode: .redactable)
         } else if editMode == .editable {
             textView.becomeFirstResponder()
+            
+            // Hacky solution to minor problem:
+            if characterIndexTapped == numberOfCharacters - 1 { characterIndexTapped = numberOfCharacters }
+            //----
             
             selectTextView(atIndex: characterIndexTapped)
         }
@@ -404,7 +417,7 @@ fileprivate extension TextViewController {
         var selectedIndex = index
         
         let maxIndex = document.attributedText.string.count
-        if selectedIndex >= maxIndex { selectedIndex = maxIndex }
+        if selectedIndex > maxIndex { selectedIndex = maxIndex }
         
         if shouldSelectAtEndOfWord {
             let classifiedTextIndex = document.classifiedText.classifiedTextIndex(for: index)!

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import JavaScriptCore
+import Alamofire
 
 // I'm going to make this a singleton because there should only be one unredactor and it doesn't carry info between things, it only performs functions
 class Unredactor {
@@ -27,9 +28,12 @@ class Unredactor {
         
         // Placeholder definition of unredactedWords - get from API
         
-        getUnredactedWords(fromText: unredactedText.urlText, withRequestType: .get) { (words, errorMessage) in
+        getUnredactedWords(fromText: unredactedText.urlText, withRequestType: .post) { (words, errorMessage) in
             
-            guard words != [""] else { return } // An error occurred
+            guard words != [""] else {
+                completion(unredactedText, errorMessage)
+                return
+            } // An error occurred
             
             unredactedWords = words
             
@@ -70,16 +74,32 @@ class Unredactor {
                     completion(unredactedWords, errorMessage)
                 })
             }
+            
+            // Start the task
+            task.resume()
         } else { // requestType = .post
+            /*
             //from: https://stackoverflow.com/questions/26364914/http-request-in-swift-with-post-method (accepted answer)
-            let url = URL(string: "https://unredactor.com/unredactor")!
+            let url = URL(string: "https://unredactor-mobile-3h3pagkfya-uw.a.run.app/unredact")!
+            //let url = URL(string: "https://unredactor.com/unredactor")!
             var request = URLRequest(url: url)
             request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            
             request.httpMethod = "POST"
+            
+            /*
             let parameters: [String: Any] = [
                 "text": text,
             ]
-            request.httpBody = parameters.percentEscaped().data(using: .utf8)
+ */
+            let json: [String: Any] = ["text": text]
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+            
+            //request.httpBody = parameters.percentEscaped().data(using: .utf8)
+            request.httpBody = jsonData
+            
+            //print("request: \(parameters.percentEscaped())")
             
             task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 guard let data = data,
@@ -89,20 +109,36 @@ class Unredactor {
                         return
                 }
                 
+                /*
                 guard (200 ... 299) ~= response.statusCode else {                    // check for http errors
                     print("statusCode should be 2xx, but is \(response.statusCode)")
                     print("response = \(response)")
                     return
                 }
+ */
                 
                 let responseString = String(data: data, encoding: .utf8)
                 print("responseString = \(responseString)")
+                print("response: \(response)")
+                
+                self.handleServerResponse(data: data, response: response, error: error) { (unredactedWords, errorMessage) in
+                    completion(unredactedWords, errorMessage)
+                }
+            }
+ */
+            
+            let parameters = ["text": text]
+            AF.request("https://unredactor-mobile-3h3pagkfya-uw.a.run.app/unredact", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { [unowned self] (response) in
+                print(response)
+                
+                self.handleServerResponse(data: response.data, response: nil, error: nil) { (unredactedWords, error) in
+                    completion(unredactedWords, error)
+                }
             }
             
+            //AF.request("https://unredactor-mobile-3h3pagkfya-uw.a.run.app/unredact" , method: .post, parameters: parameters, encoding: URLEncoding.httpBody)
+            
         }
-        
-        // Start the task
-        task.resume()
     }
     
     // MARK: - Unredactor Info
@@ -139,10 +175,9 @@ class Unredactor {
         }
         
         if let data = data {
-            if let unredactorInfo = try? jsonDecoder.decode(UnredactorInfo.self, from:data) {
-                
-                completion(unredactorInfo.unredacted_words, nil)
+            if let unredactorInfo = try? jsonDecoder.decode(UnredactorInfo.self, from: data) {
                 print(String(data: data, encoding: .utf8)!)
+                completion(unredactorInfo.unredacted_words, nil)
             } else {
                 completion([""], "The app couldn't understand the server response. Contact the developer or leave a review telling us how this happened.")
             }
@@ -150,4 +185,10 @@ class Unredactor {
             completion([""], "Couldn't get a response from the server. The server might be down or you might have a bad connection.")
         }
     }
+    
+    /*
+    private func decodeAlamofireJSONResponse(response: AFDataResponse<Any>, completion: @escaping ([String], String?) -> Void) {
+        response.
+    }
+ */
 }

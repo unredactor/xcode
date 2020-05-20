@@ -32,9 +32,12 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
             var string = word.string
             if word.redactionState != .notRedacted { string = "unk" }
             
+            /*
             // space for urls
             if word.type == .space { urlText.append("%20") }
             else { urlText.append(string) }
+ */
+            urlText.append(string)
         }
         
         return urlText

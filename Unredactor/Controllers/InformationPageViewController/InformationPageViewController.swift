@@ -108,7 +108,7 @@ class AboutPageViewController: InformationPageViewController {
         let flask: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "Flask")
         let website: UIViewController! = storyboard?.instantiateViewController(withIdentifier: "WebsiteInfo")
         
-        pages = [about, unredactorInfo, iOS, flask, website]
+        pages = [about]
         
         setViewControllers([about], direction: .forward, animated: false, completion: nil)
         
