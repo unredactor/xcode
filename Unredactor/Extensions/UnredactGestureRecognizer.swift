@@ -28,7 +28,7 @@ extension UITapGestureRecognizer {
         let sizeThatFits = textView.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
         textContainer.size = CGSize(width: width, height: sizeThatFits.height)
         textContainer.lineFragmentPadding = 0
-        textContainer.lineBreakMode = .byWordWrapping
+        textContainer.lineBreakMode = .byCharWrapping
         
         // Find the tapped character location and compare it to the specified range
         let locationOfTouchInTextView = self.location(in: textView) // Location within UIView (from 0,0 at bottom left)
