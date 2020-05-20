@@ -296,6 +296,7 @@ extension TextViewController: UITextViewDelegate {
         return false
     }
     
+    /*
     func textViewDidChangeSelection(_ textView: UITextView) {
         print("Selection: \(textView.selectedRange)")
         
@@ -303,10 +304,15 @@ extension TextViewController: UITextViewDelegate {
             selectBeginningOfTextView()
         }
     }
+ */
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        
+    }
 }
 
 // MARK: - UIGestureRecognizerDelegate
 extension TextViewController: UIGestureRecognizerDelegate {
+    /*
     @objc func textViewTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         
         let previousRedactionState = document.redactionState
@@ -360,6 +366,65 @@ extension TextViewController: UIGestureRecognizerDelegate {
             selectTextView(atIndex: characterIndexTapped)
         }
     }
+ */
+    // Link method
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in
+        characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        // Make this always return false because I don't actually want to interact with the URL, I just want the character range
+        
+        let previousRedactionState = document.redactionState
+        
+        guard isTextViewUserInteractionEnabled == true else { return false }
+        
+        let numberOfCharacters = document.attributedText.length
+        
+        var characterIndexTapped = characterRange.location
+        
+        guard editMode == .redactable //|| gestureRecognizer.numberOfTapsRequired == 2
+            else {
+            // EditMode must be edit, so let's start editing
+            textView.becomeFirstResponder()
+            
+            
+            // Hacky solution to minor problem:
+            if characterIndexTapped == numberOfCharacters - 1 { characterIndexTapped = numberOfCharacters }
+            
+            selectTextView(atIndex: characterIndexTapped)
+                
+            return false
+        }
+        
+        if editMode == .redactable //|| gestureRecognizer.numberOfTapsRequired == 2
+        {
+            // Make the tapped word toggle between redacted and unredacted
+            document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState()
+            
+            UIView.transition(with: textView, duration: 0.15, options: .transitionCrossDissolve, animations: { [unowned self] in
+                self.textView.attributedText = self.document.attributedText
+            })
+            
+            // Notify delegate if there are changes
+            if document.redactionState == .redacted && previousRedactionState != .redacted
+            {
+                delegate?.textViewDidBecomeRedacted()
+            } else if document.redactionState != .redacted && previousRedactionState == .redacted {
+                delegate?.textViewDidBecomeNotRedacted()
+            }
+            
+            selectTextView(atIndex: characterIndexTapped, shouldSelectAtEndOfWord: true)
+            setTextView(toEditMode: .redactable)
+        } else if editMode == .editable {
+            textView.becomeFirstResponder()
+            
+            
+            // Hacky solution to minor problem:
+            if characterIndexTapped == numberOfCharacters - 1 { characterIndexTapped = numberOfCharacters }
+            
+            selectTextView(atIndex: characterIndexTapped)
+        }
+        
+        return false
+    }
     
     @objc func keyboardDidShow(_ notification: NSNotification) {
         delegate?.keyboardDidShow(notification)
@@ -386,6 +451,7 @@ fileprivate extension TextViewController {
     func setupTapGestureRecognizers() {
         textView.gestureRecognizers = nil
         
+        /*
         // Single tap recognizer
         let singleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(TextViewController.textViewTapped(_:)))
         singleTapRecognizer.delegate = self
@@ -396,6 +462,7 @@ fileprivate extension TextViewController {
         doubleTapRecognizer.delegate = self
         doubleTapRecognizer.numberOfTapsRequired = 2
         //textView.addGestureRecognizer(doubleTapRecognizer) // Turned off for now due to behavior issues
+ */
     }
     
     func setTextToPlaceholderText() {

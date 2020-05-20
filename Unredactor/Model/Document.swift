@@ -17,6 +17,7 @@ class Document {
     var classifiedText: ClassifiedText // Base text that was entered is accessible through classifiedText.rawText
     var font = UIFont(name: "Courier", size: 22)!
     
+    /*
     var attributedText: NSAttributedString { // Text that is used by the DocumentCell to dsiplay black bars.
         
         let attributedText: NSMutableAttributedString = NSMutableAttributedString(string : "")
@@ -43,6 +44,44 @@ class Document {
         }
         
         attributedText.addAttribute(.font, value: font, range: NSMakeRange(0, attributedText.string.count))
+        
+        return attributedText
+    }
+ */
+    
+    // Temp for testing so that I don't have to change every instance its used.
+    var attributedText: NSAttributedString {
+        return linkedAttributedText
+    }
+    
+    var linkedAttributedText: NSAttributedString { // Same as above but it adds links for more accurate tapping of words
+        
+        let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: "")
+        
+        for(wordIndex, word) in classifiedText.words.enumerated() {
+            let attributedWord = NSMutableAttributedString(string: word.displayedString)
+            
+            // Here's the difference:
+            attributedWord.addAttribute(.link, value: word.id.uuidString, range: NSRange(location: 0, length: attributedWord.length)) // might create a bounds error
+            
+            if word.type == .word {
+                setAttributedString(attributedWord, toState: word.redactionState)
+                
+            } else if word.type == .space {
+                // Make it .redacted if both surrounding words are .redacted
+                if wordIndex > 0 && wordIndex + 1 < classifiedText.words.count {
+                    let wordBefore = classifiedText.words[wordIndex - 1]
+                    let wordAfter = classifiedText.words[wordIndex + 1]
+                    
+                    if wordBefore.redactionState == .redacted && wordAfter.redactionState == .redacted {
+                        setAttributedString(attributedWord, toState: .redacted) // otherwise keep it .notRedacted
+                    }
+                }
+            }
+            attributedText.append(attributedWord)
+        }
+        
+        attributedText.addAttribute(.font, value: font, range: NSMakeRange(0, attributedText.length))
         
         return attributedText
     }

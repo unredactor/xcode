@@ -278,6 +278,10 @@ class ClassifiedString: CustomStringConvertible {
     var unredactorPrediction: String?
     var redactionState: RedactionState = .notRedacted
     var lastRedactionState: RedactionState?
+    
+    // For identifying through the link method:
+    var id: UUID
+    
     var displayedString: String { // The string that is actually used/displayed (it is just the unredactorPrediction when the ClassifiedString.redactionState == .unredacted)
         get {
             if let unredactorPrediction = unredactorPrediction, redactionState == .unredacted {
@@ -321,6 +325,8 @@ class ClassifiedString: CustomStringConvertible {
         } else {
             type = .word
         }
+        
+        id = UUID()
     }
     
     init(_ character: Character) {
@@ -331,6 +337,8 @@ class ClassifiedString: CustomStringConvertible {
         } else {
             type = .word
         }
+        
+        id = UUID()
     }
     
     enum ClassifiedStringType {
