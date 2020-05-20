@@ -17,7 +17,6 @@ class Document {
     var classifiedText: ClassifiedText // Base text that was entered is accessible through classifiedText.rawText
     var font = UIFont(name: "Courier", size: 22)!
     
-    /*
     var attributedText: NSAttributedString { // Text that is used by the DocumentCell to dsiplay black bars.
         
         let attributedText: NSMutableAttributedString = NSMutableAttributedString(string : "")
@@ -47,13 +46,15 @@ class Document {
         
         return attributedText
     }
- */
     
+    /*
     // Temp for testing so that I don't have to change every instance its used.
     var attributedText: NSAttributedString {
         return linkedAttributedText
     }
-    
+ */
+ 
+    /*
     var linkedAttributedText: NSAttributedString { // Same as above but it adds links for more accurate tapping of words
         
         let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: "")
@@ -85,6 +86,7 @@ class Document {
         
         return attributedText
     }
+ */
     
     // MARK: - Interface (public methods)
     /// Sets the text of the document. Will cause the document to forget the redaction state of words. Do not use if you are modifying the text from a similar state (eg. in a text input view)

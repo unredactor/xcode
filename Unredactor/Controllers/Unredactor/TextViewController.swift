@@ -296,7 +296,7 @@ extension TextViewController: UITextViewDelegate {
         return false
     }
     
-    /*
+    
     func textViewDidChangeSelection(_ textView: UITextView) {
         print("Selection: \(textView.selectedRange)")
         
@@ -304,10 +304,70 @@ extension TextViewController: UITextViewDelegate {
             selectBeginningOfTextView()
         }
     }
- */
+    
+    /*
     func textViewDidChangeSelection(_ textView: UITextView) {
+        if textView.textColor == .lightGray {
+            selectBeginningOfTextView()
+            
+            return
+        }
         
+        let previousRedactionState = document.redactionState
+        
+        guard isTextViewUserInteractionEnabled == true else { return }
+        
+        var characterIndexTapped = textView.selectedRange.location
+        print("selectedRange: \(textView.selectedRange.location)")
+        guard textView.selectedRange.length == 0 else { return }
+        
+        let numberOfCharacters = document.attributedText.length
+        
+        if document.classifiedText.rawText.count == 0 { characterIndexTapped = 0 }
+        
+        guard editMode == .redactable else {
+            // EditMode must be edit, so let's start editing
+            textView.becomeFirstResponder()
+            
+            // Hacky solution to minor problem:
+            if characterIndexTapped == numberOfCharacters - 1 { characterIndexTapped = numberOfCharacters }
+            //----
+            
+            // MAKE IT SELECT WHERE YOU TAP
+            selectTextView(atIndex: characterIndexTapped)
+            
+            return
+        }
+        
+        if editMode == .redactable {
+            
+            // Make the tapped word toggle between redacted and unredacted
+            document.classifiedText.wordForCharacterIndex(characterIndexTapped)?.toggleRedactionState()
+            
+            UIView.transition(with: textView, duration :0.15, options: .transitionCrossDissolve, animations: { [unowned self] in
+                self.textView.attributedText = self.document.attributedText
+            })
+            
+            // Notify delegate if there are changes
+            if document.redactionState == .redacted && previousRedactionState != .redacted {
+                delegate?.textViewDidBecomeRedacted()
+            } else if document.redactionState != .redacted && previousRedactionState == .redacted {
+                delegate?.textViewDidBecomeNotRedacted ()
+            }
+            
+            selectTextView(atIndex: characterIndexTapped, shouldSelectAtEndOfWord: true)
+            setTextView(toEditMode: .redactable)
+        } else if editMode == .editable {
+            textView.becomeFirstResponder()
+            
+            // Hacky solution to minor problem:
+            if characterIndexTapped == numberOfCharacters - 1 { characterIndexTapped = numberOfCharacters }
+            //---
+            
+            selectTextView(atIndex: characterIndexTapped)
+        }
     }
+ */
 }
 
 // MARK: - UIGestureRecognizerDelegate
