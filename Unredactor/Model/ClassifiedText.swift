@@ -69,13 +69,37 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
         return numberOfCharacters
     }
     
+    /*
     func wordForCharacterIndex(_ characterIndex: Int) -> ClassifiedString? {
         guard characterIndex >= 0 && characterIndex < numberOfCharacters else { return nil }
         
         var startIndex = 0
         var endIndex = 0 // Place we are at in the sequence currently
         for word in words {
-            let wordLength = word.redactionState == .unredacted ? word.unredactorPrediction!.count : word.string.count
+            let wordLength = (word.redactionState == .unredacted) ? word.unredactorPrediction!.count : word.string.count
+            
+            if let unredactorPrediction = word.unredactorPrediction {
+                print("UNREDACTOR PREDICTION: \(unredactorPrediction)")
+            }
+            
+            endIndex += wordLength
+            startIndex = endIndex - wordLength
+            if characterIndex >= startIndex && characterIndex <= endIndex - 1 {
+                if word.type != .space { return word }
+                else { return nil }
+            }
+        }
+        
+        return nil
+    }
+ */
+    func wordForCharacterIndex(_ characterIndex: Int) -> ClassifiedString? {
+        guard characterIndex >= 0 && characterIndex < numberOfCharacters else { return nil }
+        
+        var startIndex = 0
+        var endIndex = 0 // Place we are at in the sequence currently
+        for word in words {
+            let wordLength = (word.redactionState == .unredacted) ? word.unredactorPrediction!.count : word.string.count
             
             if let unredactorPrediction = word.unredactorPrediction {
                 print("UNREDACTOR PREDICTION: \(unredactorPrediction)")

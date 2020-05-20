@@ -50,7 +50,7 @@ class Document {
         
         // Make it wrap by character
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineBreakMode = .byCharWrapping
+        paragraphStyle.lineBreakMode = .byWordWrapping
         attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: attributedTextRange)
         
         return attributedText

@@ -17,4 +17,11 @@ class UnredactorTextView: UITextView {
         
         //var canPerformAction = super.canPerformAction(action, withSender: sender)
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        textContainerInset = UIEdgeInsets.zero
+        textContainer.lineFragmentPadding = 0
+    }
 }
