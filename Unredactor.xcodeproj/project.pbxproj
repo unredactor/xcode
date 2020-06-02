@@ -29,6 +29,8 @@
 		23B876E222F93633006E7D16 /* FolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B876E122F93633006E7D16 /* FolderViewController.swift */; };
 		23BE4D192302178B005407FF /* README in Resources */ = {isa = PBXBuildFile; fileRef = 23BE4D182302178B005407FF /* README */; };
 		23BE4D1B23022780005407FF /* EditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BE4D1A23022780005407FF /* EditMode.swift */; };
+		23CFA33324751E8B003AADE6 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CFA33224751E8B003AADE6 /* AboutViewController.swift */; };
+		23D44B5524803DA80082D278 /* RedactedKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D44B5424803DA80082D278 /* RedactedKeyboard.swift */; };
 		23DCA83622FB4D3800AAAE4B /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DCA83522FB4D3800AAAE4B /* TextViewController.swift */; };
 		23E607BF23146DD300E00A27 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E607BE23146DD300E00A27 /* ChatViewController.swift */; };
 		23E607C123146E3000E00A27 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E607C023146E3000E00A27 /* Message.swift */; };
@@ -94,6 +96,8 @@
 		23B876E122F93633006E7D16 /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
 		23BE4D182302178B005407FF /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		23BE4D1A23022780005407FF /* EditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMode.swift; sourceTree = "<group>"; };
+		23CFA33224751E8B003AADE6 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		23D44B5424803DA80082D278 /* RedactedKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedactedKeyboard.swift; sourceTree = "<group>"; };
 		23DCA83522FB4D3800AAAE4B /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		23E607BE23146DD300E00A27 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		23E607C023146E3000E00A27 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -241,6 +245,7 @@
 				23066B702315F50F00A9E8B0 /* Unredactor */,
 				23066B7A2316F59700A9E8B0 /* InformationPageViewController */,
 				23B64004230DA4C4002ED14C /* WebsiteViewController.swift */,
+				23CFA33224751E8B003AADE6 /* AboutViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -272,6 +277,16 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		23D44B53248010D50082D278 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2F7C0A5C22DCF2FC00AD2828 /* Main.storyboard */,
+				2F7C0A6122DCF2FC00AD2828 /* LaunchScreen.storyboard */,
+				23D44B5424803DA80082D278 /* RedactedKeyboard.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		2F7C0A4C22DCF2FC00AD2828 = {
 			isa = PBXGroup;
 			children = (
@@ -301,11 +316,10 @@
 				23BE4D182302178B005407FF /* README */,
 				23946B7722F3AFD300A69AF3 /* Controllers */,
 				23946B7822F3B04200A69AF3 /* Model */,
+				23D44B53248010D50082D278 /* View */,
 				23946B7922F3B05800A69AF3 /* Extensions */,
 				237C08A022FB95C800DE3379 /* Old Stuff (Unused) */,
-				2F7C0A5C22DCF2FC00AD2828 /* Main.storyboard */,
 				2F7C0A5F22DCF2FC00AD2828 /* Assets.xcassets */,
-				2F7C0A6122DCF2FC00AD2828 /* LaunchScreen.storyboard */,
 				2F7C0A6422DCF2FC00AD2828 /* Info.plist */,
 			);
 			path = Unredactor;
@@ -349,7 +363,6 @@
 				1D3D0ED1703A69F85DFF481D /* Pods-UnredactorTests.debug.xcconfig */,
 				C2DCE3D486DB97DF32F4CCAC /* Pods-UnredactorTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -604,12 +617,14 @@
 				2F7C0A9B22E6069600AD2828 /* SettingsTableViewController.swift in Sources */,
 				23159A842305C938007D57DE /* SideMenuTableViewController.swift in Sources */,
 				23066B7E2317577B00A9E8B0 /* UnredactorTextView.swift in Sources */,
+				23CFA33324751E8B003AADE6 /* AboutViewController.swift in Sources */,
 				2F7C0A9522E2D66900AD2828 /* URL+Helpers.swift in Sources */,
 				23A4065A2331E7120001DB1D /* String+Helpers.swift in Sources */,
 				2F7C0A8722DF863F00AD2828 /* Document.swift in Sources */,
 				2309D19D230462DB0028C2BA /* CABasicAnimation+Helpers.swift in Sources */,
 				23E708072318948300FA2DF8 /* SummaryViewController.swift in Sources */,
 				2F7C0A8D22E0310400AD2828 /* Unredactor.swift in Sources */,
+				23D44B5524803DA80082D278 /* RedactedKeyboard.swift in Sources */,
 				2F7C0A9322E0D8DE00AD2828 /* ClassifiedText.swift in Sources */,
 				23E607C123146E3000E00A27 /* Message.swift in Sources */,
 				23066B782315F64300A9E8B0 /* TypingIndicatorViewController.swift in Sources */,
@@ -810,7 +825,7 @@
 				INFOPLIST_FILE = Unredactor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.07;
+				MARKETING_VERSION = 1.08;
 				PRODUCT_BUNDLE_IDENTIFIER = manceps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -828,7 +843,7 @@
 				INFOPLIST_FILE = Unredactor/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.07;
+				MARKETING_VERSION = 1.08;
 				PRODUCT_BUNDLE_IDENTIFIER = manceps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

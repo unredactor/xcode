@@ -299,7 +299,7 @@ extension TextViewController: UITextViewDelegate {
     
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        print("Selection: \(textView.selectedRange)")
+        //print("Selection: \(textView.selectedRange)")
         
         if textView.textColor == .lightGray {
             selectBeginningOfTextView()
@@ -411,9 +411,12 @@ extension TextViewController: UIGestureRecognizerDelegate {
                 self.textView.attributedText = self.document.attributedText
             })
             
+            print("REDACTION STATE: \(document.redactionState)")
+            
+            
             // Notify delegate if there are changes
-            if document.redactionState == .redacted && previousRedactionState != .redacted { delegate?.textViewDidBecomeRedacted() }
-            else if document.redactionState != .redacted && previousRedactionState == .redacted { delegate?.textViewDidBecomeNotRedacted() }
+            if document.redactionState != .notRedacted && previousRedactionState != .redacted { delegate?.textViewDidBecomeRedacted() }
+            else if document.redactionState == .notRedacted { delegate?.textViewDidBecomeNotRedacted() }
             
             selectTextView(atIndex: characterIndexTapped, shouldSelectAtEndOfWord: true)
             setTextView(toEditMode: .redactable)

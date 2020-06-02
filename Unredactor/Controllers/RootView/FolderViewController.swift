@@ -274,8 +274,8 @@ extension FolderViewController: SideMenuViewControllerDelegate {
             if row == 0 {
                 self.updateUnredactButton(percentageDone: -1.0, duration: 0.9)
             }
+            self.menuIsShown = false
         }
-        menuIsShown = false
     }
     
     func menuButtonPressed() {
@@ -332,6 +332,7 @@ fileprivate extension FolderViewController {
         shadowGradient.zPosition = 5 // Move in front of side menu
         sideMenu.layer.insertSublayer(shadowGradient, at: 0)
         
+        print("INDEX: \(pageViewController.currentIndex)")
         // Set selected to match shown view
         sideMenuViewController.selectRow(atRow: pageViewController.currentIndex)
     }

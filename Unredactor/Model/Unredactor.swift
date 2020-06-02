@@ -65,6 +65,7 @@ class Unredactor {
         print("REQUEST TYPE: \(requestType)")
         
         if requestType == .get {
+            /*
             let urlString = "https://unredactor.com/api/unredact_bert?text=" + text
             print("URLSTRING: \(urlString)")
             let baseURL = URL(string: urlString)!
@@ -77,6 +78,7 @@ class Unredactor {
             
             // Start the task
             task.resume()
+ */
         } else { // requestType = .post
             /*
             //from: https://stackoverflow.com/questions/26364914/http-request-in-swift-with-post-method (accepted answer)
@@ -128,7 +130,8 @@ class Unredactor {
  */
             
             let parameters = ["text": text]
-            AF.request("https://unredactor-mobile-3h3pagkfya-uw.a.run.app/unredact", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { [unowned self] (response) in
+            print("TEXT: \(text)")
+            AF.request("https://unredactor-mobile-3h3pagkfya-uw.a.run.app/unredact", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { [unowned self] (response) in
                 print(response)
                 
                 self.handleServerResponse(data: response.data, response: nil, error: nil) { (unredactedWords, error) in
@@ -171,16 +174,18 @@ class Unredactor {
         
         if let error = error {
             print("ERROR: \(error)")
-            completion([""], "Couldn't get a response from the server. The server might be down or you might have a bad connection.")
+            completion([""], "Couldn't connect to the server. You might be offline; check your internet connection.")
         }
         
         if let data = data {
+            print("DATA: \(String(data: data, encoding: .utf8)!)")
             if let unredactorInfo = try? jsonDecoder.decode(UnredactorInfo.self, from: data) {
-                print(String(data: data, encoding: .utf8)!)
+                
                 completion(unredactorInfo.unredacted_words, nil)
             } else {
                 completion([""], "The app couldn't understand the server response. Contact the developer or leave a review telling us how this happened.")
             }
+            
         } else {
             completion([""], "Couldn't get a response from the server. The server might be down or you might have a bad connection.")
         }

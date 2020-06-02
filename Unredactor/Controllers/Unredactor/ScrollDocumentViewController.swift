@@ -170,19 +170,20 @@ extension ScrollDocumentViewController: TextViewControllerDelegate {
         // get the size of the keboard
         let keyboardRect = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
         let keyboardSize = keyboardRect.size
-        print("KEYBOARD SIZE: \(keyboardRect.size)")
+        //print("KEYBOARD SIZE: \(keyboardRect.size)")
         
         // Scroll the scrollView so the selected content is visible
-        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-        if keyboardSize.height > 120 { scrollView.contentInset = contentInsets }
-        print("CONTENT INSETS: \(contentInsets)")
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height - 120, right: 0)
+        //if keyboardSize.height > 120 { scrollView.contentInset = contentInsets }
+        scrollView.contentInset = contentInsets
+        //print("CONTENT INSETS: \(contentInsets)")
         //scrollView.scrollIndicatorInsets = contentInsets
     }
     
     func keyboardWillHide(_ notification: NSNotification) {
         // Scroll back to what it was previously
         scrollView.contentInset = .zero
-        print("CONTENT INSETS: \(scrollView.contentInset)")
+        //print("CONTENT INSETS: \(scrollView.contentInset)")
         //scrollView.scrollIndicatorInsets = .zero
     }
     
@@ -294,6 +295,7 @@ fileprivate extension ScrollDocumentViewController {
         // Animate switch view down (back to normal position)
         UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: { [unowned self] in
             self.switchView.transform = downTransform
+            self.switchView.layer.opacity = 0.0
             }, completion: { (bool) in
         })
     }
@@ -306,6 +308,7 @@ fileprivate extension ScrollDocumentViewController {
         // Animate switch view up
         UIView.animate(withDuration: duration, delay: 0.0, options: .curveEaseInOut, animations: { [unowned self] in
             self.switchView.transform = identityTransform
+            self.switchView.layer.opacity = 1.0
             }, completion: { (bool) in
         })
     }
@@ -320,6 +323,11 @@ fileprivate extension ScrollDocumentViewController {
     
     func showErrorMessage(_ errorMessage: String) {
         let alert = UIAlertController(title: "Oops! Something went wrong. 😕", message: errorMessage, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action: UIAlertAction!) in
+            
+        }
+        
+        alert.addAction(okAction)
         
         self.present(alert, animated: true)
     }

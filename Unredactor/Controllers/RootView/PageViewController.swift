@@ -32,7 +32,7 @@ class PageViewController: UIPageViewController {
         
         let unredactor: DocumentViewController! = storyboard?.instantiateViewController(withIdentifier: "unredactorView2") as? DocumentViewController // TODO: Update names
         //let chatbot: ChatViewController! = storyboard?.instantiateViewController(withIdentifier: "chatbot") as? ChatViewController
-        let about: AboutPageViewController! = storyboard?.instantiateViewController(withIdentifier: "About") as? AboutPageViewController
+        let about: AboutViewController! = storyboard?.instantiateViewController(withIdentifier: "AboutViewController") as? AboutViewController
         let contributors: ContributorsPageViewController! = storyboard?.instantiateViewController(withIdentifier: "Contributors") as? ContributorsPageViewController
         let website: UnredactorWebsiteViewController! = storyboard?.instantiateViewController(withIdentifier: "Website") as? UnredactorWebsiteViewController
         let manceps: MancepsWebsiteViewController! = storyboard?.instantiateViewController(withIdentifier: "Manceps") as? MancepsWebsiteViewController
@@ -40,7 +40,7 @@ class PageViewController: UIPageViewController {
         unredactor.document = documents[0]
         //page2.document = documents[1]
         
-        pages.append(contentsOf: [unredactor, about, contributors, website, manceps])
+        pages.append(contentsOf: [unredactor, about, website, manceps])
         
         setViewControllers([unredactor], direction: .forward, animated: false, completion: nil)
     }
@@ -55,7 +55,8 @@ class PageViewController: UIPageViewController {
     }
     
     func setCurrentPageFirstResponder() {
-        if let currentPage = pages[currentIndex] as? ScrollDocumentViewController {
+        
+        if let currentPage = pages[currentIndex] as? ScrollDocumentViewController, currentIndex == 0 {
             currentPage.becomeFirstResponder()
             currentPage.updateTextViewEditMode()
         }

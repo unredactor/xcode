@@ -34,6 +34,10 @@ class SideMenuTableViewController: UITableViewController {
     // MARK: - Interface
     func selectRow(atRow row: Int, isAnimated animated: Bool) {
         let selectedRow = indexPathForRow(row)
+        print("SELECTED ROW: \(selectedRow)")
+        
+        guard selectedRow != IndexPath(row: 1, section: 0) else { return }
+        
         tableView.selectRow(at: selectedRow, animated: animated, scrollPosition: .top)
         tableView.delegate?.tableView?(tableView, didSelectRowAt: selectedRow)
         tableView.reloadData()
@@ -72,6 +76,14 @@ class SideMenuTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if indexPath == IndexPath(row: 1, section: 0) {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // Select the first cell
         if indexPath == IndexPath(row: 0, section: 0) {
@@ -84,7 +96,7 @@ class SideMenuTableViewController: UITableViewController {
         if section == 0 {
             return 2
         } else {
-            return 4
+            return 3
         }
     }
     
@@ -95,7 +107,7 @@ class SideMenuTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-        if let selectedIndexPath = tableView.indexPathForSelectedRow, let cell = tableView.cellForRow(at: selectedIndexPath), selectedIndexPath != indexPath {
+        if let selectedIndexPath = tableView.indexPathForSelectedRow, let cell = tableView.cellForRow(at: selectedIndexPath), selectedIndexPath != indexPath && selectedIndexPath != IndexPath(row: 1, section: 0) {
             cell.setSelected(false, animated: true)
         }
         
@@ -104,7 +116,7 @@ class SideMenuTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
-        if tableView.indexPathForSelectedRow != indexPath {
+        if tableView.indexPathForSelectedRow != indexPath && indexPath != IndexPath(row: 1, section: 0) {
             delegate?.didSelectRow(rowForIndexPath(indexPath))
         }
         

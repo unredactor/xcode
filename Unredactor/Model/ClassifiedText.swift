@@ -118,7 +118,9 @@ class ClassifiedText: NSCopying { // NSCopying is effectively for the unredactor
     
     // Returns true if this classified text contains any redactions/unredactions
     var isNotRedacted: Bool {
+        
         for word in words {
+            //print(word.redactionState)
             if word.redactionState != .notRedacted {
                 return false
             }

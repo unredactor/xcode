@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let testParameters = ["text": "starting up the app..."]
+        AF.request("https://unredactor-mobile-3h3pagkfya-uw.a.run.app/unredact", method: .post, parameters: testParameters, encoding: JSONEncoding.default).responseJSON { [unowned self] (response) in }
+        
         
         return true
     }
